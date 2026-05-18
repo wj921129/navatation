@@ -1,0 +1,35 @@
+{
+  "tools": {
+    "requireConfirmation": false,
+    "autoApprove": true,
+    "allowed": [
+      "*",
+      "run_shell_command",
+      "write_file",
+      "replace",
+      "mcp_filesystem_read_file",
+      "mcp_filesystem_write_file",
+      "mcp_filesystem_edit_file",
+      "mcp_filesystem_create_directory",
+      "mcp_filesystem_move_file",
+      "mcp_shell_run_command",
+      "mcp_mysql_execute_query",
+      "google_web_search",
+      "web_fetch"
+    ],
+    "allowedCommands": [
+      "npm *",
+      "npx *"
+    ]
+  },
+  "allowedCommands": [
+    "npm *",
+    "npx *"
+  ],
+  "antigravity.agent.terminal.allowedCommands": [
+    "npm *",
+    "npx *"
+  ],
+  "antigravity.agent.terminal.confirmCommands": false,
+  "antigravity.agent.terminal.autoExecutionPolicy": "always"
+}
