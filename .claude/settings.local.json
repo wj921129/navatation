@@ -58,20 +58,55 @@
       "Bash(awk *)",
       "Bash(cmd.exe *)",
       "Bash(where *)",
-      "Bash(java -version)",
       "Bash(export *)",
       "Bash(echo *)",
       "Bash(wmic service *)",
       "Bash(powershell.exe *)",
       "Bash(bash *)",
       "Bash(cmd *)",
-      "Bash(cd /e E:/workspace/navatation/scripts)",
+      "Bash(cd *)",
+      "Bash(xxd *)",
       "Bash(./start-fe.bat)",
       "Bash(./stop-fe.bat)",
       "Bash(cat)",
       "Bash(/tmp/test.bat)",
+      "Bash(python3 *)",
+      "Bash(java -version)",
       "Bash(MSYS2_ARG_CONV_EXCL=\"*\" cmd *)",
-      "Bash(xxd \"E:/workspace/navatation/scripts/stop-fe.bat\")"
+      "Bash(scripts/ *)",
+      "Bash(tasklist *)",
+      "Bash(git *)",
+      "Bash(grep *)",
+      "Bash(redis* *)",
+      "Bash(pip3 install *)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/start-services.sh",
+            "timeout": 30,
+            "statusMessage": "检查 Navatation 服务状态",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/stop-services.sh",
+            "timeout": 15,
+            "statusMessage": "正在停止 Navatation 服务",
+            "async": true
+          }
+        ]
+      }
     ]
   }
 }

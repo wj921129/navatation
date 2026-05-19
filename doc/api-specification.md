@@ -712,13 +712,48 @@ Authorization: Bearer {accessToken}
 ```
 
 抓取策略：
-1. 先尝试 `{origin}/favicon.ico`
-2. 再解析 HTML `<link rel="icon">` 标签
-3. 抓取后将图标文件上传至 OSS，返回 OSS 地址
+1. 请求目标页面 HTML，解析 `<link rel="icon">` 标签提取真实图标地址
+2. 若解析失败，回退到 `{origin}/favicon.ico`
+3. 超时 5 秒，网络异常时静默降级回退
 
 ---
 
-### 3.4 推荐分类数据
+### 3.4 图标上传
+
+#### 3.4.1 上传图标文件
+
+```
+POST /api/v1/nav/icon/upload
+Authorization: Bearer {accessToken}
+Content-Type: multipart/form-data
+```
+
+**Request:**
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| file | File | 图标文件，支持 PNG/JPEG/GIF/WebP/ICO/SVG，最大 200KB |
+
+**安全限制：**
+1. 文件类型白名单：仅允许图片格式
+2. 文件大小上限：200KB
+3. 上传频率限制：每用户每小时最多 30 次（Redis 计数器）
+
+**Response (200):**
+
+```json
+{
+  "code": 200,
+  "message": "上传成功",
+  "data": {
+    "iconUrl": "/uploads/icons/user_1/a1b2c3d4-e5f6-7890-abcd-ef1234567890.png"
+  }
+}
+```
+
+---
+
+### 3.5 推荐分类数据
 
 #### 3.4.1 获取推荐分类列表
 
@@ -1079,6 +1114,7 @@ Authorization: Bearer {accessToken}
 | 导航 | DELETE | `/nav/shortcuts/{id}` | 是 | 删除快捷方式 |
 | 导航 | PUT | `/nav/shortcuts/sort` | 是 | 拖拽排序 |
 | 导航 | POST | `/nav/favicon` | 是 | 抓取 Favicon |
+| 导航 | POST | `/nav/icon/upload` | 是 | 上传图标文件（200KB 上限，30次/小时限流） |
 | 导航 | GET | `/nav/recommended` | 否 | 获取推荐分类 |
 | 设置 | GET | `/settings` | 是 | 获取用户配置 |
 | 设置 | PUT | `/settings` | 是 | 全量更新配置 |

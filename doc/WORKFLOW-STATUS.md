@@ -209,6 +209,10 @@
 | 2026-05-18 | 拖拽排序功能开发 | FE | ✅ 完成 | react-dnd 集成到编辑模式快捷方式排序 |
 | 2026-05-18 | 主题切换功能开发 | FE | ✅ 完成 | next-themes + SettingsDialog 主题选择器 |
 | 2026-05-18 | RSA 加密登录 | BE/FE | ✅ 完成 | RSA-OAEP-256 + 一次性 Nonce，保护登录/注册/改密接口 |
+| 2026-05-19 | BUG-004 修复 + Redis 版本适配 | BE | ✅ 完成 | NonceService 移除 GETDEL，兼容 Redis 3.2.100 |
+| 2026-05-19 | BUG-005 修复: RSA OAEP MGF1 参数对齐 | BE | ✅ 完成 | 显式指定 MGF1 SHA-256，对齐前端 Web Crypto API |
+| 2026-05-19 | 自动检测网站图标功能 | BE/FE | ✅ 完成 | 后端增强 fetchFavicon 爬取页面解析 <link rel="icon">；前端输入 URL 防抖自动检测并填充图标 |
+| 2026-05-19 | 图标上传功能改造 | BE/FE | ✅ 完成 | 新增 POST /nav/icon/upload；文件类型/大小/频率三关卡安全限制；前端上传流从 Base64 改为后端上传 |
 
 ---
 
@@ -230,8 +234,15 @@
 | 2026-05-18 | `App.tsx` | 集成 TodoPanel、react-dnd 拖拽、next-themes 主题
 | 2026-05-18 | `rsa-login-encryption-design.md` | 新建：RSA 加密登录设计方案 |
 | 2026-05-18 | `api-specification.md` | 新增 /auth/nonce 端点，更新登录/注册/改密为 RSA 加密传输 |
+| 2026-05-19 | `backend-architecture.md` | Redis 版本从 7.x 更新为 3.2.100 |
 | 2026-05-18 | `backend-architecture.md` | 安全设计章节引用 RSA 加密设计文档 |
 | 2026-05-18 | `WORKFLOW-STATUS.md` | 同步 RSA 加密开发记录 |
+| 2026-05-19 | `NavService.java` | 增强 fetchFavicon：实际请求页面 HTML 解析 <link rel="icon"> 标签提取真实图标，超时 5s 回退 /favicon.ico |
+| 2026-05-19 | `AddShortcutDialog.tsx` | 自定义网址输入框增加防抖自动检测网站图标，显示加载/成功/失败状态 |
+| 2026-05-19 | `ResourceConfig.java` | 新增：映射 /uploads/** 到文件系统，使上传文件可 HTTP 访问 |
+| 2026-05-19 | `NavController.java`, `NavService.java` | 新增 POST /nav/icon/upload：文件类型白名单/200KB/Redis 30次/小时频率限制 |
+| 2026-05-19 | `AddShortcutDialog.tsx` | 图标上传改为调用后端接口，替换 FileReader Base64 方案 |
+| 2026-05-19 | `api-specification.md` | 新增图标上传 API 文档 |
 
 ---
 
@@ -242,3 +253,5 @@
 | BUG-001 | 🔴 P0 阻塞 | MySQL JDBC `characterEncoding=utf8mb4` 不被 Connector-J 识别，首次数据库操作 500 | ✅ 已修复 | 2026-05-18 |
 | BUG-002 | 🟠 P1 严重 | 前端快捷方式与设置无持久化（页面刷新即丢失） | ✅ 已修复 | 2026-05-18 |
 | BUG-003 | 🟠 P1 严重 | 登录注册入口 Profile 按钮无效 | ✅ 已修复 | 2026-05-18 |
+| BUG-004 | 🔴 P0 阻塞 | 登录接口 500：`GETDEL` 命令不兼容 Redis 3.2.100 | ✅ 已修复 | 2026-05-19 |
+| BUG-005 | 🔴 P0 阻塞 | 登录 RSA 解密失败：Java MGF1 默认 SHA-1 与前端 Web Crypto SHA-256 不匹配 | ✅ 已修复 | 2026-05-19 |
