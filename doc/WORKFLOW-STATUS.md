@@ -1,6 +1,6 @@
 # 📋 navatation 项目任务看板
 
-> 维护者：项目经理（PM）| 最后更新：2026-05-18T21:00
+> 维护者：项目经理（PM）| 最后更新：2026-05-20T22:04
 
 ---
 
@@ -213,6 +213,8 @@
 | 2026-05-19 | BUG-005 修复: RSA OAEP MGF1 参数对齐 | BE | ✅ 完成 | 显式指定 MGF1 SHA-256，对齐前端 Web Crypto API |
 | 2026-05-19 | 自动检测网站图标功能 | BE/FE | ✅ 完成 | 后端增强 fetchFavicon 爬取页面解析 <link rel="icon">；前端输入 URL 防抖自动检测并填充图标 |
 | 2026-05-19 | 图标上传功能改造 | BE/FE | ✅ 完成 | 新增 POST /nav/icon/upload；文件类型/大小/频率三关卡安全限制；前端上传流从 Base64 改为后端上传 |
+| 2026-05-20 | 编辑器与项目配置优化 | FE/BE | ✅ 完成 | 创建 .editorconfig 缩进规范；前端新增 tsconfig.json 与 TS 开发依赖包修复 IDE 别名报红问题；优化后端 application.yml 绝对上传路径为跨平台通用配置。 |
+| 2026-05-20 | AOP 链路日志追踪功能开发 | BE | ✅ 完成 | 引入 spring-boot-starter-aop，开发优先级最高的 RequestLogAspect 切面类生成 UUID MDC 追踪链路，打印精确 of IP、URL、UserID、处理时长并规整 logback 全局日志为中括号格式。 |
 
 ---
 
@@ -243,6 +245,12 @@
 | 2026-05-19 | `NavController.java`, `NavService.java` | 新增 POST /nav/icon/upload：文件类型白名单/200KB/Redis 30次/小时频率限制 |
 | 2026-05-19 | `AddShortcutDialog.tsx` | 图标上传改为调用后端接口，替换 FileReader Base64 方案 |
 | 2026-05-19 | `api-specification.md` | 新增图标上传 API 文档 |
+| 2026-05-20 | `tsconfig.json` | 新增前端 TS 配置文件，修复 IDE 引用 `@/` 路径别名报红的异常 |
+| 2026-05-20 | `logback-spring.xml` | 重塑 CONSOLE 与 FILE 全局日志格式为 `[level] [traceId] [time] [class.method] msg` 规整中括号形式 |
+| 2026-05-20 | `RequestLogAspect.java` | 新建最高优先级切面，动态解析 token 提取用户 ID 并使用 32 位 UUID MDC 进行链路追踪 |
+| 2026-05-20 | `Maven 多模块打包构建` | 解决因子模块直接启动未包含最新 framework 切面字节码导致 AOP 未生效问题，全局 clean install 并验证通过 |
+| 2026-05-20 | `NavService.java`, `vite.config.ts`, `App.tsx`, `AddShortcutDialog.tsx` | 修复上传文件 FileNotFound 异常（转绝对路径）；为 Vite 增加 `/uploads` 静态代理修复回显 404；调整图标渲染为 `60% contain` 比例并优化添加网址弹窗右侧的圆形实时预览 UI |
+| 2026-05-20 | `WORKFLOW-STATUS.md` | 同步项目看板，追加编辑器配置、AOP MDC 链路追踪及图标上传相关修复记录 |
 
 ---
 
@@ -255,3 +263,5 @@
 | BUG-003 | 🟠 P1 严重 | 登录注册入口 Profile 按钮无效 | ✅ 已修复 | 2026-05-18 |
 | BUG-004 | 🔴 P0 阻塞 | 登录接口 500：`GETDEL` 命令不兼容 Redis 3.2.100 | ✅ 已修复 | 2026-05-19 |
 | BUG-005 | 🔴 P0 阻塞 | 登录 RSA 解密失败：Java MGF1 默认 SHA-1 与前端 Web Crypto SHA-256 不匹配 | ✅ 已修复 | 2026-05-19 |
+| BUG-006 | 🟠 P1 严重 | 后端图标上传 500 (FileNotFoundException)，Tomcat 获取相对路径异常 | ✅ 已修复 | 2026-05-20 |
+| BUG-007 | 🟡 P2 中等 | 前端上传及自定义 URL 图标回显 404 (Vite 未代理 `/uploads`) 且原始比例占满容器不协调 | ✅ 已修复 | 2026-05-20 |
