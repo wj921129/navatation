@@ -190,38 +190,59 @@
 | 日期 | 任务 | 角色 | 状态 | 备注 |
 |------|------|------|------|------|
 | 2026-05-18 | 工作流初始化 | PM | ✅ 完成 | 建立四角色协作体系 |
-| 2026-05-18 | DDL 执行 | 后端 | ✅ 完成 | 7 张业务表已建 |
-| 2026-05-18 | 后端 API 开发 | 后端 | ✅ 完成 | 4 个 Controller / 4 个 Service / 5 个 Mapper |
-| 2026-05-18 | 前端 Service 层 | 前端 | ✅ 完成 | api-client + 4 个业务 service + auth-store |
-| 2026-05-18 | 前端主页面 UI | 前端 | ✅ 完成 | 搜索框/快捷方式网格/设置面板/登录弹窗 |
-| 2026-05-18 | 进度同步 | PM | ✅ 完成 | 更新 WORKFLOW-STATUS.md |
-| 2026-05-18 | 前后端启动 | 后端/前端 | ✅ 完成 | 后端 :8080 / 前端 :5173 |
-| 2026-05-18 | BUG-001 修复 | 后端 | ✅ 完成 | characterEncoding=utf8mb4 → UTF-8 |
-| 2026-05-18 | 首轮 QA 测试 | QA | ✅ 完成 | 14/14 通过，含 API 测试 + UI 测试 |
-| 2026-05-18 | 前端核心 API 对接 | FE | ✅ 完成 | 主页面/设置面板/添加弹窗 对接后端 |
-| 2026-05-18 | 二轮 QA 测试 | QA | ✅ 完成 | 状态持久化、用户登录等已验证通过 |
-| 2026-05-18 | 工作流优化（被动QA模式） | PM | ✅ 完成 | 调整 QA 为被动角色，仅在用户指派时执行测试，默认由用户手动确认 |
-| 2026-05-18 | 忘记密码功能开发 | FE/BE | ✅ 完成 | 完善前后端忘记密码及邮箱验证重置密码功能 |
-| 2026-05-18 | 首次登录网址同步 | FE | ✅ 完成 | 首次登录且云端列表为空时，自动同步游客模式下的定制快捷网址 |
-| 2026-05-18 | 编辑与删除网址持久化 | FE | ✅ 完成 | 修复用户在编辑模式下的修改与删除无法同步至云端数据库的 Bug |
-| 2026-05-18 | CORS 跨域问题修复 | BE | ✅ 完成 | 删除冲突的 WebMvcConfig，SecurityConfig 放行 OPTIONS，CorsFilter 为主 |
-| 2026-05-18 | 待办事项 UI 组件开发 | FE | ✅ 完成 | TodoPanel 组件 + todoService 对接 + 云端同步 |
-| 2026-05-18 | 拖拽排序功能开发 | FE | ✅ 完成 | react-dnd 集成到编辑模式快捷方式排序 |
-| 2026-05-18 | 主题切换功能开发 | FE | ✅ 完成 | next-themes + SettingsDialog 主题选择器 |
-| 2026-05-18 | RSA 加密登录 | BE/FE | ✅ 完成 | RSA-OAEP-256 + 一次性 Nonce，保护登录/注册/改密接口 |
-| 2026-05-19 | BUG-004 修复 + Redis 版本适配 | BE | ✅ 完成 | NonceService 移除 GETDEL，兼容 Redis 3.2.100 |
-| 2026-05-19 | BUG-005 修复: RSA OAEP MGF1 参数对齐 | BE | ✅ 完成 | 显式指定 MGF1 SHA-256，对齐前端 Web Crypto API |
-| 2026-05-19 | 自动检测网站图标功能 | BE/FE | ✅ 完成 | 后端增强 fetchFavicon 爬取页面解析 <link rel="icon">；前端输入 URL 防抖自动检测并填充图标 |
-| 2026-05-19 | 图标上传功能改造 | BE/FE | ✅ 完成 | 新增 POST /nav/icon/upload；文件类型/大小/频率三关卡安全限制；前端上传流从 Base64 改为后端上传 |
-| 2026-05-20 | 编辑器与项目配置优化 | FE/BE | ✅ 完成 | 创建 .editorconfig 缩进规范；前端新增 tsconfig.json 与 TS 开发依赖包修复 IDE 别名报红问题；优化后端 application.yml 绝对上传路径为跨平台通用配置。 |
-| 2026-05-20 | AOP 链路日志追踪功能开发 | BE | ✅ 完成 | 引入 spring-boot-starter-aop，开发优先级最高的 RequestLogAspect 切面类生成 UUID MDC 追踪链路，打印精确 of IP、URL、UserID、处理时长并规整 logback 全局日志为中括号格式。 |
+| 2026-05-21 | `.claude/settings.local.json`, `CLAUDE.md`, `GEMINI.md` | - | ✅ 完成 | 精简脚本至 4 个，完全移除了所有旧 `.sh` 脚本和冗余脚本，重新对齐 hooks 及其余说明 |
+| 2026-05-21 | `EditShortcutDialog.tsx`, `App.tsx` | FE | ✅ 完成 | 重构编辑网址弹窗，对接后端上传 `uploadIcon` 与自动 Favicon 嗅探服务，并修复 `App.tsx` 保存快捷键时未解构更新图标属性的 Bug |
+| 2026-05-21 | `GEMINI.md` | PM | ✅ 完成 | 新增免去环境变量读取的 AI 启动指令及 Windows 一键启动脚本使用说明 |
+| 2026-05-18 | `base_rule.md` | PM | ✅ 完成 | 添加四角色工作流激活指令 |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 全面更新：同步 DDL/后端/前端代码进度 |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 同步 QA 测试结果、Bug 修复记录 |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 添加 /reset-password 接口与忘记密码开发记录 |
+| 2026-05-18 | `application.yml` | BE | ✅ 完成 | 修复 characterEncoding=utf8mb4 → UTF-8 |
+| 2026-05-18 | 工作流配置文件 | PM | ✅ 完成 | 细化 QA 被动触发机制，默认用户手动验证，保留 QA 角色 |
+| 2026-05-18 | 工作流配置文件 | PM | ✅ 完成 | 修改后端接口同步规范，强制所有接口 100% 实时同步至 api-specification.md |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 新增首次登录网址同步开发记录 |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 新增快捷网址编辑与删除同步持久化开发记录 |
+| 2026-05-18 | `TodoPanel.tsx` | FE | ✅ 完成 | 新创建：待办事项组件含本地存储+云端同步 |
+| 2026-05-18 | `App.tsx` | FE | ✅ 完成 | 集成 TodoPanel、react-dnd 拖拽、next-themes 主题 |
+| 2026-05-18 | `rsa-login-encryption-design.md` | PM | ✅ 完成 | 新建：RSA 加密登录设计方案 |
+| 2026-05-18 | `api-specification.md` | BE | ✅ 完成 | 新增 /auth/nonce 端点，更新登录/注册/改密为 RSA 加密传输 |
+| 2026-05-19 | `backend-architecture.md` | BE | ✅ 完成 | Redis 版本从 7.x 更新为 3.2.100 |
+| 2026-05-18 | `backend-architecture.md` | BE | ✅ 完成 | 安全设计章节引用 RSA 加密设计文档 |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 同步 RSA 加密开发记录 |
+| 2026-05-19 | `NavService.java` | BE | ✅ 完成 | 增强 fetchFavicon：实际请求页面 HTML 解析 <link rel="icon"> 标签提取真实图标，超时 5s 回退 /favicon.ico |
+| 2026-05-19 | `AddShortcutDialog.tsx` | FE | ✅ 完成 | 自定义网址输入框增加防抖自动检测网站图标，显示加载/成功/失败状态 |
+| 2026-05-19 | `ResourceConfig.java` | BE | ✅ 完成 | 新增：映射 /uploads/** 到文件系统，使上传文件可 HTTP 访问 |
+| 2026-05-19 | `NavController.java`, `NavService.java` | BE | ✅ 完成 | 新增 POST /nav/icon/upload：文件类型白名单/200KB/Redis 30次/小时频率限制 |
+| 2026-05-19 | `AddShortcutDialog.tsx` | FE | ✅ 完成 | 图标上传改为调用后端接口，替换 FileReader Base64 方案 |
+| 2026-05-19 | `api-specification.md` | BE | ✅ 完成 | 新增图标上传 API 文档 |
+| 2026-05-20 | `tsconfig.json` | FE | ✅ 完成 | 新增前端 TS 配置文件，修复 IDE 引用 `@/` 路径别名报红的异常 |
+| 2026-05-20 | `logback-spring.xml` | BE | ✅ 完成 | 重塑 CONSOLE 与 FILE 全局日志格式为 `[level] [traceId] [time] [class.method] msg` 规整中括号形式 |
+| 2026-05-20 | `RequestLogAspect.java` | BE | ✅ 完成 | 新建最高优先级切面，动态解析 token 提取用户 ID 并使用 32 位 UUID MDC 进行链路追踪 |
+| 2026-05-20 | `Maven 多模块打包构建` | BE | ✅ 完成 | 解决因子模块直接启动未包含最新 framework 切面字节码导致 AOP 未生效问题，全局 clean install 并验证通过 |
+| 2026-05-20 | `NavService.java`, `vite.config.ts`, `App.tsx`, `AddShortcutDialog.tsx` | FE/BE | ✅ 完成 | 修复上传文件 FileNotFound 异常（转绝对路径）；为 Vite 增加 `/uploads` 静态代理修复回显 404；调整图标渲染为 `60% contain` 比例并优化添加网址弹窗右侧的圆形实时预览 UI |
+| 2026-05-20 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 同步项目看板，追加编辑器配置、AOP MDC 链路追踪及图标上传相关修复记录 |
+| 2026-05-21 | `App.tsx` | FE | ✅ 完成 | 仅在编辑状态下显示添加网址按钮，并重构添加网址及保存重排的机制，保障全局保存一致性 |
+| 2026-05-21 | `App.tsx` | PM | ✅ 完成 | 修复首页编辑状态下仅更换图标（iconType/iconValue）或颜色点击保存没有调用后端接口的 Bug (BUG-009) |
+| 2026-05-21 | Windows 脚本精简及引用更新 | PM | ✅ 完成 | 删除了全部冗余及旧 `.sh` 脚本，仅保留 4 个核心 Windows `.bat` 启停脚本，并完成了所有项目及配置引用更新 |
+| 2026-05-21 | 壁纸与图标上传绝对路径及工具类重构 | PM | ✅ 完成 | 修复前端壁纸上传未对接后端接口问题；重构壁纸和图标物理存储为绝对路径，并支持配置文件动态修改；实现按 `userId` 物理隔离目录；引入 3次重试安全目录创建与 UUID 长字符串命名，避免重名覆盖 |
+| 2026-05-21 | 游客模式隐藏编辑图标按钮 | FE | ✅ 完成 | 隐藏未登录用户的快捷图标编辑按钮；同时增加登出安全副作用，在用户登出时强制清除临时修改状态并退出编辑模式 |
+| 2026-05-21 | 设置草稿化与保存按钮生效重构 | FE | ✅ 完成 | 实现所有设置（包括排版尺寸、壁纸上传、随机壁纸、主题选择）的本地草稿管理，重命名“完成”按钮为“保存”，只有点击保存才批量保存生效并网络持久化，非保存关闭安全回滚 |
 
 ---
+
+
 
 ## 文档同步记录
 
 | 日期 | 文档 | 变更摘要 |
 |------|------|----------|
+| 2026-05-21 | `WORKFLOW-STATUS.md` | 看板同步：更新仅编辑模式显示添加按钮及批量新建重排机制的开发记录 |
+| 2026-05-21 | `WORKFLOW-STATUS.md` | 修复首页编辑状态下仅更换图标/颜色点击保存没有调用后端接口的 Bug，并同步更新任务看板与 Bug 追踪表 |
+| 2026-05-21 | `WORKFLOW-STATUS.md` | 看板同步：更新壁纸与图标上传绝对路径及重试目录创建工具类重构的开发记录 |
+| 2026-05-21 | `WORKFLOW-STATUS.md` | 看板同步：未登录状态下隐藏首页图标编辑按钮及登出强制退出编辑态的优化记录 |
+| 2026-05-21 | `WORKFLOW-STATUS.md` | 看板同步：设置草稿化与保存按钮批量生效重构的开发记录 |
+| 2026-05-21 | `.claude/settings.local.json`, `CLAUDE.md`, `GEMINI.md` | 精简脚本至 4 个，完全移除了所有旧 `.sh` 脚本和冗余脚本，重新对齐 hooks 及其余说明 |
+| 2026-05-21 | `GEMINI.md` | 新增免去环境变量读取的 AI 启动指令及 Windows 一键启动脚本使用说明 |
 | 2026-05-18 | `base_rule.md` | 添加四角色工作流激活指令 |
 | 2026-05-18 | `WORKFLOW-STATUS.md` | 全面更新：同步 DDL/后端/前端代码进度 |
 | 2026-05-18 | `WORKFLOW-STATUS.md` | 同步 QA 测试结果、Bug 修复记录 |
@@ -233,7 +254,7 @@
 | 2026-05-18 | `WORKFLOW-STATUS.md` | 新增快捷网址编辑与删除同步持久化开发记录 |
 | 2026-05-18 | `WORKFLOW-STATUS.md` | 新增待办面板/拖拽排序/主题切换开发记录 |
 | 2026-05-18 | `TodoPanel.tsx` | 新创建：待办事项组件含本地存储+云端同步 |
-| 2026-05-18 | `App.tsx` | 集成 TodoPanel、react-dnd 拖拽、next-themes 主题
+| 2026-05-18 | `App.tsx` | 集成 TodoPanel、react-dnd 拖拽、next-themes 主题 |
 | 2026-05-18 | `rsa-login-encryption-design.md` | 新建：RSA 加密登录设计方案 |
 | 2026-05-18 | `api-specification.md` | 新增 /auth/nonce 端点，更新登录/注册/改密为 RSA 加密传输 |
 | 2026-05-19 | `backend-architecture.md` | Redis 版本从 7.x 更新为 3.2.100 |
@@ -242,7 +263,7 @@
 | 2026-05-19 | `NavService.java` | 增强 fetchFavicon：实际请求页面 HTML 解析 <link rel="icon"> 标签提取真实图标，超时 5s 回退 /favicon.ico |
 | 2026-05-19 | `AddShortcutDialog.tsx` | 自定义网址输入框增加防抖自动检测网站图标，显示加载/成功/失败状态 |
 | 2026-05-19 | `ResourceConfig.java` | 新增：映射 /uploads/** 到文件系统，使上传文件可 HTTP 访问 |
-| 2026-05-19 | `NavController.java`, `NavService.java` | 新增 POST /nav/icon/upload：文件类型白名单/200KB/Redis 30次/小时频率限制 |
+| 2026-05-19 | `NavController.java`, `NavService.java` | 新增 POST /nav/icon/upload：文件类型 whiteList/200KB/Redis 30次/小时频率限制 |
 | 2026-05-19 | `AddShortcutDialog.tsx` | 图标上传改为调用后端接口，替换 FileReader Base64 方案 |
 | 2026-05-19 | `api-specification.md` | 新增图标上传 API 文档 |
 | 2026-05-20 | `tsconfig.json` | 新增前端 TS 配置文件，修复 IDE 引用 `@/` 路径别名报红的异常 |
@@ -251,17 +272,3 @@
 | 2026-05-20 | `Maven 多模块打包构建` | 解决因子模块直接启动未包含最新 framework 切面字节码导致 AOP 未生效问题，全局 clean install 并验证通过 |
 | 2026-05-20 | `NavService.java`, `vite.config.ts`, `App.tsx`, `AddShortcutDialog.tsx` | 修复上传文件 FileNotFound 异常（转绝对路径）；为 Vite 增加 `/uploads` 静态代理修复回显 404；调整图标渲染为 `60% contain` 比例并优化添加网址弹窗右侧的圆形实时预览 UI |
 | 2026-05-20 | `WORKFLOW-STATUS.md` | 同步项目看板，追加编辑器配置、AOP MDC 链路追踪及图标上传相关修复记录 |
-
----
-
-## Bug 追踪
-
-| ID | 严重级别 | 描述 | 状态 | 修复日期 |
-|----|----------|------|------|----------|
-| BUG-001 | 🔴 P0 阻塞 | MySQL JDBC `characterEncoding=utf8mb4` 不被 Connector-J 识别，首次数据库操作 500 | ✅ 已修复 | 2026-05-18 |
-| BUG-002 | 🟠 P1 严重 | 前端快捷方式与设置无持久化（页面刷新即丢失） | ✅ 已修复 | 2026-05-18 |
-| BUG-003 | 🟠 P1 严重 | 登录注册入口 Profile 按钮无效 | ✅ 已修复 | 2026-05-18 |
-| BUG-004 | 🔴 P0 阻塞 | 登录接口 500：`GETDEL` 命令不兼容 Redis 3.2.100 | ✅ 已修复 | 2026-05-19 |
-| BUG-005 | 🔴 P0 阻塞 | 登录 RSA 解密失败：Java MGF1 默认 SHA-1 与前端 Web Crypto SHA-256 不匹配 | ✅ 已修复 | 2026-05-19 |
-| BUG-006 | 🟠 P1 严重 | 后端图标上传 500 (FileNotFoundException)，Tomcat 获取相对路径异常 | ✅ 已修复 | 2026-05-20 |
-| BUG-007 | 🟡 P2 中等 | 前端上传及自定义 URL 图标回显 404 (Vite 未代理 `/uploads`) 且原始比例占满容器不协调 | ✅ 已修复 | 2026-05-20 |

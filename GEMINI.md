@@ -26,6 +26,16 @@
 
 ## 🛠️ 构建与运行
 
+### 🚀 Windows 一键启动（免去环境变量探查）
+为解决 Windows 上 `JAVA_HOME` 环境变量中存在空格等路径冲突，项目已在 `scripts/` 目录下精简为 4 个写死正确 JDK 路径的批处理脚本：
+- **开启后端 (写死 JAVA_HOME)**：`scripts/start-be.bat`
+- **关闭后端**：`scripts/stop-be.bat`
+- **开启前端**：`scripts/start-fe.bat`
+- **关闭前端**：`scripts/stop-fe.bat`
+
+对于 AI 助手：当收到“启动前后端”指令时，**禁止探查环境变量**，直接在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；在 `navatation-web` 目录运行 `npm run dev`。
+
+
 ### 前端启动
 1. 进入前端目录: `cd navatation-web`
 2. 安装依赖: `npm install`

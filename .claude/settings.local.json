@@ -87,9 +87,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash scripts/start-services.sh",
+            "command": "cmd.exe /c \"start cmd.exe /c scripts\\start-be.bat & start cmd.exe /c scripts\\start-fe.bat\"",
             "timeout": 30,
-            "statusMessage": "检查 Navatation 服务状态",
+            "statusMessage": "启动 Navatation 核心服务",
             "async": true
           }
         ]
@@ -100,9 +100,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash scripts/stop-services.sh",
+            "command": "cmd.exe /c \"scripts\\stop-be.bat & scripts\\stop-fe.bat\"",
             "timeout": 15,
-            "statusMessage": "正在停止 Navatation 服务",
+            "statusMessage": "正在关闭 Navatation 核心服务",
             "async": true
           }
         ]

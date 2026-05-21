@@ -24,19 +24,17 @@
 
 ## 通用命令
 
-> 启动命令已提取到独立脚本文件，换机器只需修改对应文件即可。
-> - **Windows 用户** 直接双击 `.bat` 文件
->   - 前端: `scripts/start-fe.bat` / `scripts/stop-fe.bat`
->   - 后端: `scripts/start-be.bat` / `scripts/stop-be.bat`
-> - **Git Bash 用户**: `scripts/start-fe.sh` / `scripts/stop-fe.sh`
+> 启动命令已提取到独立脚本文件，在 Windows 环境下直接双击或运行对应的 `.bat` 文件即可：
+> - **前端控制**: `scripts/start-fe.bat` (启动) / `scripts/stop-fe.bat` (停止)
+> - **后端控制**: `scripts/start-be.bat` (启动) / `scripts/stop-be.bat` (停止)
 
 ### 前端 (navatation-web/)
 
-详见 `scripts/start-fe.sh`，包含安装依赖、启动开发服务器、构建等命令。
+详见 `scripts/start-fe.bat`，包含进入前端目录启动开发服务器的指令。
 
 ### 后端 (navatation-admin/)
 
-详见 `scripts/start-be.sh`，包含启动应用、构建模块、运行测试等命令。
+详见 `scripts/start-be.bat`，已配置固定的 `JAVA_HOME`，包含启动后端 Service 服务的指令。
 
 ### 数据库
 
