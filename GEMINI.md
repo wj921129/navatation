@@ -35,18 +35,13 @@
 
 对于 AI 助手：当收到“启动前后端”指令时，**禁止探查环境变量**，直接在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；在 `navatation-web` 目录运行 `npm run dev`。
 
+### 📦 一键推送所有仓库代码（推送 git）
+- **脚本位置**：[push-all.bat](file:///E:/workspace/navatation/scripts/push-all.bat)
+- **运行命令**：在主仓库根目录下，AI 可直接建议或执行：`scripts\push-all.bat "您的提交信息"`（不带参数则提示手动输入）
+- **触发规范**：**切勿主动执行**。只有当用户明确发出 **“推送git”** 或 **“推送代码”** 时，AI 方可执行。
 
-### 前端启动
-1. 进入前端目录: `cd navatation-web`
-2. 安装依赖: `npm install`
-3. 启动开发服务器: `npm run dev`
-4. 访问地址: `http://localhost:5173`
-
-### 后端启动
-1. 进入后端业务模块目录: `cd navatation-admin/navatation-business`
-2. 运行 Spring Boot 应用: `mvn spring-boot:run`
-3. API 访问地址: `http://localhost:8080`
-4. Swagger 文档地址: `http://localhost:8080/swagger-ui.html`
+- **前端访问地址**：`http://localhost:5173`
+- **后端访问地址**：`http://localhost:8080` | Swagger: `http://localhost:8080/swagger-ui.html`
 
 ## 📂 目录结构
 
@@ -58,32 +53,12 @@
 - `doc/`: 完整的项目文档（PRD、API 规范、架构设计等）。
 - `.gemini/`: 工作空间特定的规则和多角色工作流配置。
 
-## 🎭 自动化工作流与 Agent 协作
+## 🎭 自动化工作流
 
-本项目采用 **PM (主 Agent) 驱动 + 子 Agent 协作** 的自动化执行模式，将传统的角色切换优化为任务委派：
-
-### 核心角色与 Agent 映射
-- **项目经理 (PM)**: **由主 Agent 承担**。作为唯一入口，负责统筹全局、拆解任务、调度子 Agent，并执行最终的文档同步和质量校验。
-- **后端/前端开发 (BE/FE)**: **由 `codebase_investigator` 子 Agent 承担**。主 Agent 通过 `invoke_agent` 委派具体的代码实现任务。
-- **批处理/重构任务**: **由 `generalist` 子 Agent 承担**。用于执行跨多个文件的批量修改或耗时较长的操作。
-- **测试验证 (QA)**: **由 `browser_subagent` 承担**（用户指派时激活）。
-
-### 自动化协作流程
-1.  **需求拆解 (PM)**: 主 Agent 分析 `WORKFLOW-STATUS.md`，制定详细的执行计划。
-2.  **任务委派 (PM -> Sub-Agent)**: 
-    - 使用 `invoke_agent` 调用 `codebase_investigator`，并在提示词中明确开发环境（`navatation-admin/` 或 `navatation-web/`）及代码标准。
-    - 主 Agent 负责并发或顺序管理多个子任务，以压缩会话历史。
-3.  **结果集成 (PM)**: 主 Agent 接收子 Agent 的执行报告，确保代码变更符合“卫语句”等核心规范。
-4.  **服务启动与验证**:
-    - 主 Agent 直接执行 `run_shell_command` 启动前后端服务（BE: 8080, FE: 5173）。
-    - 验证通过后，PM 提请用户手动确认。
-5.  **收口同步 (PM)**: 更新看板、API 文档及数据库脚本。
-
-### 委派指令规范
-委派时必须包含以下上下文：
-- **目标目录**: 明确是后端还是前端。
-- **参考规范**: 引用 `GEMINI.md` 中的“通用编码准则”。
-- **预期产出**: 详细描述需要修改的文件及功能点。
+本项目采用主 Agent 驱动模式，主 Agent 作为 PM 统筹全局、拆解任务、编写代码，并执行最终的文档同步和质量校验：
+1. **需求拆解**：分析 [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md) 制定计划，并通知用户。
+2. **代码实现与服务验证**：按需启动前后端服务进行验证，并通过后提请用户手动确认。
+3. **收口同步**：在任务结束后，必须同步更新看板、API 文档以及数据库脚本。
 
 ## 📜 开发规范
 
@@ -106,7 +81,4 @@
 - **任务追踪**: PM 在每次任务结束后必须更新 `doc/WORKFLOW-STATUS.md`。
 
 ## 🎯 当前焦点
-请参考 `doc/WORKFLOW-STATUS.md` 获取最新任务看板。目前的开发重点：
-1. 待办事项 (Todo List) 模块实现。
-2. 拖拽排序功能 (react-dnd)。
-3. 主题切换功能 (浅色/深色/系统自适应)。
+请参考 [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md) 获取最新任务看板。目前的开发迭代工作已全部完成，后续修改和代码推送请遵循相关规范。

@@ -198,20 +198,6 @@
 | 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 同步 QA 测试结果、Bug 修复记录 |
 | 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 添加 /reset-password 接口与忘记密码开发记录 |
 | 2026-05-18 | `application.yml` | BE | ✅ 完成 | 修复 characterEncoding=utf8mb4 → UTF-8 |
-| 2026-05-18 | 工作流配置文件 | PM | ✅ 完成 | 细化 QA 被动触发机制，默认用户手动验证，保留 QA 角色 |
-| 2026-05-18 | 工作流配置文件 | PM | ✅ 完成 | 修改后端接口同步规范，强制所有接口 100% 实时同步至 api-specification.md |
-| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 新增首次登录网址同步开发记录 |
-| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 新增快捷网址编辑与删除同步持久化开发记录 |
-| 2026-05-18 | `TodoPanel.tsx` | FE | ✅ 完成 | 新创建：待办事项组件含本地存储+云端同步 |
-| 2026-05-18 | `App.tsx` | FE | ✅ 完成 | 集成 TodoPanel、react-dnd 拖拽、next-themes 主题 |
-| 2026-05-18 | `rsa-login-encryption-design.md` | PM | ✅ 完成 | 新建：RSA 加密登录设计方案 |
-| 2026-05-18 | `api-specification.md` | BE | ✅ 完成 | 新增 /auth/nonce 端点，更新登录/注册/改密为 RSA 加密传输 |
-| 2026-05-19 | `backend-architecture.md` | BE | ✅ 完成 | Redis 版本从 7.x 更新为 3.2.100 |
-| 2026-05-18 | `backend-architecture.md` | BE | ✅ 完成 | 安全设计章节引用 RSA 加密设计文档 |
-| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 同步 RSA 加密开发记录 |
-| 2026-05-19 | `NavService.java` | BE | ✅ 完成 | 增强 fetchFavicon：实际请求页面 HTML 解析 <link rel="icon"> 标签提取真实图标，超时 5s 回退 /favicon.ico |
-| 2026-05-19 | `AddShortcutDialog.tsx` | FE | ✅ 完成 | 自定义网址输入框增加防抖自动检测网站图标，显示加载/成功/失败状态 |
-| 2026-05-19 | `ResourceConfig.java` | BE | ✅ 完成 | 新增：映射 /uploads/** 到文件系统，使上传文件可 HTTP 访问 |
 | 2026-05-19 | `NavController.java`, `NavService.java` | BE | ✅ 完成 | 新增 POST /nav/icon/upload：文件类型白名单/200KB/Redis 30次/小时频率限制 |
 | 2026-05-19 | `AddShortcutDialog.tsx` | FE | ✅ 完成 | 图标上传改为调用后端接口，替换 FileReader Base64 方案 |
 | 2026-05-19 | `api-specification.md` | BE | ✅ 完成 | 新增图标上传 API 文档 |
@@ -227,6 +213,7 @@
 | 2026-05-21 | 壁纸与图标上传绝对路径及工具类重构 | PM | ✅ 完成 | 修复前端壁纸上传未对接后端接口问题；重构壁纸和图标物理存储为绝对路径，并支持配置文件动态修改；实现按 `userId` 物理隔离目录；引入 3次重试安全目录创建与 UUID 长字符串命名，避免重名覆盖 |
 | 2026-05-21 | 游客模式隐藏编辑图标按钮 | FE | ✅ 完成 | 隐藏未登录用户的快捷图标编辑按钮；同时增加登出安全副作用，在用户登出时强制清除临时修改状态并退出编辑模式 |
 | 2026-05-21 | 设置草稿化与保存按钮生效重构 | FE | ✅ 完成 | 实现所有设置（包括排版尺寸、壁纸上传、随机壁纸、主题选择）的本地草稿管理，重命名“完成”按钮为“保存”，只有点击保存才批量保存生效并网络持久化，非保存关闭安全回滚 |
+| 2026-05-21 | 三仓一键推送脚本开发与工作流整合 | PM | ✅ 完成 | 编写 scripts/push-all.bat 实现主仓、前端仓、后端仓一键提交推送，并将该命令及规范写入 GEMINI.md/CLAUDE.md 的 AI 引导工作流中 |
 
 ---
 
@@ -241,6 +228,7 @@
 | 2026-05-21 | `WORKFLOW-STATUS.md` | 看板同步：更新壁纸与图标上传绝对路径及重试目录创建工具类重构的开发记录 |
 | 2026-05-21 | `WORKFLOW-STATUS.md` | 看板同步：未登录状态下隐藏首页图标编辑按钮及登出强制退出编辑态的优化记录 |
 | 2026-05-21 | `WORKFLOW-STATUS.md` | 看板同步：设置草稿化与保存按钮批量生效重构的开发记录 |
+| 2026-05-21 | `GEMINI.md`, `CLAUDE.md`, `WORKFLOW-STATUS.md` | 同步一键推送脚本到 AI 引导文档与工作流中，确保未来 Agent 能快速定位并按需执行 |
 | 2026-05-21 | `.claude/settings.local.json`, `CLAUDE.md`, `GEMINI.md` | 精简脚本至 4 个，完全移除了所有旧 `.sh` 脚本和冗余脚本，重新对齐 hooks 及其余说明 |
 | 2026-05-21 | `GEMINI.md` | 新增免去环境变量读取的 AI 启动指令及 Windows 一键启动脚本使用说明 |
 | 2026-05-18 | `base_rule.md` | 添加四角色工作流激活指令 |

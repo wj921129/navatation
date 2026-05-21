@@ -28,13 +28,11 @@
 > - **前端控制**: `scripts/start-fe.bat` (启动) / `scripts/stop-fe.bat` (停止)
 > - **后端控制**: `scripts/start-be.bat` (启动) / `scripts/stop-be.bat` (停止)
 
-### 前端 (navatation-web/)
 
-详见 `scripts/start-fe.bat`，包含进入前端目录启动开发服务器的指令。
+### 📦 代码推送与一键同步
 
-### 后端 (navatation-admin/)
-
-详见 `scripts/start-be.bat`，已配置固定的 `JAVA_HOME`，包含启动后端 Service 服务的指令。
+- **推送脚本**: `scripts\push-all.bat "提交信息"`（不带参数则进入交互输入模式）
+- **触发规范**: 仅当用户发出“推送git”或“推送代码”等关键词时，AI 方可调用该脚本。
 
 ### 数据库
 
