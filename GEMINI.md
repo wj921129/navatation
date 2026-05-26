@@ -40,6 +40,16 @@
 - **运行命令**：在主仓库根目录下，AI 可直接建议或执行：`scripts\push-all.bat "您的提交信息"`（不带参数则提示手动输入）
 - **触发规范**：**切勿主动执行**。只有当用户明确发出 **“推送git”** 或 **“推送代码”** 时，AI 方可执行。
 
+### 🌿 开发分支与提交规范（Git dev/main 双分支工作流）
+- **dev 开发分支规范**：
+  - 项目所有子仓库均基于 `dev` 分支进行日常开发与增量提交。
+  - 以后每次对话修改完代码，AI 均必须**自动执行** `scripts\push-dev.bat "本次修改的注释"` 将前端、后端、主仓的所有更改一键提交并推送至各自远端的 `dev` 分支，以维持开发状态同步。
+  - 自动开发提交脚本：[push-dev.bat](file:///E:/workspace/navatation/scripts/push-dev.bat)。
+- **合并至 main 分支规范**：
+  - **合并脚本位置**：[merge-to-main.bat](file:///E:/workspace/navatation/scripts/main/merge-to-main.bat)。
+  - **触发条件**：日常小修改直接推送到 `dev` 分支。**当对一个功能有大规模改动或者新增了新功能时**，AI 必须在对话最后**主动提示用户**本次改动范围较大，询问是否合并到 `main` 分支。
+  - **执行流**：在获得用户**明确同意/确认**之后，AI 方可执行 `scripts\main\merge-to-main.bat` 脚本将三仓 `dev` 代码合并至 `main` 分支并完成远端推送。
+
 - **前端访问地址**：`http://localhost:5173`
 - **后端访问地址**：`http://localhost:8080` | Swagger: `http://localhost:8080/swagger-ui.html`
 
