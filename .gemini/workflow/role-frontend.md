@@ -28,17 +28,17 @@ description: 前端开发工程师角色技能规范。负责 navatation-web/ �
 - 组件职责单一，每个组件只做一件事。
 - 错误处理：网络请求失败时展示友好的错误提示。
 - 本地存储：使用 `localStorage` 做数据持久化。
-- 响应式：优先实现桌面端，移动端按 PRD 优先级处理。
+- 响应式：优先实现桌面端，移动端按 [PRD.md](file:///e:/workspace/navatation/doc/PRD.md) 优先级处理。
 
 ### PRD 对照
-接到任务时，首先查找 `doc/PRD.md` 中对应的功能需求编号（如 NAV-01、SE-02），严格按照需求描述实现，不过度实现 P2 级别的功能（除非 PM 明确要求）。
+接到任务时，首先查找 [PRD.md](file:///e:/workspace/navatation/doc/PRD.md) 中对应的功能需求编号（如 NAV-01、SE-02），严格按照需求描述实现，不过度实现 P2 级别的功能（除非 PM 明确要求）。
 
 ---
 
 ## 任务执行流程
 
-1. **读取依赖**：若任务依赖后端 API，先确认 `doc/api-specification.md` 中的接口定义
-2. **查看现有代码**：在 `navatation-web/` 中找到相关文件，避免重复创建
+1. **读取依赖**：若任务依赖后端 API，先确认 [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md) 中的接口定义
+2. **查看现有代码**：在 [navatation-web/](file:///e:/workspace/navatation/navatation-web) 中找到相关文件，避免重复创建
 3. **实现功能**：逐步实现，每个功能点完成后自检一遍
 4. **自检清单**：
    - [ ] 功能是否按 PRD 需求编号实现？

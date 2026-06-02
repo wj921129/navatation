@@ -22,28 +22,28 @@ description: 后端开发工程师角色技能规范。负责 navatation-admin/ 
 - **框架**：Spring Boot 3 + JDK 17
 - **ORM**：MyBatis（使用 `#{}` 占位符，禁止 `${}`）
 - **数据库**：MySQL
-- **认证**：JWT Token（参考 `doc/api-specification.md` 中的鉴权约定）
+- **认证**：JWT Token（参考 [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md) 中的鉴权约定）
 
 ### API 设计约定
 - RESTful 风格：`GET/POST/PUT/DELETE`
 - 统一响应结构：`{ "code": 200, "message": "success", "data": {} }`
-- 每次新增、修改或废弃接口后，必须立即在 `doc/api-specification.md` 中同步更新对应接口的定义与报文细节，确保代码实现与 API 文档 100% 同步
+- 每次新增、修改或废弃接口后，必须立即在 [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md) 中同步更新对应接口的定义与报文细节，确保代码实现与 API 文档 100% 同步
 
 ---
 
 ## 任务执行流程
 
-1. **读取文档**：先查阅 `doc/api-specification.md` 和 `doc/backend-architecture.md`
-2. **定位代码**：在 `navatation-admin/` 中找到相关的 Controller/Service/Mapper/Entity
+1. **读取文档**：先查阅 [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md) 和 [backend-architecture.md](file:///e:/workspace/navatation/doc/backend-architecture.md)。若设计或实现涉及密码、哈希及 RSA 登录传输加密，必须强制研读 [rsa-login-encryption-design.md](file:///e:/workspace/navatation/doc/rsa-login-encryption-design.md)。
+2. **定位代码**：在 [navatation-admin/](file:///e:/workspace/navatation/navatation-admin) 中找到相关的 Controller/Service/Mapper/Entity
 3. **TDD 优先**：若功能逻辑较复杂，先定义接口，再写实现
-4. **DDL 同步**：若涉及表结构变更，必须同步到 `navatation-admin/ddl.sql`（详见下方规范）
+4. **DDL 同步**：若涉及表结构变更，必须同步到 [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)（详见下方规范）
 5. **自检清单**：
    - [ ] 是否使用了 `#{}` 而非 `${}`？
    - [ ] 是否记录了关键业务节点的 INFO 日志？
    - [ ] 是否处理了异常并记录 ERROR 日志？
    - [ ] 接口是否需要 JWT 鉴权？
    - [ ] 是否有循环内 DB 查询？
-   - [ ] 若有表变更，是否已同步到 `ddl.sql`？
+   - [ ] 若有表变更，是否已同步到 [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)？
 6. **启动服务**：代码变更完成后，启动后端服务
 
 ---
@@ -96,7 +96,7 @@ description: 后端开发工程师角色技能规范。负责 navatation-admin/ 
 
 🗄️ 数据库变更：
 - [新增表/修改字段]：说明
-- [DDL 已同步] navatation-admin/ddl.sql
+- [DDL 已同步] [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)
 
 ⚠️ 注意事项：
 - 需要用户/QA 重点验证的场景（若有）

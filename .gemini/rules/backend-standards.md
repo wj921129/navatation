@@ -34,16 +34,17 @@
 - **防止 SQL 注入**：MyBatis XML/Annotation 中必须使用 `#{}` 进行占位绑定，**严禁使用 `${}` 拼接**用户输入。
 - **数据库查询**：**禁止在循环（for/while）内执行 DB 查询或远程 HTTP 接口调用**。必须提前将所需数据批量查出并缓存在内存（Map）中进行组装。
 - **安全检查**：对外部传入的敏感参数（如用户 ID、组织 ID 等）进行权限校验，防止越权。
+- **用户登录安全**：若涉及用户注册、登录密码传输、RSA 密钥对生成或传输数据加密解密逻辑，必须无条件参考并严格遵循专项安全设计规范 [rsa-login-encryption-design.md](file:///e:/workspace/navatation/doc/rsa-login-encryption-design.md)。
 
 ## 6. 数据库 (DDL) 变更规范
-- **任何数据库表结构变更，必须同步更新 `navatation-admin/ddl.sql`。**
+- **任何数据库表结构变更，必须同步更新 [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)。**
 - **同步场景**：新建表、新增/修改/删除字段、新增/修改索引、修改字段约束等。
 - **更新规则**：
-  - 在 `ddl.sql` 文件末尾追加变更 SQL，用注释标注变更日期和功能用途。
+  - 在 [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) 文件末尾追加变更 SQL，用注释标注变更日期和功能用途。
   - 若修改已有表，追加 `ALTER TABLE` 语句，不要直接修改已有的 `CREATE TABLE`。
   - 确保 SQL 可重复执行（使用 `IF NOT EXISTS` / `IF EXISTS` 等逻辑）。
 
 ## 7. API 接口设计与文档同步
 - **RESTful 设计**：严格遵循 RESTful 风格使用 `GET/POST/PUT/DELETE`。
 - **响应体格式**：采用统一的响应包装器 `Result`，格式必须为：`{ "code": 200, "message": "success", "data": {} }`
-- **文档同步**：任何 API 的新增、修改或废弃，必须 **100% 同步更新至 `doc/api-specification.md`**，确保接口定义与实现完全一致。
+- **文档同步**：任何 API 的新增、修改或废弃，必须 **100% 同步更新至 [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md)**，确保接口定义与实现完全一致。

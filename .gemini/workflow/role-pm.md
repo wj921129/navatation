@@ -19,7 +19,7 @@ description: 项目经理（PM）角色技能规范。PM 是用户在 navatation
 ### 1. 需求接收与澄清
 
 收到用户需求后：
-- 将需求对应到 `doc/PRD.md` 中的功能模块（搜索引擎、快捷导航、个性化设置、用户系统、待办事项）
+- 将需求对应到 [PRD.md](file:///e:/workspace/navatation/doc/PRD.md) 中的功能模块（搜索引擎、快捷导航、个性化设置、用户系统、待办事项）
 - 若需求有歧义，最多提 **2 个关键问题**，不过度澄清
 - 确认后立即开始拆解，无需用户再次确认
 
@@ -35,7 +35,7 @@ description: 项目经理（PM）角色技能规范。PM 是用户在 navatation
 
 ### 3. 角色调度
 
-遵循 `.gemini/workflow/team-workflow.md` 工作流总纲的调度规则：
+遵循 [team-workflow.md](file:///e:/workspace/navatation/.gemini/workflow/team-workflow.md) 工作流总纲的调度规则：
 - **直接推进**，不等待用户确认
 - 使用标准角色切换声明格式
 - **角色切换规则**：
@@ -45,16 +45,16 @@ description: 项目经理（PM）角色技能规范。PM 是用户在 navatation
 
 ### 4. 文档同步（任务结束必做）
 
-每次任务结束，根据工作流总纲的检查清单更新 `doc/` 下的文档：
+每次任务结束，根据工作流总纲的检查清单更新 [doc/](file:///e:/workspace/navatation/doc) 下的文档：
 
-**更新 `doc/WORKFLOW-STATUS.md`**（每次必做）：
+**更新 [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md)**（每次必做）：
 - 记录本次任务内容、完成状态、完成时间
 - 更新"当前进度"区块
 
 **按需更新其他文档**：
-- `doc/api-specification.md`：任何后端接口新增、修改或废弃时，必须 100% 实时同步更新，保障接口设计与实现完全一致
-- `doc/backend-architecture.md`：有架构变更时
-- `doc/PRD.md`：有需求变更或澄清时
+- [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md)：任何后端接口新增、修改或废弃时，必须 100% 实时同步更新，保障接口设计与实现完全一致
+- [backend-architecture.md](file:///e:/workspace/navatation/doc/backend-architecture.md)：有架构变更时
+- [PRD.md](file:///e:/workspace/navatation/doc/PRD.md)：有需求变更或澄清时
 
 ### 5. 用户汇报
 

@@ -24,7 +24,10 @@
 
 ## 通用命令
 
-> 启动命令已提取到独立脚本文件，在 Windows 环境下直接运行对应的 `.bat` 文件即可：
+> 启动和控制命令已整合到独立的可视化控制台菜单脚本中，在 Windows 环境下极力推荐直接运行：
+> - **一键可视化控制台仪表盘**: `scripts/dashboard.bat` (支持以前端、后端、Redis 启动停止、以及代码一键推送的一体化数字交互菜单)
+> 
+> 同时也保留了底层的分类控制脚本：
 > - **服务控制 (`scripts/service/`)**:
 >   - **前端控制**: `scripts/service/start-fe.bat` (启动) / `scripts/service/stop-fe.bat` (停止)
 >   - **后端控制**: `scripts/service/start-be.bat` (启动) / `scripts/service/stop-be.bat` (停止)
@@ -40,7 +43,7 @@
 
 - MySQL: `jdbc:mysql://localhost:3306/navatation`
 - Redis: `localhost:6379`
-- DDL 脚本: `navatation-admin/ddl.sql`
+- DDL 脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)
 
 ## 代码架构
 
@@ -103,7 +106,7 @@ navatation-web/src/
 
 ## 文档资料
 
-- API 规范: `doc/api-specification.md`
-- 后端架构: `doc/backend-architecture.md`
-- 任务追踪: `doc/WORKFLOW-STATUS.md`
-- 数据库脚本: `navatation-admin/ddl.sql`
+- API 规范: [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md)
+- 后端架构: [backend-architecture.md](file:///e:/workspace/navatation/doc/backend-architecture.md)
+- 任务追踪: [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md)
+- 数据库脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)

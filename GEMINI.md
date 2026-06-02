@@ -26,8 +26,12 @@
 
 ## 🛠️ 构建与运行
 
-### 🚀 Windows 一键启动与停止（免去环境变量探查，分类存放）
-项目脚本已在 `scripts/` 目录下按功能分类整理为 **启动服务相关 (`scripts/service/`)** 与 **Git 版本管理相关 (`scripts/git/`)**：
+### 🚀 Windows 一键控制仪表盘与分类脚本（免去路径记忆）
+项目脚本已在 `scripts/` 目录下提供了一键可视化仪表盘，并按功能分类整理为 **启动服务相关 (`scripts/service/`)** 与 **Git 版本管理相关 (`scripts/git/`)**：
+
+#### 0. 🛠️ 统一可视化控制台仪表盘 (极力推荐)
+- **仪表盘入口**：[dashboard.bat](file:///e:/workspace/navatation/scripts/dashboard.bat)
+- **使用说明**：直接双击或运行该脚本，即可在命令行图形化交互菜单中，一键选择启动/重启/停止前端、后端、Redis 缓存服务，或者进行所有子仓库代码的一键 Git 提交与推送。
 
 #### 1. 启动与停止服务相关 (`scripts/service/`)
 为解决 Windows 环境兼容性，已提供写死 JDK 路径的批处理脚本：
@@ -50,12 +54,12 @@
 ### 🌿 开发分支与提交规范（Git dev/main 双分支工作流）
 - **dev 开发分支规范**：
   - 项目所有子仓库均基于 `dev` 分支进行日常开发与增量提交。
-  - 以后每次对话修改完代码，AI 均必须**自动执行** `scripts\git\push-dev.bat "本次修改的注释"` 将前端、后端、主仓的所有更改一键提交并推送至各自远端的 `dev` 分支，以维持开发状态同步。
-  - 自动开发提交脚本：[push-dev.bat](file:///E:/workspace/navatation/scripts/git/push-dev.bat)。
+  - 以后每次对话修改完代码，AI 均必须**自动执行** [push-dev.bat](file:///e:/workspace/navatation/scripts/git/push-dev.bat) 将前端、后端、主仓的所有更改一键提交并推送至各自远端的 `dev` 分支，以维持开发状态同步。
+  - 自动开发提交脚本：[push-dev.bat](file:///e:/workspace/navatation/scripts/git/push-dev.bat)。
 - **合并至 main 分支规范**：
   - **合并脚本位置**：[merge-to-main.bat](file:///E:/workspace/navatation/scripts/git/merge-to-main.bat)。
   - **触发条件**：日常小修改直接推送到 `dev` 分支。**当对一个功能有大规模改动或者新增了新功能时**，AI 必须在对话最后**主动提示用户**本次改动范围较大，询问是否合并到 `main` 分支。
-  - **执行流**：在获得用户**明确同意/确认**之后，AI 方可执行 `scripts\git\merge-to-main.bat` 脚本将三仓 `dev` 代码合并至 `main` 分支并完成远端推送。
+  - **执行流**：在获得用户**明确同意/确认**之后，AI 方可执行 [merge-to-main.bat](file:///e:/workspace/navatation/scripts/git/merge-to-main.bat) 脚本将三仓 `dev` 代码合并至 `main` 分支并完成远端推送。
 
 
 - **前端访问地址**：`http://localhost:5173`
@@ -63,13 +67,13 @@
 
 ## 📂 目录结构
 
-- `navatation-web/`: React 前端应用程序。
-- `navatation-admin/`: Maven 多模块后端。
-  - `navatation-common/`: 公共工具类和常量模块。
-  - `navatation-framework/`: 核心配置模块（Security, JWT, Redis）。
-  - `navatation-business/`: 业务逻辑模块，包含 Controller、Service 和 Mapper。
-- `doc/`: 完整的项目文档（PRD、API 规范、架构设计等）。
-- `.gemini/`: 工作空间特定的规则和多角色工作流配置。
+- [navatation-web/](file:///e:/workspace/navatation/navatation-web): React 前端应用程序。
+- [navatation-admin/](file:///e:/workspace/navatation/navatation-admin): Maven 多模块后端。
+  - [navatation-common/](file:///e:/workspace/navatation/navatation-admin/navatation-common): 公共工具类和常量模块。
+  - [navatation-framework/](file:///e:/workspace/navatation/navatation-admin/navatation-framework): 核心配置模块（Security, JWT, Redis）。
+  - [navatation-business/](file:///e:/workspace/navatation/navatation-admin/navatation-business): 业务逻辑模块，包含 Controller、Service 和 Mapper。
+- [doc/](file:///e:/workspace/navatation/doc): 完整的项目文档（PRD、API 规范、架构设计等）。
+- [.gemini/](file:///e:/workspace/navatation/.gemini): 工作空间特定的规则 and 多角色工作流配置。
 
 ## 🎭 自动化工作流
 
@@ -86,9 +90,9 @@
 - **前端开发规范 (FE)**：[frontend-standards.md](file:///e:/workspace/navatation/.gemini/rules/frontend-standards.md)（涵盖 React 18、Vite、Tailwind CSS 4、嵌套层级限制、卫语句、可选链 `?.` 与空值合并 `??`、JSDoc 注释规范等）
 
 ### 文档与数据同步
-- **API 变更**: 必须 100% 同步更新至 `doc/api-specification.md`，保持接口设计与代码实现完全一致。
-- **数据库变更**: 任何表结构变更必须 100% 同步追加更新至 `navatation-admin/ddl.sql`。
-- **任务追踪**: PM 角色在每次开发任务结束后，必须立即更新工作流看板 `doc/WORKFLOW-STATUS.md`。
+- **API 变更**: 必须 100% 同步更新至 [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md)，保持接口设计与代码实现完全一致。
+- **数据库变更**: 任何表结构变更必须 100% 同步追加更新至 [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)。
+- **任务追踪**: PM 角色在每次开发任务结束后，必须立即更新工作流看板 [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md)。
 
 ## 🎯 当前焦点
 请参考 [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md) 获取最新任务看板。目前的开发迭代工作已全部完成，后续修改和代码推送请遵循相关规范。
