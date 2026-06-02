@@ -24,14 +24,16 @@
 
 ## 通用命令
 
-> 启动命令已提取到独立脚本文件，在 Windows 环境下直接双击或运行对应的 `.bat` 文件即可：
-> - **前端控制**: `scripts/start-fe.bat` (启动) / `scripts/stop-fe.bat` (停止)
-> - **后端控制**: `scripts/start-be.bat` (启动) / `scripts/stop-be.bat` (停止)
+> 启动命令已提取到独立脚本文件，在 Windows 环境下直接运行对应的 `.bat` 文件即可：
+> - **服务控制 (`scripts/service/`)**:
+>   - **前端控制**: `scripts/service/start-fe.bat` (启动) / `scripts/service/stop-fe.bat` (停止)
+>   - **后端控制**: `scripts/service/start-be.bat` (启动) / `scripts/service/stop-be.bat` (停止)
+>   - **Redis控制**: `scripts/service/start-redis.bat` (启动) / `scripts/service/stop-redis.bat` (停止)
 
 
 ### 📦 代码推送与一键同步
 
-- **推送脚本**: `scripts\push-all.bat "提交信息"`（不带参数则进入交互输入模式）
+- **推送脚本**: `scripts\git\push-all.bat "提交信息"`（不带参数则进入交互输入模式）
 - **触发规范**: 仅当用户发出“推送git”或“推送代码”等关键词时，AI 方可调用该脚本。
 
 ### 数据库

@@ -26,29 +26,37 @@
 
 ## 🛠️ 构建与运行
 
-### 🚀 Windows 一键启动（免去环境变量探查）
-为解决 Windows 上 `JAVA_HOME` 环境变量中存在空格等路径冲突，项目已在 `scripts/` 目录下精简为 4 个写死正确 JDK 路径的批处理脚本：
-- **开启后端 (写死 JAVA_HOME)**：`scripts/start-be.bat`
-- **关闭后端**：`scripts/stop-be.bat`
-- **开启前端**：`scripts/start-fe.bat`
-- **关闭前端**：`scripts/stop-fe.bat`
+### 🚀 Windows 一键启动与停止（免去环境变量探查，分类存放）
+项目脚本已在 `scripts/` 目录下按功能分类整理为 **启动服务相关 (`scripts/service/`)** 与 **Git 版本管理相关 (`scripts/git/`)**：
+
+#### 1. 启动与停止服务相关 (`scripts/service/`)
+为解决 Windows 环境兼容性，已提供写死 JDK 路径的批处理脚本：
+- **开启后端服务 (写死 JAVA_HOME)**：`scripts/service/start-be.bat`
+- **关闭后端服务**：`scripts/service/stop-be.bat`
+- **开启前端服务**：`scripts/service/start-fe.bat`
+- **关闭前端服务**：`scripts/service/stop-fe.bat`
+- **开启 Redis 缓存 (启动目录 D:\javaSoftware\Redis)**：`scripts/service/start-redis.bat`
+- **关闭 Redis 缓存**：`scripts/service/stop-redis.bat`
 
 对于 AI 助手：当收到“启动前后端”指令时，**禁止探查环境变量**，直接在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；在 `navatation-web` 目录运行 `npm run dev`。
 
+#### 2. Git 版本管理相关 (`scripts/git/`)
+
 ### 📦 一键推送所有仓库代码（推送 git）
-- **脚本位置**：[push-all.bat](file:///E:/workspace/navatation/scripts/push-all.bat)
-- **运行命令**：在主仓库根目录下，AI 可直接建议或执行：`scripts\push-all.bat "您的提交信息"`（不带参数则提示手动输入）
+- **脚本位置**：[push-all.bat](file:///E:/workspace/navatation/scripts/git/push-all.bat)
+- **运行命令**：在主仓库根目录下，AI 可直接建议或执行：`scripts\git\push-all.bat "您的提交信息"`（不带参数则提示手动输入）
 - **触发规范**：**切勿主动执行**。只有当用户明确发出 **“推送git”** 或 **“推送代码”** 时，AI 方可执行。
 
 ### 🌿 开发分支与提交规范（Git dev/main 双分支工作流）
 - **dev 开发分支规范**：
   - 项目所有子仓库均基于 `dev` 分支进行日常开发与增量提交。
-  - 以后每次对话修改完代码，AI 均必须**自动执行** `scripts\push-dev.bat "本次修改的注释"` 将前端、后端、主仓的所有更改一键提交并推送至各自远端的 `dev` 分支，以维持开发状态同步。
-  - 自动开发提交脚本：[push-dev.bat](file:///E:/workspace/navatation/scripts/push-dev.bat)。
+  - 以后每次对话修改完代码，AI 均必须**自动执行** `scripts\git\push-dev.bat "本次修改的注释"` 将前端、后端、主仓的所有更改一键提交并推送至各自远端的 `dev` 分支，以维持开发状态同步。
+  - 自动开发提交脚本：[push-dev.bat](file:///E:/workspace/navatation/scripts/git/push-dev.bat)。
 - **合并至 main 分支规范**：
-  - **合并脚本位置**：[merge-to-main.bat](file:///E:/workspace/navatation/scripts/main/merge-to-main.bat)。
+  - **合并脚本位置**：[merge-to-main.bat](file:///E:/workspace/navatation/scripts/git/merge-to-main.bat)。
   - **触发条件**：日常小修改直接推送到 `dev` 分支。**当对一个功能有大规模改动或者新增了新功能时**，AI 必须在对话最后**主动提示用户**本次改动范围较大，询问是否合并到 `main` 分支。
-  - **执行流**：在获得用户**明确同意/确认**之后，AI 方可执行 `scripts\main\merge-to-main.bat` 脚本将三仓 `dev` 代码合并至 `main` 分支并完成远端推送。
+  - **执行流**：在获得用户**明确同意/确认**之后，AI 方可执行 `scripts\git\merge-to-main.bat` 脚本将三仓 `dev` 代码合并至 `main` 分支并完成远端推送。
+
 
 - **前端访问地址**：`http://localhost:5173`
 - **后端访问地址**：`http://localhost:8080` | Swagger: `http://localhost:8080/swagger-ui.html`
