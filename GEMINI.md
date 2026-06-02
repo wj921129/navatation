@@ -80,23 +80,15 @@
 
 ## 📜 开发规范
 
-### 通用编码准则
-- **语言**: 所有沟通、计划和注释**必须使用中文**。
-- **逻辑控制**: 强制使用 **卫语句 (Guard Clauses)** 提前返回，以减少嵌套深度。
-- **Java 规范**: 
-  - 使用 JDK 17, UTF-8 编码。
-  - 禁止通配符导入。
-  - 嵌套层级最大为 3 层。
-  - 使用 `StringUtils`/`CollectionUtils` 进行非空判断。
-- **前端规范**:
-  - 嵌套层级最大为 3 层（超出须拆分为子组件）。
-  - 推荐使用可选链 (`?.`) 和空值合并运算符 (`??`)。
-  - 异步操作使用 `async/await` 配合 `try-catch`。
+本项目的开发规范已独立化、细粒度化拆分，以实现高内聚和开发角色的极致自律。在开始任何代码编写或修改前，前端与后端开发角色必须自觉查阅并遵守对应的独立规范：
 
-### 文档同步
-- **API 变更**: 必须 100% 同步更新至 `doc/api-specification.md`。
-- **数据库变更**: 必须同步更新至 `navatation-admin/ddl.sql`。
-- **任务追踪**: PM 在每次任务结束后必须更新 `doc/WORKFLOW-STATUS.md`。
+- **后端开发规范 (BE)**：[backend-standards.md](file:///e:/workspace/navatation/.gemini/rules/backend-standards.md)（涵盖 Java 17、Guard Clauses 卫语句、禁止通配符导入、MyBatis `#{}` 占位符、异常捕获、日志规范、DDL 变更同步等）
+- **前端开发规范 (FE)**：[frontend-standards.md](file:///e:/workspace/navatation/.gemini/rules/frontend-standards.md)（涵盖 React 18、Vite、Tailwind CSS 4、嵌套层级限制、卫语句、可选链 `?.` 与空值合并 `??`、JSDoc 注释规范等）
+
+### 文档与数据同步
+- **API 变更**: 必须 100% 同步更新至 `doc/api-specification.md`，保持接口设计与代码实现完全一致。
+- **数据库变更**: 任何表结构变更必须 100% 同步追加更新至 `navatation-admin/ddl.sql`。
+- **任务追踪**: PM 角色在每次开发任务结束后，必须立即更新工作流看板 `doc/WORKFLOW-STATUS.md`。
 
 ## 🎯 当前焦点
 请参考 [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md) 获取最新任务看板。目前的开发迭代工作已全部完成，后续修改和代码推送请遵循相关规范。

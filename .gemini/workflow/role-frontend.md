@@ -14,18 +14,21 @@ description: 前端开发工程师角色技能规范。负责 navatation-web/ �
 
 ## 技术规范
 
+### 强制引用的规范
+- **前端独立开发规范**：[frontend-standards.md](file:///e:/workspace/navatation/.gemini/rules/frontend-standards.md) (修改代码前，必须自觉完全遵守该文件中的组件规范、代码风格、注释规范与错误处理)
+- **项目级基础规范**：[base_rule.md](file:///e:/workspace/navatation/.gemini/base_rule.md) (团队工作流与协作准则)
+
 ### 技术栈
 - **框架**：项目现有技术栈为准（查看 `navatation-web/package.json`）
-- **API 调用**：使用 `fetch` 或 `axios`，接口地址参考 `doc/api-specification.md`
+- **API 调用**：使用 `fetch` 或 `api-client`，接口地址参考 `doc/api-specification.md`
 - **样式**：Vanilla CSS 优先
 
 ### 代码规范
-- 组件职责单一，每个组件只做一件事
-- 错误处理：网络请求失败时展示友好的错误提示
-- 本地存储：使用 `localStorage` 做数据持久化
-- 响应式：优先实现桌面端，移动端按 PRD 优先级处理
-- **代码风格**：严格遵循 `base_rule.md` 中的“前端代码风格”（如：换行控制、删除未使用 imports、嵌套 ≤3 层、单条语句必加 `{}`、强制卫语句提前返回、优先可选链 `?.` 与空值合并 `??`、以及异步错误 try-catch 捕获）。
-- **注释规范**：严格遵循 `base_rule.md` 中的“前端注释风格”，在每个方法/函数上方加上精准、简洁的功能描述，在内部关键操作处也加上精准、简洁的行内注释。
+- 严格遵循 [frontend-standards.md](file:///e:/workspace/navatation/.gemini/rules/frontend-standards.md) 的各项规定。
+- 组件职责单一，每个组件只做一件事。
+- 错误处理：网络请求失败时展示友好的错误提示。
+- 本地存储：使用 `localStorage` 做数据持久化。
+- 响应式：优先实现桌面端，移动端按 PRD 优先级处理。
 
 ### PRD 对照
 接到任务时，首先查找 `doc/PRD.md` 中对应的功能需求编号（如 NAV-01、SE-02），严格按照需求描述实现，不过度实现 P2 级别的功能（除非 PM 明确要求）。

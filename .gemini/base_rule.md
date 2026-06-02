@@ -24,54 +24,11 @@ trigger: always_on
 
 ---
 
-## Java 代码生成规范
+## 📜 代码编写与生成规范
 
-## 基础约束
-**JDK 版本**：JDK 17
-**字符编码**：UTF-8 无 BOM
-**语言**：对话、计划、思路强制使用中文
+为了实现极致的高内聚和职责隔离，本项目的开发代码规范已被完全拆分为独立文件。在修改任何代码前，AI 助手对应的角色必须自觉查看并无条件遵守以下独立文件中的所有规范细节：
 
-## 代码风格
-**换行控制**：单行 ≤180 字符；左大括号不换行；连续空行 ≤1 行
-**类依赖**：禁用通配符导入，删除未使用的 `import`
-**嵌套层级**：`if`/`for`/`while` 不超过 3 层，超出须拆分方法
-**非空判断**：用 `StringUtils`/`CollectionUtils` 判空
-**条件语句**：单条语句也用 `{}` 括起
-**资源关闭**：流、连接须用 `try-with-resources` 自动关闭
-**逻辑控制**：强制使用 **卫语句**（Guard Clauses）提前返回，消除嵌套的 `if-else`。
-
-## 注释风格
-- 类头加上功能注释。
-- 静态方法和接口方法必加 Javadoc，关键业务处用行内注释。
-- 非 Controller 的 `public` 方法和静态方法：Javadoc 含 `@param`、`@return`。
-- `private` 方法：Javadoc 块注释，不带参数描述。
-- 注释精炼简洁，**禁止用数字（如 1.、①）编号**。
-
-## 日志规范
-- 使用 `LoggerFactory.getLogger`；`ERROR` 记录系统异常，`INFO` 记录关键业务节点，禁用其他级别。
-- 使用 `{}` 占位符，禁止字符串拼接。
-
-## 安全红线
-- MyBatis 使用 `#{}`，禁止 `${}` 拼接用户输入。
-- 禁止在循环内执行 DB 查询或远程调用，须提前批量查询。
-- 集合判空：`CollectionUtils.isEmpty()`；字符串判空：`StringUtils.isBlank()`。
-- `catch` 块必须记录日志或向上抛出，禁止空 `catch`。
-
----
-
-## 前端代码生成规范
-
-## 前端代码风格
-- **换行控制**：单行 ≤180 字符；左大括号不换行；连续空行 ≤1 行
-- **依赖导入**：删除未使用的 `import`
-- **嵌套层级**：`if`/`for`/`while`/`map` 不超过 3 层，超出须拆分为子函数或子组件
-- **条件语句**：单项语句也必须使用 `{}` 括起（JSX 中的内联渲染条件判断除外）
-- **逻辑控制**：强制使用 **卫语句**（Guard Clauses）提前返回，消除嵌套的 `if-else`
-- **空值判断**：推荐使用可选链（Optional Chaining `?.`）与空值合并运算符（Nullish Coalescing `??`）进行安全访问及容错
-- **异步处理**：使用 `async/await` 配合 `try-catch` 捕获异常，禁止直接让 Promise 错误逃逸
-
-## 前端注释风格
-- **方法与函数注释**：在每个方法或函数（包括 React 组件、Hook、核心 API 请求函数、辅助工具函数等）上方，必须加上精准、简洁的功能描述注释（建议使用 JSDoc/TSDoc 风格 `/** ... */`）。
-- **内部关键操作注释**：在方法或函数内部的关键操作（如核心 API 调用、复杂计算、状态更新、复杂分支判断、副作用 Effect 逻辑等）处，必须加上精准、简洁的行内中文注释。
-- **常量注释**：所有 `const` 常量（包括配置常量、枚举值、魔法数字等）必须在其上方或行内加上简洁的中文描述注释，说明该常量的用途与取值含义。
-- **注释要求**：所有注释必须**精准、简洁**，直击核心逻辑，避免冗长废话。
+* **后端开发规范 (BE)**：[backend-standards.md](file:///e:/workspace/navatation/.gemini/rules/backend-standards.md)
+  * *涵盖*：JDK 17、Guard Clauses 卫语句、禁止通配符导入、MyBatis `#{}` 占位符、异常捕获、批量 DB 查询、日志规范、DDL 变更同步等。
+* **前端开发规范 (FE)**：[frontend-standards.md](file:///e:/workspace/navatation/.gemini/rules/frontend-standards.md)
+  * *涵盖*：React 18、Vite、Tailwind CSS 4、嵌套层级 ≤3 层控制、卫语句、Optional Chaining 可选链、JSDoc 注释规范、加载/出错友好 UI 处理等。

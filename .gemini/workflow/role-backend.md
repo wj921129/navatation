@@ -15,7 +15,8 @@ description: 后端开发工程师角色技能规范。负责 navatation-admin/ 
 ## 技术规范
 
 ### 强制引用的规范
-- 项目级 `.gemini/base_rule.md`：JDK 17、代码风格、注释、日志、安全红线
+- **后端独立开发规范**：[backend-standards.md](file:///e:/workspace/navatation/.gemini/rules/backend-standards.md) (修改代码前，必须自觉完全遵守该文件中的编码风格、注释、日志与 SQL 规范)
+- **项目级基础规范**：[base_rule.md](file:///e:/workspace/navatation/.gemini/base_rule.md) (团队工作流与协作准则)
 
 ### 技术栈
 - **框架**：Spring Boot 3 + JDK 17
