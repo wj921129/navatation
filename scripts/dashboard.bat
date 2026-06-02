@@ -1,80 +1,80 @@
-@echo off
-title Navatation Service & Git Control Panel
-:menu
-cls
-echo ============================================
-echo   Navatation é¡¹ç›®ä¸€é”®æ§åˆ¶å°ä»ªè¡¨ç›˜
-echo ============================================
-echo   [æœåŠ¡å¯åŠ¨/åœæ­¢]
-echo     1. å¯åŠ¨ å‰ç«¯æœåŠ¡ (Vite)
-echo     2. åœæ­¢ å‰ç«¯æœåŠ¡ (Port 5173)
-echo     3. å¯åŠ¨ åç«¯æœåŠ¡ (Spring Boot)
-echo     4. åœæ­¢ åç«¯æœåŠ¡ (Port 8080)
-echo     5. å¯åŠ¨ Redis ç¼“å­˜
-echo     6. åœæ­¢ Redis ç¼“å­˜
-echo.
-echo   [ç‰ˆæœ¬æ§åˆ¶ä¸æäº¤]
-echo     7. ä¸€é”®æ¨é€æ‰€æœ‰ä»“åº“åˆ° dev å¼€å‘åˆ†æ”¯
-echo.
-echo   [å…¶ä»–]
-echo     8. é€€å‡ºä»ªè¡¨ç›˜
-echo ============================================
-set /p choice="è¯·è¾“å…¥æ•°å­—é€‰æ‹©æ“ä½œ (1-8): "
-
-if "%choice%"=="1" goto start_fe
-if "%choice%"=="2" goto stop_fe
-if "%choice%"=="3" goto start_be
-if "%choice%"=="4" goto stop_be
-if "%choice%"=="5" goto start_redis
-if "%choice%"=="6" goto stop_redis
-if "%choice%"=="7" goto push_dev
-if "%choice%"=="8" goto exit
-goto menu
-
-:start_fe
-echo æ­£åœ¨å¯åŠ¨å‰ç«¯æœåŠ¡...
-start "Navatation Frontend" cmd /c "%~dp0service\start-fe.bat"
-pause
-goto menu
-
-:stop_fe
-echo æ­£åœ¨åœæ­¢å‰ç«¯æœåŠ¡...
-call "%~dp0service\stop-fe.bat"
-pause
-goto menu
-
-:start_be
-echo æ­£åœ¨å¯åŠ¨åç«¯æœåŠ¡...
-start "Navatation Backend" cmd /c "%~dp0service\start-be.bat"
-pause
-goto menu
-
-:stop_be
-echo æ­£åœ¨åœæ­¢åç«¯æœåŠ¡...
-call "%~dp0service\stop-be.bat"
-pause
-goto menu
-
-:start_redis
-echo æ­£åœ¨å¯åŠ¨ Redis ç¼“å­˜...
-start "Navatation Redis" cmd /c "%~dp0service\start-redis.bat"
-pause
-goto menu
-
-:stop_redis
-echo æ­£åœ¨åœæ­¢ Redis ç¼“å­˜...
-call "%~dp0service\stop-redis.bat"
-pause
-goto menu
-
-:push_dev
-set /p msg="è¯·è¾“å…¥æœ¬æ¬¡æäº¤çš„æ³¨é‡Šä¿¡æ¯: "
-if "%msg%"=="" set msg=dev: auto update code via dashboard
-echo æ­£åœ¨ä¸€é”®æ¨é€æ‰€æœ‰ä»“åº“ä»£ç åˆ° dev å¼€å‘åˆ†æ”¯...
-call "%~dp0git\push-dev.bat" "%msg%"
-pause
-goto menu
-
-:exit
-echo æ„Ÿè°¢ä½¿ç”¨ï¼å†è§ã€‚
-exit /b
+@echo off
+title Navatation Service and Git Control Panel
+:menu
+cls
+echo ============================================
+echo   Navatation ÏîÄ¿Ò»¼ü¿ØÖÆÌ¨ÒÇ±íÅÌ
+echo ============================================
+echo   [·şÎñÆô¶¯/Í£Ö¹]
+echo     1. Æô¶¯ Ç°¶Ë·şÎñ (Vite)
+echo     2. Í£Ö¹ Ç°¶Ë·şÎñ (Port 5173)
+echo     3. Æô¶¯ ºó¶Ë·şÎñ (Spring Boot)
+echo     4. Í£Ö¹ ºó¶Ë·şÎñ (Port 8080)
+echo     5. Æô¶¯ Redis »º´æ
+echo     6. Í£Ö¹ Redis »º´æ
+echo.
+echo   [°æ±¾¿ØÖÆÓëÌá½»]
+echo     7. Ò»¼üÍÆËÍËùÓĞ²Ö¿âµ½ dev ¿ª·¢·ÖÖ§
+echo.
+echo   [ÆäËû]
+echo     8. ÍË³öÒÇ±íÅÌ
+echo ============================================
+set /p choice="ÇëÊäÈëÊı×ÖÑ¡Ôñ²Ù×÷ (1-8): "
+
+if "%choice%"=="1" goto start_fe
+if "%choice%"=="2" goto stop_fe
+if "%choice%"=="3" goto start_be
+if "%choice%"=="4" goto stop_be
+if "%choice%"=="5" goto start_redis
+if "%choice%"=="6" goto stop_redis
+if "%choice%"=="7" goto push_dev
+if "%choice%"=="8" goto exit
+goto menu
+
+:start_fe
+echo ÕıÔÚÆô¶¯Ç°¶Ë·şÎñ...
+start "Navatation Frontend" cmd /c "%~dp0service\start-fe.bat"
+pause
+goto menu
+
+:stop_fe
+echo ÕıÔÚÍ£Ö¹Ç°¶Ë·şÎñ...
+call "%~dp0service\stop-fe.bat"
+pause
+goto menu
+
+:start_be
+echo ÕıÔÚÆô¶¯ºó¶Ë·şÎñ...
+start "Navatation Backend" cmd /c "%~dp0service\start-be.bat"
+pause
+goto menu
+
+:stop_be
+echo ÕıÔÚÍ£Ö¹ºó¶Ë·şÎñ...
+call "%~dp0service\stop-be.bat"
+pause
+goto menu
+
+:start_redis
+echo ÕıÔÚÆô¶¯ Redis »º´æ...
+start "Navatation Redis" cmd /c "%~dp0service\start-redis.bat"
+pause
+goto menu
+
+:stop_redis
+echo ÕıÔÚÍ£Ö¹ Redis »º´æ...
+call "%~dp0service\stop-redis.bat"
+pause
+goto menu
+
+:push_dev
+set /p msg="ÇëÊäÈë±¾´ÎÌá½»µÄ×¢ÊÍĞÅÏ¢: "
+if "%msg%"=="" set msg=dev: auto update code via dashboard
+echo ÕıÔÚÒ»¼üÍÆËÍËùÓĞ²Ö¿â´úÂëµ½ dev ¿ª·¢·ÖÖ§...
+call "%~dp0git\push-dev.bat" "%msg%"
+pause
+goto menu
+
+:exit
+echo ¸ĞĞ»Ê¹ÓÃ£¡ÔÙ¼û¡£
+exit /b
