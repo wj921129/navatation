@@ -192,7 +192,7 @@
 
 | 日期 | 任务 | 角色 | 状态 | 备注 |
 |------|------|------|------|------|
-| 2026-06-03 | 优化时钟小组件背景清晰度与对比度 | FE | ✅ 完成 | 为防壁纸干扰导致时钟字迹与指针不清，将模拟 (AnalogClock)、数字 (DigitalClock) 和传统 (TraditionalClock) 背景不透明度提升（bg-white/25、dark:bg-black/50），并将模糊级别升级至 backdrop-blur-xl，以强化文本与指针的可读性 |
+| 2026-06-03 | 优化时钟小组件背景清晰度与对比度 | FE | ✅ 完成 | 为防壁纸干扰导致时钟字迹与指针不清，将模拟 (AnalogClock) 与数字 (DigitalClock) 背景不透明度及模糊度提升（bg-white/35、dark:bg-black/60，backdrop-blur-2xl），将传统 (TraditionalClock) 调整为高透磨砂（bg-white/90、dark:bg-neutral-900/95，backdrop-blur-2xl）；同时将数字时钟年月日、星期小字字号调大至 text-xs、加深字色为 text-neutral-600 dark:text-neutral-300 并改为 font-normal，大幅优化文本可读性 |
 | 2026-06-03 | 开发新小组件：时钟功能 | FE | ✅ 完成 | 在编辑模式的 TopDock 中集成时钟入口，呼出精美样式下拉框（包含模拟/数字/翻页样式）。支持点击添加或指针事件“即拖即放”拖拽排版，视口边界限位防溢出，完美兼容编辑态保存与取消草稿回滚机制 |
 | 2026-06-03 | 职责隔离机制优化配置 | PM | ✅ 完成 | 修改 GEMINI.md 角色职责，允许项目经理（PM）在主会话中直接运行非源码、非 API 文档变动之外的所有管理任务（如服务启停、Git脚本等） |
 | 2026-06-03 | 合并 dev 分支至 main 分支 | PM | ✅ 完成 | 成功由 PM 统筹、Git 子 Agent 执行合并脚本，将前端、后端、主仓库的 dev 分支合并至 main 并推送到远端，最后安全恢复至本地 dev 分支工作状态 |

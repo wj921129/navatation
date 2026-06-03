@@ -91,7 +91,7 @@
 
 | 日期 | 任务 | 角色 | 状态 | 备注 |
 |------|------|------|------|------|
-| 2026-06-03 | 优化时钟小组件背景清晰度与对比度 | FE | ✅ 完成 (已推dev) | 为防壁纸干扰导致时钟字迹与指针不清，将模拟 (AnalogClock)、数字 (DigitalClock) 和传统 (TraditionalClock) 背景不透明度提升（bg-white/25、dark:bg-black/50），并将模糊级别升级至 backdrop-blur-xl，以强化文本与指针的可读性 |
+| 2026-06-03 | 优化时钟小组件背景清晰度与对比度 | FE | ✅ 完成 (已推dev) | 为防壁纸干扰导致时钟字迹与指针不清，将模拟 (AnalogClock) 与数字 (DigitalClock) 背景不透明度及模糊度提升（bg-white/35、dark:bg-black/60，backdrop-blur-2xl），将传统 (TraditionalClock) 调整为高透磨砂（bg-white/90、dark:bg-neutral-900/95，backdrop-blur-2xl）；同时将数字时钟年月日、星期小字字号调大至 text-xs、加深字色为 text-neutral-600 dark:text-neutral-300 并改为 font-normal，大幅优化文本可读性 |
 | 2026-06-03 | 网址本地上传图标联动搜索停用及清空 | FE | ✅ 完成 (已推dev) | 修改添加/编辑网址弹窗，在本地上传图标后，停用网址图标探测搜索，清空非上传图标，只保留本地上传图标，清除上传图标后恢复 |
 | 2026-05-26 | 聚合AI搜索与对比平台功能开发 | PM/FE | ✅ 完成 (已推dev) | 扩展搜索引擎选择器与输入框拦截机制；创建ChatGPT/通义千问/豆包/聚合SVG品牌图标；编写毛玻璃材质交互Overlay支持单轨专注与三分栏并列流式展示；集成“大师提炼总结”与二次提问功能；全量同步推送至dev分支 |
 | 2026-05-26 | Git 双分支自动化研发工作流部署 | PM/FE | ✅ 完成 | 在三仓（主、前、后）部署同步本地与远端 dev 开发分支；设计并新建 scripts/push-dev.bat 实现对话结项自动增量 dev 提交；新建 scripts/main/merge-to-main.bat 合并脚本并规整开发规范至 GEMINI.md |
