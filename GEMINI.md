@@ -27,7 +27,7 @@
 - **开启 Redis 缓存 (启动目录 D:\javaSoftware\Redis)**：`scripts/service/start-redis.bat`
 - **关闭 Redis 缓存**：`scripts/service/stop-redis.bat`
 
-对于 AI 助手：当收到“启动前后端”指令时，**禁止探查环境变量**，直接在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；在 `navatation-web` 目录运行 `npm run dev`。
+对于 AI 助手：当收到“启动前后端”指令时，**禁止探查环境变量**，首先在 `scripts/service/` 目录运行 `start-redis.bat` 启动 Redis 服务，然后在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；最后在 `navatation-web` 目录运行 `npm run dev`。
 
 ### 2. Git 版本管理相关 (`scripts/git/`)
 - **一键推送所有仓库代码（推送 git）**：[push-all.bat](file:///E:/workspace/navatation/scripts/git/push-all.bat) *(切勿主动执行，仅在用户发出指令时调用)*
