@@ -91,6 +91,7 @@
 
 | 日期 | 任务 | 角色 | 状态 | 备注 |
 |------|------|------|------|------|
+| 2026-06-03 | 时钟小组件非编辑态常显与启用/禁用切换 | FE | ✅ 完成 (已推dev) | 时钟小组件不再仅限编辑模式显示，普通模式下也常驻渲染；在 TopDock 时钟图标常驻，编辑模式下 hover 展开添加菜单，非编辑模式下点击切换时钟全局显隐并持久化到 localStorage（navatation_clocks_visible）；图标颜色反映当前状态 |
 | 2026-06-03 | 待办项字体放大与时钟样式封装重构 | FE | ✅ 完成 (已推dev) | 调大首页未完结待办清单 (TodoListWidget) 的字体字号为 text-xs；调大待办详情抽屉 (TodoPanel) 任务项字体字号为 text-base；在 theme.css 中统一封装 glass-widget-xl 和 glass-widget-opaque 实用类，重构四类时钟小组件以降低维护成本 |
 | 2026-06-03 | 优化时钟小组件背景清晰度与对比度 | FE | ✅ 完成 (已推dev) | 为防壁纸干扰导致时钟字迹与指针不清，将模拟 (AnalogClock) 与数字 (DigitalClock) 背景不透明度及模糊度提升（bg-white/35、dark:bg-black/60，backdrop-blur-2xl），将传统 (TraditionalClock) 调整为高透磨砂（bg-white/90、dark:bg-neutral-900/95，backdrop-blur-2xl）；同时将数字时钟年月日、星期小字字号调大至 text-xs、加深字色为 text-neutral-600 dark:text-neutral-300 并改为 font-normal，大幅优化文本可读性 |
 | 2026-06-03 | 网址本地上传图标联动搜索停用及清空 | FE | ✅ 完成 (已推dev) | 修改添加/编辑网址弹窗，在本地上传图标后，停用网址图标探测搜索，清空非上传图标，只保留本地上传图标，清除上传图标后恢复 |
