@@ -91,6 +91,7 @@
 
 | 日期 | 任务 | 角色 | 状态 | 备注 |
 |------|------|------|------|------|
+| 2026-06-03 | 待办项字体放大与时钟样式封装重构 | FE | ✅ 完成 (已推dev) | 调大首页未完结待办清单 (TodoListWidget) 的字体字号为 text-xs；调大待办详情抽屉 (TodoPanel) 任务项字体字号为 text-base；在 theme.css 中统一封装 glass-widget-xl 和 glass-widget-opaque 实用类，重构四类时钟小组件以降低维护成本 |
 | 2026-06-03 | 优化时钟小组件背景清晰度与对比度 | FE | ✅ 完成 (已推dev) | 为防壁纸干扰导致时钟字迹与指针不清，将模拟 (AnalogClock) 与数字 (DigitalClock) 背景不透明度及模糊度提升（bg-white/35、dark:bg-black/60，backdrop-blur-2xl），将传统 (TraditionalClock) 调整为高透磨砂（bg-white/90、dark:bg-neutral-900/95，backdrop-blur-2xl）；同时将数字时钟年月日、星期小字字号调大至 text-xs、加深字色为 text-neutral-600 dark:text-neutral-300 并改为 font-normal，大幅优化文本可读性 |
 | 2026-06-03 | 网址本地上传图标联动搜索停用及清空 | FE | ✅ 完成 (已推dev) | 修改添加/编辑网址弹窗，在本地上传图标后，停用网址图标探测搜索，清空非上传图标，只保留本地上传图标，清除上传图标后恢复 |
 | 2026-05-26 | 聚合AI搜索与对比平台功能开发 | PM/FE | ✅ 完成 (已推dev) | 扩展搜索引擎选择器与输入框拦截机制；创建ChatGPT/通义千问/豆包/聚合SVG品牌图标；编写毛玻璃材质交互Overlay支持单轨专注与三分栏并列流式展示；集成“大师提炼总结”与二次提问功能；全量同步推送至dev分支 |
@@ -110,6 +111,7 @@
 
 | 日期 | 文档 | 变更摘要 |
 |------|------|----------|
+| 2026-06-03 | `WORKFLOW-STATUS-DEV.md` | 看板同步：调大待办事项小组件与管理抽屉内的字号，并在 theme.css 中封装通用 glass-widget 样式进行组件重构 |
 | 2026-06-03 | `WORKFLOW-STATUS-DEV.md` | 看板同步：调优时钟小组件中模拟、数字和传统时钟背景模糊度（backdrop-blur-xl）与不透明度以突出文字 |
 | 2026-06-03 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增添加/编辑网址弹窗中本地上传图标与网址嗅探搜索隔离与清空逻辑开发记录 |
 | 2026-05-26 | `WORKFLOW-STATUS-DEV.md` | 新建看板：全新创立 dev 专版开发进度文档，实现开发分支与稳定分支进度的双向彻底隔离 |
