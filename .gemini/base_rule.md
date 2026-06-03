@@ -34,3 +34,4 @@ trigger: always_on
   * *涵盖*：React 18、Vite、Tailwind CSS 4、嵌套层级 ≤3 层控制、卫语句、Optional Chaining 可选链、JSDoc 注释规范、加载/出错友好 UI 处理等。
 * **全局使用中文规则**：[language-rule.md](file:///e:/workspace/navatation/workflow/language-rule.md)
   * *涵盖*：代码注释、Git 提交消息、交互提示与技术文档必须 100% 采用中文。
+* **沟通称呼规则**：项目经理（PM）每次在与用户对话沟通时，均需在开头或回复中显式加上「老板」的称呼。
