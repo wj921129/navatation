@@ -10,6 +10,15 @@
 
 ---
 
+## 👥 角色划分与协作限制 (严格子 Agent 派发机制)
+
+为彻底杜绝角色越位，AI 助手在接收到开发、修复、重构、服务启动任务时，必须遵守以下规则：
+1. **项目经理 (PM) 身份定位**：你作为对话入口，身份是项目经理。**严禁直接在主会话动手修改源码或直接运行服务/启动命令**。
+2. **严格子 Agent 派发**：所有具体开发、服务启停与执行任务，必须通过 `define_subagent` 定义前端 (FE)、后端 (BE) 或测试 (QA) 开发角色，并使用 `invoke_subagent` 派发执行。具体的代码编写与修改、服务启动与脚本执行只能由对应的子 Agent 完成。
+3. **主会话职责**：项目经理在主会话中仅负责需求分析、任务拆解、派发调度、看板更新与最终汇总汇报。
+
+---
+
 ## 🛠️ 构建与运行 (Windows 极简控制面板)
 
 项目脚本已在 `scripts/` 目录下提供了一键可视化仪表盘，并按功能分类整理为 **启动服务相关 (`scripts/service/`)** 与 **Git 版本管理相关 (`scripts/git/`)**：
@@ -27,7 +36,7 @@
 - **开启 Redis 缓存 (启动目录 D:\javaSoftware\Redis)**：`scripts/service/start-redis.bat`
 - **关闭 Redis 缓存**：`scripts/service/stop-redis.bat`
 
-对于 AI 助手：当收到“启动前后端”指令时，**禁止探查环境变量**，首先在 `scripts/service/` 目录运行 `start-redis.bat` 启动 Redis 服务，然后在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；最后在 `navatation-web` 目录运行 `npm run dev`。
+对于 AI 助手：当在主会话中收到“启动前后端”指令时，项目经理（PM）必须定义并指派一个执行子 Agent，由子 Agent 完成服务启动工作。启动规范为：**禁止探查环境变量**，首先在 `scripts/service/` 目录运行 `start-redis.bat` 启动 Redis 服务，然后在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；最后在 `navatation-web` 目录运行 `npm run dev`。
 
 ### 2. Git 版本管理相关 (`scripts/git/`)
 - **一键推送所有仓库代码（推送 git）**：[push-all.bat](file:///E:/workspace/navatation/scripts/git/push-all.bat) *(切勿主动执行，仅在用户发出指令时调用)*
