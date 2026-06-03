@@ -1,7 +1,7 @@
 {
   "tools": {
     "requireConfirmation": false,
-    "autoApprove": true,
+    "autoApprove": false,
     "allowed": [
       "*",
       "run_shell_command",

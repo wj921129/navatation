@@ -1092,7 +1092,81 @@ Authorization: Bearer {accessToken}
 
 ---
 
-## 六、接口汇总表
+## 六、组件模块 `/widgets`
+
+### 6.1 获取组件列表
+
+```
+GET /api/v1/widgets
+Authorization: Bearer {accessToken}
+```
+
+**Response (200):**
+
+```json
+{
+  "code": 200,
+  "message": "success",
+  "data": [
+    {
+      "widgetId": "WG1234567890123456789012",
+      "type": "clock",
+      "style": "analog",
+      "x": 40.50,
+      "y": 30.00,
+      "meta": {}
+    },
+    {
+      "widgetId": "WG9876543210987654321098",
+      "type": "clock",
+      "style": "digital",
+      "x": 10.00,
+      "y": 80.00,
+      "meta": {
+        "timeFormat": "24h"
+      }
+    }
+  ],
+  "timestamp": 1715760000000
+}
+```
+
+### 6.2 批量保存组件列表 (全量覆盖)
+
+```
+PUT /api/v1/widgets
+Authorization: Bearer {accessToken}
+```
+
+**Request Body:**
+
+```json
+[
+  {
+    "widgetId": "WG1234567890123456789012",
+    "type": "clock",
+    "style": "analog",
+    "x": 45.00,
+    "y": 32.50,
+    "meta": {}
+  }
+]
+```
+
+**Response (200):**
+
+```json
+{
+  "code": 200,
+  "message": "组件配置保存成功",
+  "data": null,
+  "timestamp": 1715760000000
+}
+```
+
+---
+
+## 七、接口汇总表
 
 | 模块 | 方法 | 路径 | 鉴权 | 说明 |
 |------|------|------|------|------|
@@ -1127,3 +1201,6 @@ Authorization: Bearer {accessToken}
 | 待办 | DELETE | `/todo/{id}` | 是 | 删除待办 |
 | 待办 | PUT | `/todo/sort` | 是 | 待办排序 |
 | 待办 | DELETE | `/todo/completed` | 是 | 清空已完成 |
+| 组件 | GET | `/widgets` | 是 | 获取用户小组件列表 |
+| 组件 | PUT | `/widgets` | 是 | 全量覆盖保存用户小组件列表 |
+
