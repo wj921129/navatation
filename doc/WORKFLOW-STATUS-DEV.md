@@ -13,7 +13,7 @@
 | 当前开发版本 | v1.0 MVP + 聚合AI搜索（增量已推 ✅） |
 | 数据库 | DDL 已执行 ✅ (7 张表已建) |
 | 后端进度 | 用户认证 API ✅ \| 导航管理 API ✅ \| 设置 API ✅ \| 待办事项 API ✅ |
-| 前端进度 | 项目初始化 ✅ \| 主页面 UI ✅ \| Service 层 ✅ \| 组件 ✅ \| 登录联调 ✅ \| 待办面板 ✅ \| 拖拽排序 ✅ \| 主题切换 ✅ \| **聚合AI搜索层 ✅** |
+| 前端进度 | 项目初始化 ✅ \| 主页面 UI ✅ \| Service 层 ✅ \| 组件 ✅ \| 登录联调 ✅ \| 待办面板 ✅ \| 拖拽排序 ✅ \| 主题切换 ✅ \| **聚合AI搜索层 ✅** \| **效率专注组件体系 ✅** |
 | 测试状态 | 默认由用户手动确认，QA 角色保留作为被动指派验证 |
 
 ---
@@ -80,7 +80,9 @@
 ## 待完成事项 🔧 (dev 分支)
 
 ### 研发
-- 无（聚合 AI 搜索研发第一阶段已完美收官，全部推送至 `dev`）
+- [x] 开发番茄钟小组件 (Pomodoro Widget)
+- [x] 开发呼吸冥想小组件 (Breathe Widget)
+- [x] 升级 TopDock 统筹管理所有小组件
 
 ### 部署与集成
 - [ ] 等待用户确认，执行合并至 `main` 主线分支
@@ -91,6 +93,7 @@
 
 | 日期 | 任务 | 状态 | 备注 |
 |------|------|------|------|
+| 2026-06-04 | Widget 生态扩充：番茄钟与冥想组件 | ✅ 完成 (已推dev) | 全新上线支持 25min/5min 状态无缝切换的 Pomodoro 效率组件，以及基于 framer-motion 提供平滑动效的 Breathe 呼吸冥想组件，并统一由 TopDock 菜单统筹分发管理 |
 | 2026-06-03 | 修复翻页时钟导致全页组件闪烁问题 | ✅ 完成 (已推dev) | 查明根因为 FlipClock 冠号点使用 Tailwind animate-ping（内部依赖 transform:scale 强制 GPU 合成层更新），导致所有带 backdrop-filter 元素共同闪烁重绘；冠号改用纯 opacity 自定义关键帧（flip-colon-blink），ClockWidget 容器加 isolation:isolate + will-change:transform 隔离渲染层，FlipClock 卡片颜色改为主题 token |
 | 2026-06-03 | 深色模式兼容修复：时钟选样弹窗与 TopDock 背景 | ✅ 完成 (已推dev) | 将时钟选样弹窗硬编码黑底白字改为语义化 token（bg-widget-bg/95、text-text-primary、border-widget-border 等），亮暗主题自动适配；修复 TopDock 深色模式下下半部背景色不一致问题（移除 hover 切换背景色、稳定 backdrop-blur-xl、仅保留 opacity 动画） |
 | 2026-06-03 | 时钟小组件非编辑态常显与启用/禁用切换 | ✅ 完成 (已推dev) | 时钟小组件不再仅限编辑模式显示，普通模式下也常驻渲染；在 TopDock 时钟图标常驻，编辑模式下 hover 展开添加菜单，非编辑模式下点击切换时钟全局显隐并持久化到 localStorage（navatation_clocks_visible）；图标颜色反映当前状态 |
@@ -114,6 +117,7 @@
 
 | 日期 | 文档 | 变更摘要 |
 |------|------|----------|
+| 2026-06-04 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增番茄钟 (Pomodoro) 和冥想 (Breathe) 效率专注组件的开发记录 |
 | 2026-06-03 | `WORKFLOW-STATUS-DEV.md` | 看板同步：调大待办事项小组件与管理抽屉内的字号，并在 theme.css 中封装通用 glass-widget 样式进行组件重构 |
 | 2026-06-03 | `WORKFLOW-STATUS-DEV.md` | 看板同步：调优时钟小组件中模拟、数字和传统时钟背景模糊度（backdrop-blur-xl）与不透明度以突出文字 |
 | 2026-06-03 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增添加/编辑网址弹窗中本地上传图标与网址嗅探搜索隔离与清空逻辑开发记录 |
