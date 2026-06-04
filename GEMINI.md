@@ -10,12 +10,13 @@
 
 ---
 
-## 👥 角色划分与协作限制 (优化版职责隔离机制)
+## 🚀 核心工作流 (多智能体协作架构)
 
-为优化开发效率并确保核心源码与规范的安全，AI 助手需遵守以下职责边界：
-1. **项目经理 (PM) 职责**：项目经理在主会话中可直接负责并执行除**修改代码**和**更新 API 文档**之外的所有任务。这包括：启动/停止/重启服务、运行测试、执行 Git 仓库推送或合并分支脚本，以及其他命令行辅助操作。
-2. **特定任务子 Agent 派发**：仅当任务涉及**源码编写/修改**、**API 协议更新 (`doc/api-specification.md`)** 等核心开发与规范变动时，项目经理才必须通过 `define_subagent` 定义前端 (FE) 或后端 (BE) 角色，并使用 `invoke_subagent` 派发执行。
-3. **主会话权限**：项目经理可在主会话中直接运行日常运维脚本、启动命令或 Git 指令，无需因脚本执行或服务启停派发子 Agent。
+为最大化开发效能并充分发挥先进 AI 的能力，本项目推崇**高效智能体协作模式**。主控 AI（即你）需发挥统筹规划与核心开发的 Superpowers，同时合理利用子 Agent 协助完成任务：
+
+1. **主控与协作并重**：你在当前主会话中统筹负责需求分析、前后端核心代码编写等关键任务，但对于后台资料搜集、大规模代码库检索、局部独立任务或测试等，**应合理派发子 Agent (Subagents)** 协助并行处理，以提升整体研发效能。
+2. **全局上下文感知**：遇到复杂问题时，直接跨越技术栈边界（如同时阅读前端组件和后端实体），优先提供最小可行修复或最优架构，直击问题核心。
+3. **极简操作路径**：在确保效率的前提下，直接动用可用工具完成代码修改或环境构建；复杂任务灵活委派子 Agent。
 
 ---
 
@@ -36,13 +37,13 @@
 - **开启 Redis 缓存 (启动目录 D:\javaSoftware\Redis)**：`scripts/service/start-redis.bat`
 - **关闭 Redis 缓存**：`scripts/service/stop-redis.bat`
 
-对于 AI 助手：当在主会话中收到“启动前后端”指令时，项目经理（PM）可以直接在主会话中运行服务启动工作。启动规范为：**禁止探查环境变量**，首先在 `scripts/service/` 目录运行 `start-redis.bat` 启动 Redis 服务，然后在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；最后在 `navatation-web` 目录运行 `npm run dev`。
+对于 AI 助手：当在主会话中收到“启动前后端”指令时，你可以直接在主会话中运行服务启动工作。启动规范为：**禁止探查环境变量**，首先在 `scripts/service/` 目录运行 `start-redis.bat` 启动 Redis 服务，然后在 `navatation-admin/navatation-business` 目录运行写死的后端命令：`$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`；最后在 `navatation-web` 目录运行 `npm run dev`。
 
 ### 2. Git 版本管理相关 (`scripts/git/`)
 - **一键推送所有仓库代码（推送 git）**：[push-all.bat](file:///E:/workspace/navatation/scripts/git/push-all.bat) *(切勿主动执行，仅在用户发出指令时调用)*
 - **分支开发规范（Git dev/main 双分支工作流）**：
   - **开发提交脚本**：[push-dev.bat](file:///e:/workspace/navatation/scripts/git/push-dev.bat) *(日常开发每次对话修改完，AI 必须自动运行将三仓更改推送至 dev 分支)*
-  - **合并主线脚本**：[merge-to-main.bat](file:///e:/workspace/navatation/scripts/git/merge-to-main.bat) *(大规模改动通过验证后，PM 必须主动提示用户，并在获得确认后运行)*
+  - **合并主线脚本**：[merge-to-main.bat](file:///e:/workspace/navatation/scripts/git/merge-to-main.bat) *(大规模改动通过验证后，AI 助手必须主动提示用户，并在获得确认后运行)*
 
 - **前端开发地址**：`http://localhost:5173`
 - **后端开发地址**：`http://localhost:8080` | Swagger: `http://localhost:8080/swagger-ui.html`
@@ -51,13 +52,16 @@
 
 ## 📜 开发规范 (高内聚职责隔离)
 
-本项目的编码规范已独立化、细粒度化拆分。在开始任何代码编写或修改前，前端与后端开发角色必须自觉查阅并严格遵守：
+本项目的编码规范已全部浓缩聚合。在开始任何代码编写或修改前，AI 助手必须自觉查阅并严格遵守全栈极简开发规范：
 
-- **后端开发规范 (BE)**：[backend-standards.md](file:///e:/workspace/navatation/.gemini/rules/backend-standards.md)（Java 17、卫语句、禁止通配符导入、MyBatis `#{}`、日志规范、安全红线、DDL 同步等）
-- **前端开发规范 (FE)**：[frontend-standards.md](file:///e:/workspace/navatation/.gemini/rules/frontend-standards.md)（React 18、嵌套层级限制、卫语句、可选链 `?.` 与空值合并 `??`、TSDoc 等）
+- **全栈极简开发规范**：[base_rule.md](file:///e:/workspace/navatation/.gemini/base_rule.md)（涵盖前后端开发红线、卫语句、中文限制等所有约定）
 
-### 📂 核心文档链接
-- 需求对照：[PRD.md](file:///e:/workspace/navatation/doc/PRD.md)
-- 接口定义：[api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md) *(有变动必须 100% 同步更新)*
-- 数据库脚本：[ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) *(表结构变动必填)*
-- 看板追踪：[WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md) *(PM 每次任务结束后必须更新)*
+### 📂 核心文档维护规范 (DDD 文档驱动开发)
+AI 助手在每次代码改动前后，必须严格遵循以下文档同步维护要求：
+
+- **需求与产品对照**：[PRD.md](file:///e:/workspace/navatation/doc/PRD.md) *(开发前对齐需求范围；新增功能、修改优先级必须同步更新此文档)*
+- **架构设计与底层**：[backend-architecture.md](file:///e:/workspace/navatation/doc/backend-architecture.md) *(涉及缓存策略、模块结构或建表 UUID 规则等核心架构变动时，必须同步更新)*
+- **接口协议定义**：[api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md) *(后端 Controller、DTO 或响应结果有变动时必须 100% 同步更新)*
+- **数据库建表脚本**：[ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) *(任何表结构、字段类型、索引的变动必须同步至该脚本)*
+- **日常开发追踪 (dev)**：[WORKFLOW-STATUS-DEV.md](file:///e:/workspace/navatation/doc/WORKFLOW-STATUS-DEV.md) *(核心！**每次**单项开发任务结束后，AI 必须主动在文档中追加任务日志并更新进度状态，随后再执行 push-dev 推送)*
+- **主线版本追踪 (main)**：[WORKFLOW-STATUS.md](file:///e:/workspace/navatation/doc/WORKFLOW-STATUS.md) *(只有当大规模改动验证完成，并在用户确认合并至 main 分支后，才将 dev 看板的阶段性成果同步到此文档)*

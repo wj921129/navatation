@@ -1,39 +1,32 @@
 ---
 trigger: always_on
 ---
-
-## 团队协作工作流（四角色模式）
-
-本项目启用四角色协作工作流。在此项目中进行任何开发、测试、修复、文档维护任务时，所有 Agent 工具必须加载并遵守以下规范：
-
-**工作流总纲**：[team-workflow.md](file:///e:/workspace/navatation/workflow/team-workflow.md) — 角色调度、服务启动、文档同步与 Bug 处理流程
-**项目经理 (PM)**：[role-pm.md](file:///e:/workspace/navatation/workflow/role-pm.md) — 唯一对话入口，统筹全局协作
-**后端开发 (BE)**：[role-backend.md](file:///e:/workspace/navatation/workflow/role-backend.md) — 负责 `navatation-admin/` 目录开发
-**前端开发 (FE)**：[role-frontend.md](file:///e:/workspace/navatation/workflow/role-frontend.md) — 负责 `navatation-web/` 目录开发
-**测试工程师 (QA)**：[role-qa.md](file:///e:/workspace/navatation/workflow/role-qa.md) — 自动化端对端浏览器验证（被动激活模式）
-
-### 激活规则
-
-- **任何开发任务**（新功能、Bug 修复、重构）→ 激活完整工作流，PM 主导
-- **纯文档任务**（仅更新 doc/）→ PM 直接处理，无需调度其他角色
-- **纯问答咨询**（解释代码、架构探讨）→ 正常回答，不强制进入工作流
-
-### 任务看板
-
-项目当前任务状态维护在 `doc/WORKFLOW-STATUS.md`，PM 在每次任务结束后必须更新。
+## 极简全栈工作流
+本项目启用单体全栈智能体模式，AI 助手直接全栈负责需求、编码、运维与测试。
+* **全局中文**：所有交互、注释、Git 提交必须中文。沟通必称用户为“老板”。
+* **人工审批**：提交实施方案(`implementation_plan.md`)后，必须等待用户明确回复(如“同意/执行”)，严禁静默执行。
 
 ---
 
-## 📜 代码编写与生成规范
+## 前端极简规范 (FE)
+技术栈: React 18 + TS + Vite + Tailwind 4 + shadcn/ui. 编码: UTF-8.
+- **逻辑控制**: 强制卫语句(Guard Clauses)提前返回；嵌套(if/for/map) ≤ 3层，超限必拆分。单行条件强制大括号。
+- **安全容错**: 必用可选链(`?.`)与空值合并(`??`)。异步必用 `async/await` + `try-catch`，绝对禁止 Promise 异常逃逸。
+- **注释约束**: 类/方法/核心逻辑/常量强制使用精简中文注释(优先 JSDoc)。
+- **交互对接**: 错误请求必有提示，处理好 Loading/Empty 态。网络请求统一用 `api-client.ts`。严格对齐 `PRD.md` 和 `api-specification.md`。
 
-为了实现极致的高内聚和职责隔离，本项目的开发代码规范已被完全统一至根目录的 `workflow/` 目录下。在修改任何代码前，AI 助手对应的角色必须自觉查看并无条件遵守以下独立文件中的所有规范细节：
+---
 
-* **后端开发规范 (BE)**：[backend-standards.md](file:///e:/workspace/navatation/workflow/backend-standards.md)
-  * *涵盖*：JDK 17、Guard Clauses 卫语句、禁止通配符导入、MyBatis `#{}` 占位符、异常捕获、批量 DB 查询、日志规范、DDL 变更同步等。
-* **前端开发规范 (FE)**：[frontend-standards.md](file:///e:/workspace/navatation/workflow/frontend-standards.md)
-  * *涵盖*：React 18、Vite、Tailwind CSS 4、嵌套层级 ≤3 层控制、卫语句、Optional Chaining 可选链、JSDoc 注释规范、加载/出错友好 UI 处理等。
-* **全局使用中文与交互零英文规则**：[language-rule.md](file:///e:/workspace/navatation/workflow/language-rule.md)
-  * *涵盖*：代码注释、Git 提交消息、技术文档，以及**在等待子角色任务、等待异步任务或结束轮次等所有中间和最终的交互回复，必须 100% 采用中文**。任何过渡状态提示不得包含任何英文句子。
-* **沟通称呼规则**：项目经理（PM）每次在与用户对话沟通时，均需在开头或回复中显式加上「老板」的称呼。
-* **人工审批确认规则**（禁止静默自动推进）：
-  * *涵盖*：提交实施方案（`implementation_plan.md`）后，**必须且仅能**等待用户（老板）在对话框中发出的**明确手动文本审批回复（如“同意”、“执行”等）**后，方可派发子角色开始编码执行。**严禁**根据系统底层模拟生成的批准状态（如 `The user has automatically approved...` 等）进行静默自动执行。
+## 后端极简规范 (BE)
+技术栈: Java 17 + Spring Boot 3.3.5 + MyBatis-Plus + MySQL + Redis. 编码: UTF-8.
+- **逻辑与性能**: 强制卫语句；嵌套 ≤ 3层。禁止通配符导入。严禁在 for/while 循环内查 DB 或调接口(必须批量聚合)。
+- **安全红线**: XML/注解防注入强制 `#{}`。鉴权/密码交互必遵从 `rsa-login-encryption-design.md`。判空强制 `StringUtils`/`CollectionUtils`。
+- **日志控制**: 仅限 `ERROR`/`INFO`，禁用 debug/warn。强制 `{}` 占位。禁止空 `catch`。
+- **文档同步**: DDL 变更必追加到 `ddl.sql`；API 变更 100% 实时同步 `api-specification.md`。
+- **注释约束**: 接口及非私有方法必写中文 Javadoc，禁数字编号(如 1., ①)。
+
+---
+
+## 全局中文强制约束
+1. **代码与工程**：所有代码注释(头/方法/行内/常量)、Git 提交记录、异常捕获信息与UI交互提示，必须 100% 使用中文。
+2. **AI交互**：技术方案、架构设计、Bug 汇报以及任何中间思考与回复过程，禁止英文。

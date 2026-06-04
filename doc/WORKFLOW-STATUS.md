@@ -1,6 +1,6 @@
 # 📋 navatation 项目稳定看板 (main 分支)
 
-> 维护者：项目经理（PM）| 最后更新：2026-06-04T14:12
+> 维护者：AI 助手| 最后更新：2026-06-04T14:12
 > 
 > 🔗 关联开发看板：[开发进度看板 (dev 分支)](file:///e:/workspace/navatation/doc/WORKFLOW-STATUS-DEV.md)
 
@@ -190,66 +190,66 @@
 
 ## 任务历史
 
-| 日期 | 任务 | 角色 | 状态 | 备注 |
-|------|------|------|------|------|
-| 2026-06-04 | 修复时钟背景色闪烁问题 | FE | ✅ 完成 | 在 ClockWidget.tsx 中动态控制 will-change（仅在拖动时设为 transform，平时设为 auto）防 backdrop-filter 和 GPU 硬件加速合成层冲突；开启 translate3d(0,0,0) 并设置 backfaceVisibility:hidden；将 TraditionalClock 的 animate-fade-in 移至最外层 div 确保整个时钟同步淡入；同时对 theme.css 的 glass-widget-xl 和 glass-widget-opaque 实用类强制启用 3D 渲染和隐藏背面，彻底消除磨砂闪烁和抖动。 |
-| 2026-06-03 | 修复翻页时钟导致全页组件闪烁问题 | FE | ✅ 完成 | 查明根因为 FlipClock 冠号点使用 Tailwind animate-ping（内部依赖 transform:scale 强制 GPU 合成层更新），导致所有带 backdrop-filter 元素（TopDock、TodoWidget等）共同闪烁重绘；解决方案：冠号改用纯 opacity 自定义关键帧（flip-colon-blink），ClockWidget 容器加 isolation:isolate + will-change:transform 隔离渲染层，FlipClock 卡片颜色全部改为主题 token |
-| 2026-06-03 | 深色模式兼容修复：时钟选样弹窗与 TopDock 背景 | FE | ✅ 完成 | 将时钟选样弹窗硬编码黑底白字改为语义化 token（bg-widget-bg/95、text-text-primary、border-widget-border 等），亮暗主题自动适配；修复 TopDock 深色模式下下半部背景色不一致问题（移除 hover 切换背景色、稳定 backdrop-blur-xl、仅保留 opacity 动画） |
-| 2026-06-03 | 时钟小组件非编辑态常显与启用/禁用切换 | FE | ✅ 完成 | 时钟小组件不再仅限编辑模式显示，普通模式下也常驻渲染；在 TopDock 时钟图标常驻，编辑模式下 hover 展开添加菜单，非编辑模式下点击切换时钟全局显隐并持久化到 localStorage（navatation_clocks_visible）；图标颜色反映当前状态 |
-| 2026-06-03 | 待办项字体放大与时钟样式封装重构 | FE | ✅ 完成 | 调大首页未完结待办清单 (TodoListWidget) 的字体字号为 text-xs；调大待办详情抽屉 (TodoPanel) 任务项字体字号为 text-base；在 theme.css 中统一封装 glass-widget-xl 和 glass-widget-opaque 实用类，重构四类时钟小组件以降低维护成本 |
-| 2026-06-03 | 优化时钟小组件背景清晰度与对比度 | FE | ✅ 完成 | 为防壁纸干扰导致时钟字迹与指针不清，将模拟 (AnalogClock) 与数字 (DigitalClock) 背景不透明度及模糊度提升（bg-white/35、dark:bg-black/60，backdrop-blur-2xl），将传统 (TraditionalClock) 调整为高透磨砂（bg-white/90、dark:bg-neutral-900/95，backdrop-blur-2xl）；同时将数字时钟年月日、星期小字字号调大至 text-xs、加深字色为 text-neutral-600 dark:text-neutral-300 并改为 font-normal，大幅优化文本可读性 |
-| 2026-06-03 | 开发新小组件：时钟功能 | FE | ✅ 完成 | 在编辑模式的 TopDock 中集成时钟入口，呼出精美样式下拉框（包含模拟/数字/翻页样式）。支持点击添加或指针事件“即拖即放”拖拽排版，视口边界限位防溢出，完美兼容编辑态保存与取消草稿回滚机制 |
-| 2026-06-03 | 职责隔离机制优化配置 | PM | ✅ 完成 | 修改 GEMINI.md 角色职责，允许项目经理（PM）在主会话中直接运行非源码、非 API 文档变动之外的所有管理任务（如服务启停、Git脚本等） |
-| 2026-06-03 | 合并 dev 分支至 main 分支 | PM | ✅ 完成 | 成功由 PM 统筹、Git 子 Agent 执行合并脚本，将前端、后端、主仓库的 dev 分支合并至 main 并推送到远端，最后安全恢复至本地 dev 分支工作状态 |
-| 2026-06-03 | 待办清单移动至屏幕右侧 | FE | ✅ 完成 | 将待办清单小组件（TodoListWidget）从屏幕左上角移至右上角，将待办事项抽屉面板（TodoPanel）从屏幕左侧移至右侧滑出，优化整体界面的右侧视觉联动 |
-| 2026-06-02 | 修复设置面板保存不持久化 Bug | FE | ✅ 完成 | 修复由于 `useSettings` 钩子未在初始挂载或登录状态变更时调用 `fetchSettings`，且未将设置持久化到 `localStorage` 中，导致用户更改及后端配置刷新后失效的严重缺陷；引入完整的双模持久化机制（登录用户服务端秒级同步 + 游客本地 `localStorage` 长效保存），实现设置 100% 可靠持久化 |
-| 2026-06-02 | 屏幕亮度面板向下垂直间距微调 | FE | ✅ 完成 | 响应用户界面交互视觉微调指令，将位于 TopDock 正下方的屏幕亮度卡片垂直定位（`top-[68px]` -> `top-[71px]`）向下位移 3px，提升小组件贴边和层次感 |
-| 2026-06-02 | 首页顶部 TopDock 增加苹果鱼眼放大效果 | FE | ✅ 完成 | 仅对 TopDock 图标增加类似于 macOS Dock 的鱼眼悬浮放大动效，通过 React Refs、MouseMove 监听和平滑余弦（Bell Curve）插值公式实现极致丝滑的动态阻尼缩放，确保整体布局与其他文本完全不受影响，操作流畅自如 |
-| 2026-05-26 | Git 双分支自动化研发工作流部署 | PM/FE | ✅ 完成 | 在三仓（主、前、后）部署同步本地与远端 dev 开发分支；设计并新建 scripts/push-dev.bat 实现对话结项自动增量 dev 提交；新建 scripts/main/merge-to-main.bat 合并脚本并规整开发规范至 GEMINI.md |
-| 2026-05-26 | 扩展设置面板滑块调节范围 | FE | ✅ 完成 | 增加搜索框-上间距最大值至 600px；拓宽图标-上下间距取值范围为 8px - 120px，提升了高分辨率大屏设备上的布局可调性 |
-| 2026-05-26 | 核心功能浅/深模式字体背景色彩大一统重构 | PM/FE | ✅ 完成 | 修复 TodoPanel 损坏语法截断并全局重构；统一待办功能、小组件工具栏（TopDock）、快捷网址图标底色（App/DraggableShortcut）、搜索框大功能（SearchBox/SearchEngineSelect）为全新自适应 HSL 主题色彩系统 |
-| 2026-05-26 | 账户管理深色模式适配与主题色封装优化 | PM/FE | ✅ 完成 | 在 theme.css 中封装 glass-panel 和 glass-button 自适应毛玻璃工具类，统一右下角控制按钮外观；重构 LoginDialog 和 LogoutConfirmDialog，解决深色模式下偏白刺眼的视觉缺陷，提供高级磨砂暗色体验 |
-| 2026-05-25 | 屏幕背景亮度控制位置及防抖 Hover 交互优化 | FE | ✅ 完成 | 重构亮度卡片位置为垂直 Flex 流布局，零间隙咬合在 TopDock 正下方；引入 200ms 微防抖缓冲机制防止滑入二级滑块时“移出即关”死锁；优化卡片为 bg-black/45 高透磨砂黑精致护眼视觉效果，并与浅色模式完美亮度隔离 |
-| 2026-05-25 | 业务 ID 逻辑 UUID 化、自增 row_id 引入与超长内容校验优化 | PM | ✅ 完成 | 全量 7 张表升级引入 row_id 物理自增主键，将逻辑主键升级为带前缀的 VARCHAR(64) UUID（U 用户/UC 配置/TD 待办等前缀）并完成前后端及 JWT 框架重构；在 DTO 层通过 @Size(max=512) 彻底修复待办内容过长导致 500 的 Bug |
-| 2026-05-25 | 待办面板排版样式优化与按钮隐藏 | FE | ✅ 完成 | 在待办详情面板中隐藏未完成项删除按钮，并对待办列表项内容应用 line-clamp-5 与 break-all，限制每一项最长换行显示 5 行以优化排版表现 |
-| 2026-05-24 | JDK 版本及编辑器配置加固 | PM | ✅ 完成 | 显式在 parent pom.xml 中配置并加固编译参数，并为 VSCode 写入工作区及后端的 `.vscode/settings.json`，彻底将编辑器与构建环境切换至 JDK 17 |
-| 2026-05-18 | 工作流初始化 | PM | ✅ 完成 | 建立四角色协作体系 |
-| 2026-05-21 | `.claude/settings.local.json`, `CLAUDE.md`, `GEMINI.md` | - | ✅ 完成 | 精简脚本至 4 个，完全移除了所有旧 `.sh` 脚本和冗余脚本，重新对齐 hooks 及其余说明 |
-| 2026-05-21 | `EditShortcutDialog.tsx`, `App.tsx` | FE | ✅ 完成 | 重构编辑网址弹窗，对接后端上传 `uploadIcon` 与自动 Favicon 嗅探服务，并修复 `App.tsx` 保存快捷键时未解构更新图标属性的 Bug |
-| 2026-05-21 | `GEMINI.md` | PM | ✅ 完成 | 新增免去环境变量读取的 AI 启动指令及 Windows 一键启动脚本使用说明 |
-| 2026-05-18 | `base_rule.md` | PM | ✅ 完成 | 添加四角色工作流激活指令 |
-| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 全面更新：同步 DDL/后端/前端代码进度 |
-| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 同步 QA 测试结果、Bug 修复记录 |
-| 2026-05-18 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 添加 /reset-password 接口与忘记密码开发记录 |
-| 2026-05-18 | `application.yml` | BE | ✅ 完成 | 修复 characterEncoding=utf8mb4 → UTF-8 |
-| 2026-05-19 | `NavController.java`, `NavService.java` | BE | ✅ 完成 | 新增 POST /nav/icon/upload：文件类型白名单/200KB/Redis 30次/小时频率限制 |
-| 2026-05-19 | `AddShortcutDialog.tsx` | FE | ✅ 完成 | 图标上传改为调用后端接口，替换 FileReader Base64 方案 |
-| 2026-05-19 | `api-specification.md` | BE | ✅ 完成 | 新增图标上传 API 文档 |
-| 2026-05-20 | `tsconfig.json` | FE | ✅ 完成 | 新增前端 TS 配置文件，修复 IDE 引用 `@/` 路径别名报红的异常 |
-| 2026-05-20 | `logback-spring.xml` | BE | ✅ 完成 | 重塑 CONSOLE 与 FILE 全局日志格式为 `[level] [traceId] [time] [class.method] msg` 规整中括号形式 |
-| 2026-05-20 | `RequestLogAspect.java` | BE | ✅ 完成 | 新建最高优先级切面，动态解析 token 提取用户 ID 并使用 32 位 UUID MDC 进行链路追踪 |
-| 2026-05-20 | `Maven 多模块打包构建` | BE | ✅ 完成 | 解决因子模块直接启动未包含最新 framework 切面字节码导致 AOP 未生效问题，全局 clean install 并验证通过 |
+| 日期 | 任务 | 状态 | 备注 |
+|------|------|------|------|
+| 2026-06-04 | 修复时钟背景色闪烁问题 | ✅ 完成 | 在 ClockWidget.tsx 中动态控制 will-change（仅在拖动时设为 transform，平时设为 auto）防 backdrop-filter 和 GPU 硬件加速合成层冲突；开启 translate3d(0,0,0) 并设置 backfaceVisibility:hidden；将 TraditionalClock 的 animate-fade-in 移至最外层 div 确保整个时钟同步淡入；同时对 theme.css 的 glass-widget-xl 和 glass-widget-opaque 实用类强制启用 3D 渲染和隐藏背面，彻底消除磨砂闪烁和抖动。 |
+| 2026-06-03 | 修复翻页时钟导致全页组件闪烁问题 | ✅ 完成 | 查明根因为 FlipClock 冠号点使用 Tailwind animate-ping（内部依赖 transform:scale 强制 GPU 合成层更新），导致所有带 backdrop-filter 元素（TopDock、TodoWidget等）共同闪烁重绘；解决方案：冠号改用纯 opacity 自定义关键帧（flip-colon-blink），ClockWidget 容器加 isolation:isolate + will-change:transform 隔离渲染层，FlipClock 卡片颜色全部改为主题 token |
+| 2026-06-03 | 深色模式兼容修复：时钟选样弹窗与 TopDock 背景 | ✅ 完成 | 将时钟选样弹窗硬编码黑底白字改为语义化 token（bg-widget-bg/95、text-text-primary、border-widget-border 等），亮暗主题自动适配；修复 TopDock 深色模式下下半部背景色不一致问题（移除 hover 切换背景色、稳定 backdrop-blur-xl、仅保留 opacity 动画） |
+| 2026-06-03 | 时钟小组件非编辑态常显与启用/禁用切换 | ✅ 完成 | 时钟小组件不再仅限编辑模式显示，普通模式下也常驻渲染；在 TopDock 时钟图标常驻，编辑模式下 hover 展开添加菜单，非编辑模式下点击切换时钟全局显隐并持久化到 localStorage（navatation_clocks_visible）；图标颜色反映当前状态 |
+| 2026-06-03 | 待办项字体放大与时钟样式封装重构 | ✅ 完成 | 调大首页未完结待办清单 (TodoListWidget) 的字体字号为 text-xs；调大待办详情抽屉 (TodoPanel) 任务项字体字号为 text-base；在 theme.css 中统一封装 glass-widget-xl 和 glass-widget-opaque 实用类，重构四类时钟小组件以降低维护成本 |
+| 2026-06-03 | 优化时钟小组件背景清晰度与对比度 | ✅ 完成 | 为防壁纸干扰导致时钟字迹与指针不清，将模拟 (AnalogClock) 与数字 (DigitalClock) 背景不透明度及模糊度提升（bg-white/35、dark:bg-black/60，backdrop-blur-2xl），将传统 (TraditionalClock) 调整为高透磨砂（bg-white/90、dark:bg-neutral-900/95，backdrop-blur-2xl）；同时将数字时钟年月日、星期小字字号调大至 text-xs、加深字色为 text-neutral-600 dark:text-neutral-300 并改为 font-normal，大幅优化文本可读性 |
+| 2026-06-03 | 开发新小组件：时钟功能 | ✅ 完成 | 在编辑模式的 TopDock 中集成时钟入口，呼出精美样式下拉框（包含模拟/数字/翻页样式）。支持点击添加或指针事件“即拖即放”拖拽排版，视口边界限位防溢出，完美兼容编辑态保存与取消草稿回滚机制 |
+| 2026-06-03 | 职责隔离机制优化配置 | ✅ 完成 | 修改 GEMINI.md 角色职责，允许项目经理（PM）在主会话中直接运行非源码、非 API 文档变动之外的所有管理任务（如服务启停、Git脚本等） |
+| 2026-06-03 | 合并 dev 分支至 main 分支 | ✅ 完成 | 成功由 PM 统筹、Git 子 Agent 执行合并脚本，将前端、后端、主仓库的 dev 分支合并至 main 并推送到远端，最后安全恢复至本地 dev 分支工作状态 |
+| 2026-06-03 | 待办清单移动至屏幕右侧 | ✅ 完成 | 将待办清单小组件（TodoListWidget）从屏幕左上角移至右上角，将待办事项抽屉面板（TodoPanel）从屏幕左侧移至右侧滑出，优化整体界面的右侧视觉联动 |
+| 2026-06-02 | 修复设置面板保存不持久化 Bug | ✅ 完成 | 修复由于 `useSettings` 钩子未在初始挂载或登录状态变更时调用 `fetchSettings`，且未将设置持久化到 `localStorage` 中，导致用户更改及后端配置刷新后失效的严重缺陷；引入完整的双模持久化机制（登录用户服务端秒级同步 + 游客本地 `localStorage` 长效保存），实现设置 100% 可靠持久化 |
+| 2026-06-02 | 屏幕亮度面板向下垂直间距微调 | ✅ 完成 | 响应用户界面交互视觉微调指令，将位于 TopDock 正下方的屏幕亮度卡片垂直定位（`top-[68px]` -> `top-[71px]`）向下位移 3px，提升小组件贴边和层次感 |
+| 2026-06-02 | 首页顶部 TopDock 增加苹果鱼眼放大效果 | ✅ 完成 | 仅对 TopDock 图标增加类似于 macOS Dock 的鱼眼悬浮放大动效，通过 React Refs、MouseMove 监听和平滑余弦（Bell Curve）插值公式实现极致丝滑的动态阻尼缩放，确保整体布局与其他文本完全不受影响，操作流畅自如 |
+| 2026-05-26 | Git 双分支自动化研发工作流部署 | ✅ 完成 | 在三仓（主、前、后）部署同步本地与远端 dev 开发分支；设计并新建 scripts/push-dev.bat 实现对话结项自动增量 dev 提交；新建 scripts/main/merge-to-main.bat 合并脚本并规整开发规范至 GEMINI.md |
+| 2026-05-26 | 扩展设置面板滑块调节范围 | ✅ 完成 | 增加搜索框-上间距最大值至 600px；拓宽图标-上下间距取值范围为 8px - 120px，提升了高分辨率大屏设备上的布局可调性 |
+| 2026-05-26 | 核心功能浅/深模式字体背景色彩大一统重构 | ✅ 完成 | 修复 TodoPanel 损坏语法截断并全局重构；统一待办功能、小组件工具栏（TopDock）、快捷网址图标底色（App/DraggableShortcut）、搜索框大功能（SearchBox/SearchEngineSelect）为全新自适应 HSL 主题色彩系统 |
+| 2026-05-26 | 账户管理深色模式适配与主题色封装优化 | ✅ 完成 | 在 theme.css 中封装 glass-panel 和 glass-button 自适应毛玻璃工具类，统一右下角控制按钮外观；重构 LoginDialog 和 LogoutConfirmDialog，解决深色模式下偏白刺眼的视觉缺陷，提供高级磨砂暗色体验 |
+| 2026-05-25 | 屏幕背景亮度控制位置及防抖 Hover 交互优化 | ✅ 完成 | 重构亮度卡片位置为垂直 Flex 流布局，零间隙咬合在 TopDock 正下方；引入 200ms 微防抖缓冲机制防止滑入二级滑块时“移出即关”死锁；优化卡片为 bg-black/45 高透磨砂黑精致护眼视觉效果，并与浅色模式完美亮度隔离 |
+| 2026-05-25 | 业务 ID 逻辑 UUID 化、自增 row_id 引入与超长内容校验优化 | ✅ 完成 | 全量 7 张表升级引入 row_id 物理自增主键，将逻辑主键升级为带前缀的 VARCHAR(64) UUID（U 用户/UC 配置/TD 待办等前缀）并完成前后端及 JWT 框架重构；在 DTO 层通过 @Size(max=512) 彻底修复待办内容过长导致 500 的 Bug |
+| 2026-05-25 | 待办面板排版样式优化与按钮隐藏 | ✅ 完成 | 在待办详情面板中隐藏未完成项删除按钮，并对待办列表项内容应用 line-clamp-5 与 break-all，限制每一项最长换行显示 5 行以优化排版表现 |
+| 2026-05-24 | JDK 版本及编辑器配置加固 | ✅ 完成 | 显式在 parent pom.xml 中配置并加固编译参数，并为 VSCode 写入工作区及后端的 `.vscode/settings.json`，彻底将编辑器与构建环境切换至 JDK 17 |
+| 2026-05-18 | 工作流初始化 | ✅ 完成 | 建立四角色协作体系 |
+| 2026-05-21 | `.claude/settings.local.json`, `CLAUDE.md`, `GEMINI.md` | ✅ 完成 | 精简脚本至 4 个，完全移除了所有旧 `.sh` 脚本和冗余脚本，重新对齐 hooks 及其余说明 |
+| 2026-05-21 | `EditShortcutDialog.tsx`, `App.tsx` | ✅ 完成 | 重构编辑网址弹窗，对接后端上传 `uploadIcon` 与自动 Favicon 嗅探服务，并修复 `App.tsx` 保存快捷键时未解构更新图标属性的 Bug |
+| 2026-05-21 | `GEMINI.md` | ✅ 完成 | 新增免去环境变量读取的 AI 启动指令及 Windows 一键启动脚本使用说明 |
+| 2026-05-18 | `base_rule.md` | ✅ 完成 | 添加四角色工作流激活指令 |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | ✅ 完成 | 全面更新：同步 DDL/后端/前端代码进度 |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | ✅ 完成 | 同步 QA 测试结果、Bug 修复记录 |
+| 2026-05-18 | `WORKFLOW-STATUS.md` | ✅ 完成 | 添加 /reset-password 接口与忘记密码开发记录 |
+| 2026-05-18 | `application.yml` | ✅ 完成 | 修复 characterEncoding=utf8mb4 → UTF-8 |
+| 2026-05-19 | `NavController.java`, `NavService.java` | ✅ 完成 | 新增 POST /nav/icon/upload：文件类型白名单/200KB/Redis 30次/小时频率限制 |
+| 2026-05-19 | `AddShortcutDialog.tsx` | ✅ 完成 | 图标上传改为调用后端接口，替换 FileReader Base64 方案 |
+| 2026-05-19 | `api-specification.md` | ✅ 完成 | 新增图标上传 API 文档 |
+| 2026-05-20 | `tsconfig.json` | ✅ 完成 | 新增前端 TS 配置文件，修复 IDE 引用 `@/` 路径别名报红的异常 |
+| 2026-05-20 | `logback-spring.xml` | ✅ 完成 | 重塑 CONSOLE 与 FILE 全局日志格式为 `[level] [traceId] [time] [class.method] msg` 规整中括号形式 |
+| 2026-05-20 | `RequestLogAspect.java` | ✅ 完成 | 新建最高优先级切面，动态解析 token 提取用户 ID 并使用 32 位 UUID MDC 进行链路追踪 |
+| 2026-05-20 | `Maven 多模块打包构建` | ✅ 完成 | 解决因子模块直接启动未包含最新 framework 切面字节码导致 AOP 未生效问题，全局 clean install 并验证通过 |
 | 2026-05-20 | `NavService.java`, `vite.config.ts`, `App.tsx`, `AddShortcutDialog.tsx` | FE/BE | ✅ 完成 | 修复上传文件 FileNotFound 异常（转绝对路径）；为 Vite 增加 `/uploads` 静态代理修复回显 404；调整图标渲染为 `60% contain` 比例并优化添加网址弹窗右侧的圆形实时预览 UI |
-| 2026-05-20 | `WORKFLOW-STATUS.md` | PM | ✅ 完成 | 同步项目看板，追加编辑器配置、AOP MDC 链路追踪及图标上传相关修复记录 |
-| 2026-05-21 | `App.tsx` | FE | ✅ 完成 | 仅在编辑状态下显示添加网址按钮，并重构添加网址及保存重排的机制，保障全局保存一致性 |
-| 2026-05-21 | `App.tsx` | PM | ✅ 完成 | 修复首页编辑状态下仅更换图标（iconType/iconValue）或颜色点击保存没有调用后端接口的 Bug (BUG-009) |
-| 2026-05-21 | Windows 脚本精简及引用更新 | PM | ✅ 完成 | 删除了全部冗余及旧 `.sh` 脚本，仅保留 4 个核心 Windows `.bat` 启停脚本，并完成了所有项目及配置引用更新 |
-| 2026-05-21 | 壁纸与图标上传绝对路径及工具类重构 | PM | ✅ 完成 | 修复前端壁纸上传未对接后端接口问题；重构壁纸和图标物理存储为绝对路径，并支持配置文件动态修改；实现按 `userId` 物理隔离目录；引入 3次重试安全目录创建与 UUID 长字符串命名，避免重名覆盖 |
-| 2026-05-21 | 游客模式隐藏编辑图标按钮 | FE | ✅ 完成 | 隐藏未登录用户的快捷图标编辑按钮；同时增加登出安全副作用，在用户登出时强制清除临时修改状态并退出编辑模式 |
-| 2026-05-21 | 设置草稿化与保存按钮生效重构 | FE | ✅ 完成 | 实现所有设置（包括排版尺寸、壁纸上传、随机壁纸、主题选择）的本地草稿管理，重命名“完成”按钮为“保存”，只有点击保存才批量保存生效并网络持久化，非保存关闭安全回滚 |
-| 2026-05-21 | 三仓一键推送脚本开发与工作流整合 | PM | ✅ 完成 | 编写 scripts/push-all.bat 实现主仓、前端仓、后端仓一键提交推送，并将该命令及规范写入 GEMINI.md/CLAUDE.md 的 AI 引导工作流中 |
-| 2026-05-24 | 性能与代码规范深度优化重构 | PM | ✅ 完成 | 依据 Vercel React 最佳实践，创建 IconMap 消除 Lucide Barrel 导入，将主输入框 searchQuery 状态隔离到局部 SearchBox 杜绝全局重渲染，重写条件渲染 && 为三元，移除 TodoPanel 模块状态变量，打包体积剧降至 283KB |
-| 2026-05-24 | 首页顶部新增 TopDock 多功能小组件工具栏 | FE | ✅ 完成 | 在首页顶部新增毛玻璃长方形工具栏，集成待办事项（隐藏右下角按钮并设置为第一个小组件）、随机壁纸（带优雅旋转动效）、一键皮肤切换、专注番茄倒计时（呼吸脉冲微动画）等多功能交互小组件 |
-| 2026-05-24 | TopDock 工具栏样式细节调优 | FE | ✅ 完成 | 调整工具栏贴合浏览器顶部边沿（`top-0` + `rounded-b-2xl`），优化默认不透明度至优雅可见 of 70%（`opacity-70 backdrop-blur-md`）以防用户忽视，并实现移入时完全亮起（`opacity-100 backdrop-blur-xl`）的流畅毛玻璃悬浮动效 |
-| 2026-05-24 | 扩展全局联动左上角待办看板小组件 | FE | ✅ 完成 | 设计自研响应式发布订阅 todoStore 全局共享数据，重构 TodoPanel 实现无缝联动；在首页左上角新增挂载胶囊长扁卡片 TodoListWidget（对齐 TopDock 的 70% opacity 悬停透亮交互），支持展示未完结待办事项，支持直接在主屏幕点击勾选快捷销项，点击空白处可一键开闭右侧管理抽屉 |
-| 2026-05-24 | 待办面板侧边调整与看板交互抛光 | FE | ✅ 完成 | 将待办详情面板从右侧滑出修改为从左侧滑出（`left-0`），与左侧看板小组件位置对称；实现无未完结待办时左上角自动完全隐匿清单功能；应用 `line-clamp-3` 完美支持单行任务字数过长时自动最多折行 2 次（最多显示 3 行）的排版逻辑 |
-| 2026-05-24 | 待办双击快捷复制与创建时间格式化显化 | FE | ✅ 完成 | 在待办详情面板双击编辑时，输入框右侧新增快捷复制按钮（`Copy` 图标，带 blur 防竞态拦截）；列表任务文字上方新增一行淡灰色极小号的创建时间信息，显示格式化为 `yyyy-MM-dd HH:mm:ss`，数据结构无缝对齐 |
-| 2026-05-24 | 详情列表新增悬浮复制与已办事项一键恢复 | FE | ✅ 完成 | 在待办详情面板中，为所有（待办/已办）事项的悬浮操作组新增快捷复制按钮（`Copy` 图标），实现非编辑状态下一键复制；为已办事项的操作组额外新增一键恢复待办按钮（`RotateCcw` 旋转撤销图标），支持快捷驳回 |
-| 2026-05-24 | 待办面板删除双击复制、支持专注详情视图与自适应暗色主题 | FE | ✅ 完成 | 移除行内双击复制；新增 FileText 详情按钮切换为沉浸式多行编辑卡片；重构面板及详情大卡片实现对 System 暗色主题的自适应优雅渲染，实现白昼与深夜模式完美呼应 |
-| 2026-05-24 | 终极锁死待办列表与输入框的自适应黑/白自定义光标 | FE | ✅ 完成 | 通过 MutationObserver 实时监听 DOM 主题变化，在待办列表、双击 input、详情 textarea 全员绑定自适应 SVG 矢量工字形光标（Light下为高对比度黑色，Dark下为晶莹白色）；锁死 caret-gray-900/100 插入光标，彻底狙击并根治浅色/深色底下的鼠标隐匿Bug |
-| 2026-05-24 | 夜间模式小图标背景色适配 | FE | ✅ 完成 | 修复 App.tsx 中编辑模式与正常模式下图标容器背景色硬编码为纯白的问题，统一改为 `bg-white dark:bg-neutral-700`，同时适配添加按钮的悬浮色为 `dark:hover:bg-neutral-600` |
-| 2026-05-24 | base_rule 补充常量注释规范 | PM | ✅ 完成 | 在前端注释风格章节新增「常量注释」规则：所有 `const` 常量（含配置常量、枚举值、魔法数字）必须附带简洁的中文描述注释 |
-| 2026-05-27 | 渐进式网址图标嗅探与提取性能重构 | PM/FE/BE | ✅ 完成 | 后端引入 Jsoup 依赖，重构为以浏览器 UA 进行 DOM 级图标提取，支持 `apple-touch-icon` 高清大图，并集成 Redis 7 天缓存层；前端在添加与编辑弹窗中引入「渐进式双路竞速」渲染机制，网址输入后毫秒级渲染 Google 64px CDN 图标进行瞬间预览，并在后台静默更新为后端获取的高清真实图标 |
+| 2026-05-20 | `WORKFLOW-STATUS.md` | ✅ 完成 | 同步项目看板，追加编辑器配置、AOP MDC 链路追踪及图标上传相关修复记录 |
+| 2026-05-21 | `App.tsx` | ✅ 完成 | 仅在编辑状态下显示添加网址按钮，并重构添加网址及保存重排的机制，保障全局保存一致性 |
+| 2026-05-21 | `App.tsx` | ✅ 完成 | 修复首页编辑状态下仅更换图标（iconType/iconValue）或颜色点击保存没有调用后端接口的 Bug (BUG-009) |
+| 2026-05-21 | Windows 脚本精简及引用更新 | ✅ 完成 | 删除了全部冗余及旧 `.sh` 脚本，仅保留 4 个核心 Windows `.bat` 启停脚本，并完成了所有项目及配置引用更新 |
+| 2026-05-21 | 壁纸与图标上传绝对路径及工具类重构 | ✅ 完成 | 修复前端壁纸上传未对接后端接口问题；重构壁纸和图标物理存储为绝对路径，并支持配置文件动态修改；实现按 `userId` 物理隔离目录；引入 3次重试安全目录创建与 UUID 长字符串命名，避免重名覆盖 |
+| 2026-05-21 | 游客模式隐藏编辑图标按钮 | ✅ 完成 | 隐藏未登录用户的快捷图标编辑按钮；同时增加登出安全副作用，在用户登出时强制清除临时修改状态并退出编辑模式 |
+| 2026-05-21 | 设置草稿化与保存按钮生效重构 | ✅ 完成 | 实现所有设置（包括排版尺寸、壁纸上传、随机壁纸、主题选择）的本地草稿管理，重命名“完成”按钮为“保存”，只有点击保存才批量保存生效并网络持久化，非保存关闭安全回滚 |
+| 2026-05-21 | 三仓一键推送脚本开发与工作流整合 | ✅ 完成 | 编写 scripts/push-all.bat 实现主仓、前端仓、后端仓一键提交推送，并将该命令及规范写入 GEMINI.md/CLAUDE.md 的 AI 引导工作流中 |
+| 2026-05-24 | 性能与代码规范深度优化重构 | ✅ 完成 | 依据 Vercel React 最佳实践，创建 IconMap 消除 Lucide Barrel 导入，将主输入框 searchQuery 状态隔离到局部 SearchBox 杜绝全局重渲染，重写条件渲染 && 为三元，移除 TodoPanel 模块状态变量，打包体积剧降至 283KB |
+| 2026-05-24 | 首页顶部新增 TopDock 多功能小组件工具栏 | ✅ 完成 | 在首页顶部新增毛玻璃长方形工具栏，集成待办事项（隐藏右下角按钮并设置为第一个小组件）、随机壁纸（带优雅旋转动效）、一键皮肤切换、专注番茄倒计时（呼吸脉冲微动画）等多功能交互小组件 |
+| 2026-05-24 | TopDock 工具栏样式细节调优 | ✅ 完成 | 调整工具栏贴合浏览器顶部边沿（`top-0` + `rounded-b-2xl`），优化默认不透明度至优雅可见 of 70%（`opacity-70 backdrop-blur-md`）以防用户忽视，并实现移入时完全亮起（`opacity-100 backdrop-blur-xl`）的流畅毛玻璃悬浮动效 |
+| 2026-05-24 | 扩展全局联动左上角待办看板小组件 | ✅ 完成 | 设计自研响应式发布订阅 todoStore 全局共享数据，重构 TodoPanel 实现无缝联动；在首页左上角新增挂载胶囊长扁卡片 TodoListWidget（对齐 TopDock 的 70% opacity 悬停透亮交互），支持展示未完结待办事项，支持直接在主屏幕点击勾选快捷销项，点击空白处可一键开闭右侧管理抽屉 |
+| 2026-05-24 | 待办面板侧边调整与看板交互抛光 | ✅ 完成 | 将待办详情面板从右侧滑出修改为从左侧滑出（`left-0`），与左侧看板小组件位置对称；实现无未完结待办时左上角自动完全隐匿清单功能；应用 `line-clamp-3` 完美支持单行任务字数过长时自动最多折行 2 次（最多显示 3 行）的排版逻辑 |
+| 2026-05-24 | 待办双击快捷复制与创建时间格式化显化 | ✅ 完成 | 在待办详情面板双击编辑时，输入框右侧新增快捷复制按钮（`Copy` 图标，带 blur 防竞态拦截）；列表任务文字上方新增一行淡灰色极小号的创建时间信息，显示格式化为 `yyyy-MM-dd HH:mm:ss`，数据结构无缝对齐 |
+| 2026-05-24 | 详情列表新增悬浮复制与已办事项一键恢复 | ✅ 完成 | 在待办详情面板中，为所有（待办/已办）事项的悬浮操作组新增快捷复制按钮（`Copy` 图标），实现非编辑状态下一键复制；为已办事项的操作组额外新增一键恢复待办按钮（`RotateCcw` 旋转撤销图标），支持快捷驳回 |
+| 2026-05-24 | 待办面板删除双击复制、支持专注详情视图与自适应暗色主题 | ✅ 完成 | 移除行内双击复制；新增 FileText 详情按钮切换为沉浸式多行编辑卡片；重构面板及详情大卡片实现对 System 暗色主题的自适应优雅渲染，实现白昼与深夜模式完美呼应 |
+| 2026-05-24 | 终极锁死待办列表与输入框的自适应黑/白自定义光标 | ✅ 完成 | 通过 MutationObserver 实时监听 DOM 主题变化，在待办列表、双击 input、详情 textarea 全员绑定自适应 SVG 矢量工字形光标（Light下为高对比度黑色，Dark下为晶莹白色）；锁死 caret-gray-900/100 插入光标，彻底狙击并根治浅色/深色底下的鼠标隐匿Bug |
+| 2026-05-24 | 夜间模式小图标背景色适配 | ✅ 完成 | 修复 App.tsx 中编辑模式与正常模式下图标容器背景色硬编码为纯白的问题，统一改为 `bg-white dark:bg-neutral-700`，同时适配添加按钮的悬浮色为 `dark:hover:bg-neutral-600` |
+| 2026-05-24 | base_rule 补充常量注释规范 | ✅ 完成 | 在前端注释风格章节新增「常量注释」规则：所有 `const` 常量（含配置常量、枚举值、魔法数字）必须附带简洁的中文描述注释 |
+| 2026-05-27 | 渐进式网址图标嗅探与提取性能重构 | ✅ 完成 | 后端引入 Jsoup 依赖，重构为以浏览器 UA 进行 DOM 级图标提取，支持 `apple-touch-icon` 高清大图，并集成 Redis 7 天缓存层；前端在添加与编辑弹窗中引入「渐进式双路竞速」渲染机制，网址输入后毫秒级渲染 Google 64px CDN 图标进行瞬间预览，并在后台静默更新为后端获取的高清真实图标 |
 
 ---
 
