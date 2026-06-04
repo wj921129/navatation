@@ -1,6 +1,6 @@
 # 📋 navatation 项目稳定看板 (main 分支)
 
-> 维护者：项目经理（PM）| 最后更新：2026-06-03T21:40
+> 维护者：项目经理（PM）| 最后更新：2026-06-04T14:12
 > 
 > 🔗 关联开发看板：[开发进度看板 (dev 分支)](file:///e:/workspace/navatation/doc/WORKFLOW-STATUS-DEV.md)
 
@@ -192,6 +192,7 @@
 
 | 日期 | 任务 | 角色 | 状态 | 备注 |
 |------|------|------|------|------|
+| 2026-06-04 | 修复时钟背景色闪烁问题 | FE | ✅ 完成 | 在 ClockWidget.tsx 中动态控制 will-change（仅在拖动时设为 transform，平时设为 auto）防 backdrop-filter 和 GPU 硬件加速合成层冲突；开启 translate3d(0,0,0) 并设置 backfaceVisibility:hidden；将 TraditionalClock 的 animate-fade-in 移至最外层 div 确保整个时钟同步淡入；同时对 theme.css 的 glass-widget-xl 和 glass-widget-opaque 实用类强制启用 3D 渲染和隐藏背面，彻底消除磨砂闪烁和抖动。 |
 | 2026-06-03 | 修复翻页时钟导致全页组件闪烁问题 | FE | ✅ 完成 | 查明根因为 FlipClock 冠号点使用 Tailwind animate-ping（内部依赖 transform:scale 强制 GPU 合成层更新），导致所有带 backdrop-filter 元素（TopDock、TodoWidget等）共同闪烁重绘；解决方案：冠号改用纯 opacity 自定义关键帧（flip-colon-blink），ClockWidget 容器加 isolation:isolate + will-change:transform 隔离渲染层，FlipClock 卡片颜色全部改为主题 token |
 | 2026-06-03 | 深色模式兼容修复：时钟选样弹窗与 TopDock 背景 | FE | ✅ 完成 | 将时钟选样弹窗硬编码黑底白字改为语义化 token（bg-widget-bg/95、text-text-primary、border-widget-border 等），亮暗主题自动适配；修复 TopDock 深色模式下下半部背景色不一致问题（移除 hover 切换背景色、稳定 backdrop-blur-xl、仅保留 opacity 动画） |
 | 2026-06-03 | 时钟小组件非编辑态常显与启用/禁用切换 | FE | ✅ 完成 | 时钟小组件不再仅限编辑模式显示，普通模式下也常驻渲染；在 TopDock 时钟图标常驻，编辑模式下 hover 展开添加菜单，非编辑模式下点击切换时钟全局显隐并持久化到 localStorage（navatation_clocks_visible）；图标颜色反映当前状态 |
@@ -256,6 +257,7 @@
 
 | 日期 | 文档 | 变更摘要 |
 |------|------|----------|
+| 2026-06-04 | `WORKFLOW-STATUS.md` | 看板同步：记录时钟背景色闪烁问题修复过程及方案归档 |
 | 2026-06-03 | `WORKFLOW-STATUS.md` | 看板同步：调大待办事项小组件与管理抽屉内的字号，并在 theme.css 中封装通用 glass-widget 样式进行组件重构 |
 | 2026-06-03 | `WORKFLOW-STATUS.md` | 看板同步：调优时钟小组件中模拟、数字和传统时钟背景模糊度（backdrop-blur-xl）与不透明度以突出文字 |
 | 2026-06-03 | `WORKFLOW-STATUS.md` | 看板同步：记录新增时钟小组件（时钟样式选单、指针拖动及边界约束、草稿持久化与回滚）开发记录 |
