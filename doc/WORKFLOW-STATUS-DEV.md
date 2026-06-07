@@ -93,6 +93,7 @@
 
 | 日期 | 任务 | 状态 | 备注 |
 |------|------|------|------|
+| 2026-06-07 | 修复菜单崩溃Bug | ✅ 完成 (已推dev) | 修复添加小组件菜单由于 `useEffect` 提升造成的 `isClockOpen` ReferenceError 初始化错误，通过修正 React 钩子的声明顺序恢复了渲染。 |
 | 2026-06-07 | 添加小组件多级联动分类菜单功能 | ✅ 完成 (已推dev) | 将“添加小组件”图标的单行样式悬浮菜单重构为多级联动悬浮菜单。向下呼出时钟、日历、计时器、冥想四大分类；鼠标在分类上悬停时在其下方进一步呼出样式卡片，支持拖拽与点击添加；并实现日历分类暂无组件的优雅占位提示与防抖重置逻辑。 |
 | 2026-06-04 | Widget 生态扩充：番茄钟与冥想组件 | ✅ 完成 (已推dev) | 全新上线支持 25min/5min 状态无缝切换 of Pomodoro 效率组件，以及基于 framer-motion 提供平滑动效 of Breathe 呼吸冥想组件，并统一由 TopDock 菜单统筹分发管理 |
 | 2026-06-03 | 修复翻页时钟导致全页组件闪烁问题 | ✅ 完成 (已推dev) | 查明根因为 FlipClock 冠号点使用 Tailwind animate-ping（内部依赖 transform:scale 强制 GPU 合成层更新），导致所有带 backdrop-filter 元素共同闪烁重绘；冠号改用纯 opacity 自定义关键帧（flip-colon-blink），ClockWidget 容器加 isolation:isolate + will-change:transform 隔离渲染层，FlipClock 卡片颜色改为主题 token |
