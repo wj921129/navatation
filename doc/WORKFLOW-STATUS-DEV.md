@@ -93,7 +93,8 @@
 
 | 日期 | 任务 | 状态 | 备注 |
 |------|------|------|------|
-| 2026-06-04 | Widget 生态扩充：番茄钟与冥想组件 | ✅ 完成 (已推dev) | 全新上线支持 25min/5min 状态无缝切换的 Pomodoro 效率组件，以及基于 framer-motion 提供平滑动效的 Breathe 呼吸冥想组件，并统一由 TopDock 菜单统筹分发管理 |
+| 2026-06-07 | 添加小组件多级联动分类菜单功能 | ✅ 完成 (已推dev) | 将“添加小组件”图标的单行样式悬浮菜单重构为多级联动悬浮菜单。向下呼出时钟、日历、计时器、冥想四大分类；鼠标在分类上悬停时在其下方进一步呼出样式卡片，支持拖拽与点击添加；并实现日历分类暂无组件的优雅占位提示与防抖重置逻辑。 |
+| 2026-06-04 | Widget 生态扩充：番茄钟与冥想组件 | ✅ 完成 (已推dev) | 全新上线支持 25min/5min 状态无缝切换 of Pomodoro 效率组件，以及基于 framer-motion 提供平滑动效 of Breathe 呼吸冥想组件，并统一由 TopDock 菜单统筹分发管理 |
 | 2026-06-03 | 修复翻页时钟导致全页组件闪烁问题 | ✅ 完成 (已推dev) | 查明根因为 FlipClock 冠号点使用 Tailwind animate-ping（内部依赖 transform:scale 强制 GPU 合成层更新），导致所有带 backdrop-filter 元素共同闪烁重绘；冠号改用纯 opacity 自定义关键帧（flip-colon-blink），ClockWidget 容器加 isolation:isolate + will-change:transform 隔离渲染层，FlipClock 卡片颜色改为主题 token |
 | 2026-06-03 | 深色模式兼容修复：时钟选样弹窗与 TopDock 背景 | ✅ 完成 (已推dev) | 将时钟选样弹窗硬编码黑底白字改为语义化 token（bg-widget-bg/95、text-text-primary、border-widget-border 等），亮暗主题自动适配；修复 TopDock 深色模式下下半部背景色不一致问题（移除 hover 切换背景色、稳定 backdrop-blur-xl、仅保留 opacity 动画） |
 | 2026-06-03 | 时钟小组件非编辑态常显与启用/禁用切换 | ✅ 完成 (已推dev) | 时钟小组件不再仅限编辑模式显示，普通模式下也常驻渲染；在 TopDock 时钟图标常驻，编辑模式下 hover 展开添加菜单，非编辑模式下点击切换时钟全局显隐并持久化到 localStorage（navatation_clocks_visible）；图标颜色反映当前状态 |
@@ -117,6 +118,7 @@
 
 | 日期 | 文档 | 变更摘要 |
 |------|------|----------|
+| 2026-06-07 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增添加小组件多级联动分类菜单的开发记录。 |
 | 2026-06-04 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增番茄钟 (Pomodoro) 和冥想 (Breathe) 效率专注组件的开发记录 |
 | 2026-06-03 | `WORKFLOW-STATUS-DEV.md` | 看板同步：调大待办事项小组件与管理抽屉内的字号，并在 theme.css 中封装通用 glass-widget 样式进行组件重构 |
 | 2026-06-03 | `WORKFLOW-STATUS-DEV.md` | 看板同步：调优时钟小组件中模拟、数字和传统时钟背景模糊度（backdrop-blur-xl）与不透明度以突出文字 |

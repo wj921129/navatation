@@ -1,0 +1,112 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(figma:figma-use-figjam)",
+      "Skill(figma:figma-use)",
+      "Skill(figma:figma-generate-design)",
+      "Skill(figma:figma-generate-library)",
+      "Skill(figma:figma-generate-diagram)",
+      "Skill(figma:figma-code-connect)",
+      "Skill(figma:figma-create-design-system-rules)",
+      "Skill(figma:figma-implement-design)",
+      "Skill(superpowers:using-superpowers)",
+      "Skill(superpowers:brainstorming)",
+      "Skill(superpowers:writing-plans)",
+      "Skill(superpowers:executing-plans)",
+      "Skill(superpowers:dispatching-parallel-agents)",
+      "Skill(superpowers:subagent-driven-development)",
+      "Skill(superpowers:verification-before-completion)",
+      "Skill(superpowers:test-driven-development)",
+      "Skill(superpowers:systematic-debugging)",
+      "Skill(superpowers:requesting-code-review)",
+      "Skill(superpowers:receiving-code-review)",
+      "Skill(superpowers:finishing-a-development-branch)",
+      "Skill(superpowers:using-git-worktrees)",
+      "mcp__plugin_figma_figma__whoami",
+      "mcp__plugin_figma_figma__get_design_context",
+      "mcp__plugin_figma_figma__get_metadata",
+      "mcp__plugin_figma_figma__get_screenshot",
+      "mcp__plugin_figma_figma__get_figjam",
+      "mcp__plugin_figma_figma__get_libraries",
+      "mcp__plugin_figma_figma__get_variable_defs",
+      "mcp__plugin_figma_figma__search_design_system",
+      "mcp__plugin_figma_figma__use_figma",
+      "mcp__plugin_figma_figma__generate_figma_design",
+      "mcp__plugin_figma_figma__create_new_file",
+      "mcp__plugin_figma_figma__upload_assets",
+      "mcp__plugin_figma_figma__generate_diagram",
+      "mcp__plugin_figma_figma__add_code_connect_map",
+      "mcp__plugin_figma_figma__get_code_connect_map",
+      "mcp__plugin_figma_figma__get_code_connect_suggestions",
+      "mcp__plugin_figma_figma__get_context_for_code_connect",
+      "mcp__plugin_figma_figma__send_code_connect_mappings",
+      "mcp__plugin_context7_context7__query-docs",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_everything-claude-code_playwright__browser_navigate",
+      "mcp__plugin_ecc_playwright__browser_navigate",
+      "WebFetch(domain:figma.com)",
+      "WebFetch(domain:www.figma.com)",
+      "Read(*)",
+      "Bash(curl *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(mvn *)",
+      "Bash(netstat *)",
+      "Bash(taskkill *)",
+      "Bash(findstr *)",
+      "Bash(awk *)",
+      "Bash(cmd.exe *)",
+      "Bash(where *)",
+      "Bash(export *)",
+      "Bash(echo *)",
+      "Bash(wmic service *)",
+      "Bash(powershell.exe *)",
+      "Bash(bash *)",
+      "Bash(cmd *)",
+      "Bash(cd *)",
+      "Bash(xxd *)",
+      "Bash(./start-fe.bat)",
+      "Bash(./stop-fe.bat)",
+      "Bash(cat)",
+      "Bash(/tmp/test.bat)",
+      "Bash(python3 *)",
+      "Bash(java -version)",
+      "Bash(MSYS2_ARG_CONV_EXCL=\"*\" cmd *)",
+      "Bash(scripts/ *)",
+      "Bash(tasklist *)",
+      "Bash(git *)",
+      "Bash(grep *)",
+      "Bash(redis* *)",
+      "Bash(pip3 install *)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd.exe /c \"start cmd.exe /c scripts\\start-be.bat & start cmd.exe /c scripts\\start-fe.bat\"",
+            "timeout": 30,
+            "statusMessage": "启动 Navatation 核心服务",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd.exe /c \"scripts\\stop-be.bat & scripts\\stop-fe.bat\"",
+            "timeout": 15,
+            "statusMessage": "正在关闭 Navatation 核心服务",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

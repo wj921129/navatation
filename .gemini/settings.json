@@ -15,7 +15,28 @@
       "mcp_shell_run_command",
       "mcp_mysql_execute_query",
       "google_web_search",
-      "web_fetch"
+      "web_fetch",
+      "Skill(figma:figma-use-figjam)",
+      "Skill(figma:figma-use)",
+      "Skill(figma:figma-generate-design)",
+      "Skill(figma:figma-generate-library)",
+      "Skill(figma:figma-generate-diagram)",
+      "Skill(figma:figma-code-connect)",
+      "Skill(figma:figma-create-design-system-rules)",
+      "Skill(figma:figma-implement-design)",
+      "Skill(superpowers:using-superpowers)",
+      "Skill(superpowers:brainstorming)",
+      "Skill(superpowers:writing-plans)",
+      "Skill(superpowers:executing-plans)",
+      "Skill(superpowers:dispatching-parallel-agents)",
+      "Skill(superpowers:subagent-driven-development)",
+      "Skill(superpowers:verification-before-completion)",
+      "Skill(superpowers:test-driven-development)",
+      "Skill(superpowers:systematic-debugging)",
+      "Skill(superpowers:requesting-code-review)",
+      "Skill(superpowers:receiving-code-review)",
+      "Skill(superpowers:finishing-a-development-branch)",
+      "Skill(superpowers:using-git-worktrees)"
     ],
     "allowedCommands": [
       "npm *",
@@ -31,5 +52,33 @@
     "npx *"
   ],
   "antigravity.agent.terminal.confirmCommands": false,
-  "antigravity.agent.terminal.autoExecutionPolicy": "always"
+  "antigravity.agent.terminal.autoExecutionPolicy": "always",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd.exe /c \"start cmd.exe /c scripts\\start-be.bat & start cmd.exe /c scripts\\start-fe.bat\"",
+            "timeout": 30,
+            "statusMessage": "启动 Navatation 核心服务",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd.exe /c \"scripts\\stop-be.bat & scripts\\stop-fe.bat\"",
+            "timeout": 15,
+            "statusMessage": "正在关闭 Navatation 核心服务",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
 }
