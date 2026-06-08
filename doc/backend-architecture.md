@@ -385,3 +385,16 @@ app:
      - **推荐分类 ID** (`category_id`)：带有双字符 **`RC`** 前缀，后接 22 位随机纯数字
      - **推荐网址 ID** (`site_id`)：带有双字符 **`RS`** 前缀，后接 22 位随机纯数字
 
+---
+
+## 九、核心实体模型设计
+
+### 9.1 用户与权限层 (User & Permission)
+*   **User**: 存储用户基本信息、凭据、角色（USER/ADMIN）。`user_id` 逻辑外键用于所有其他业务表。
+    *   **权限架构说明**：管理员(`ADMIN`)在系统内不维护私人配置，其所有操作（增删改查首页配置与网址）均会被后端静默拦截并重定向至推荐全局表（`RecommendConfig`, `RecommendCategory`, `RecommendSite`）。普通用户(`USER`)正常读写自己的 `UserConfig` 等表。
+
+### 9.2 配置层 (Configuration)
+*   **UserConfig**: 存储普通用户的个性化设置（搜索引擎、主题色、背景图片等）。
+*   **RecommendConfig**: 存储系统的全局默认推荐配置（字段结构同 UserConfig）。由 ADMIN 维护，作为游客模式（GuestConfig）的默认下发配置。
+*   **UserWidget**: 用户开启的各类组件实例（时钟、待办、日历等），以 JSON `meta` 格式灵活存储配置。
+

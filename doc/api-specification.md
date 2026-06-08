@@ -375,10 +375,11 @@ POST /api/v1/auth/reset-password
   "timestamp": 1715760000000
 }
 ```
-
 ---
 
 ## 三、导航管理模块 `/nav`
+
+> **【全局权限说明】**：对于 `/api/v1/nav/categories` 和 `/api/v1/nav/shortcuts` 系列所有操作接口，如果当前登录用户为 `ADMIN`，则所有增删改查操作会被静默路由至 **推荐表 (`navatation_recommend_category` / `navatation_recommend_site`)**，而不是用户的私人表，从而实现“管理员的首页即全局推荐首页”。
 
 ### 3.1 分类管理
 
@@ -755,13 +756,13 @@ Content-Type: multipart/form-data
 
 ### 3.5 推荐分类数据
 
-#### 3.4.1 获取推荐分类列表
+#### 3.5.1 获取推荐分类列表
 
 ```
-GET /api/v1/nav/recommended
+GET /api/v1/public/guest-config
 ```
 
-无需登录即可访问。
+该接口固定读取全局推荐配置，无需登录即可访问。
 
 **Response (200):**
 
@@ -820,6 +821,8 @@ GET /api/v1/nav/recommended
 GET /api/v1/settings
 Authorization: Bearer {accessToken}
 ```
+
+> **权限说明 (v1.0 更新)**：若当前登录用户角色为 `ADMIN`，此接口将静默读取并返回**全局推荐配置 (`navatation_recommend_config`)**，而非个人配置。
 
 **Response (200):**
 
