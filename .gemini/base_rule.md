@@ -24,6 +24,13 @@ trigger: always_on
 - **日志控制**: 仅限 `ERROR`/`INFO`，禁用 debug/warn。强制 `{}` 占位。禁止空 `catch`。
 - **文档同步**: DDL 变更必追加到 `ddl.sql`；API 变更 100% 实时同步 `api-specification.md`。
 - **注释约束**: 接口及非私有方法必写中文 Javadoc，禁数字编号(如 1., ①)。
+- **换行控制**：单行 ≤180 字符；左大括号不换行；连续空行 ≤1 行
+- **类依赖**：禁用通配符导入，删除未使用的 `import`
+- **嵌套层级**：`if`/`for`/`while` 不超过 3 层，超出须拆分方法
+- **非空判断**：用 `StringUtils`/`CollectionUtils` 判空
+- **条件语句**：单条语句也用 `{}` 括起
+- **资源关闭**：流、连接须用 `try-with-resources` 自动关闭
+- **逻辑控制**：强制使用 **卫语句**（Guard Clauses）提前返回，消除嵌套的 `if-else`。
 
 ---
 
