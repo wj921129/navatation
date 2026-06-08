@@ -200,3 +200,12 @@
   - 前端：修改 `useShortcuts.ts` 移除 `if (categoryId)` 限制条件。即便 `categoryId` 为 `undefined` 也会照常向后端发送 `batchCreateShortcuts` 请求，由后端自动为此类账户生成默认分类“常用”并保存卡片。
   - 后端：重构 `SettingsService.java` 中对 `ADMIN` 拦截分支，使其所有 settings 的增删改查同样存入普通的 `UserConfig` 物理表中（用管理员的 userId 进行隔离）。修改 `PublicService.java`，让游客的设置也直接从管理员账户 `UserConfig` 记录中获取，彻底统一了游客与管理员的数据源配置。
 - **状态**：已完成并测试编译通过。
+
+### 2026-06-08 任务日志：彻底物理表隔离管理员（Root）数据
+- **需求背景**：用户要求管理员账户登录时，与普通用户数据进行物理表级别的彻底隔离。需将用户表结构拷贝一份，使用 root 前缀专门存储管理员数据。
+- **实施细节**：
+  - 数据库层：执行 DDL 新建了 5 张 `navatation_root_*` 前缀的数据表（涵盖配置、分类、快捷方式、组件、待办事项）。
+  - 后端 Entity 和 Mapper 层：新建 `RootConfig`、`RootCategory` 等 5 个 Entity 和对应的 Mapper。
+  - 业务层：重构 `SettingsService`、`NavService`、`WidgetService` 和 `TodoService`，检测如果角色为 `ADMIN`，则直接使用 `Root*Mapper` 操作底层 `navatation_root_*` 相关表。
+  - 游客默认展现层：`PublicService` 中获取默认数据的 `getGuestConfig` 接口依然保持传入超级管理员（ADMIN）的 `userId` 给前述 Service，因底层自动拦截了 ADMIN 路由，游客现在完美地固定拉取物理隔离后的 `navatation_root_*` 数据展现，确保与用户数据严格隔离。
+- **状态**：已完成并测试编译通过。
