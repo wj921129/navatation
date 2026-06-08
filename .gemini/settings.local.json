@@ -47,6 +47,7 @@
       "WebFetch(domain:figma.com)",
       "WebFetch(domain:www.figma.com)",
       "Read(*)",
+      "Bash(*)",
       "Bash(curl *)",
       "Bash(npm *)",
       "Bash(npx *)",

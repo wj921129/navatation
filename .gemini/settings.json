@@ -1,6 +1,6 @@
 {
   "tools": {
-    "requireConfirmation": false,
+    "requireConfirmation": true,
     "autoApprove": false,
     "allowed": [
       "*",
