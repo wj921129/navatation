@@ -717,6 +717,50 @@ Authorization: Bearer {accessToken}
 2. 若解析失败，回退到 `{origin}/favicon.ico`
 3. 超时 5 秒，网络异常时静默降级回退
 
+#### 3.3.2 批量根据 URL 抓取 Favicon
+
+```
+POST /api/v1/nav/favicon/batch
+Authorization: Bearer {accessToken}
+```
+
+**Request Body:**
+
+```json
+{
+  "urls": [
+    "https://github.com",
+    "https://google.com"
+  ]
+}
+```
+
+**Response (200):**
+
+```json
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "https://github.com": {
+      "faviconUrl": "https://github.com/favicon.ico",
+      "sourceUrl": "https://github.com"
+    },
+    "https://google.com": {
+      "faviconUrl": "https://www.google.com/favicon.ico",
+      "sourceUrl": "https://google.com"
+    }
+  },
+  "timestamp": 1715760000000
+}
+```
+
+**防 OOM 与性能设计：**
+1. **线程池隔离**：使用独立的有界线程池 `faviconExecutor`（核心池大小 5，最大值 10，有界队列 200）。
+2. **限速反压**：当有界队列满载时，采用 `CallerRunsPolicy` 拒绝策略，使用 Tomcat 调用者线程串行处理以实现前台反压，防止 JVM 内存膨胀。
+3. **接口级拦截**：单次批量请求最多接受 100 个 URL，去重后执行。
+4. **超时与容错**：全局 15 秒超时拦截，超出时间自动截断，单个任务失败自动回退并返回，绝不阻塞 Tomcat 服务。
+
 ---
 
 ### 3.4 图标上传
