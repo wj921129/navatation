@@ -94,6 +94,7 @@
 
 | 日期 | 任务 | 状态 | 备注 |
 |------|------|------|------|
+| 2026-06-09 | 图标左右间距滑块最小值调整为 10 | ✅ 完成 (已推dev) | 将 SettingsDialog 中图标左右间距设置滑块 (iconSpacingX) 的最小值从 16 下调至 10。 |
 | 2026-06-09 | 修复设置面板滑块拖动归位 Bug (依赖项细化) | ✅ 完成 (已推dev) | 细化了 App.tsx 中游客模式副作用依赖项，改用细粒度稳定 dispatch 函数以避开大对象引用引起的重绘循环；将 SettingsDialog 内草稿重置仅绑定至弹窗开启。 |
 | 2026-06-09 | 修复推荐网址左右拖拽卡片异常跳跃 Bug | ✅ 完成 (已推dev) | 将拖拽 Droppable 容器从不支持折行一维的 Grid 布局重构为单行 Flex 横向滚动列表，彻底消除了计算位移差错导致的闪跃问题。 |
 | 2026-06-08 | 修复批量管理模式组件引用丢失导致的 React 渲染崩溃 Bug | ✅ 完成 (已推dev) | 修复了在切换到批量模式时，使用 `JSON.parse(JSON.stringify(categories))` 深拷贝导致分类中的 `LucideIcon` 函数组件属性在序列化时被过滤抹除，进而在渲染 `<category.icon />` 时引发 "Element type is invalid" 崩溃的问题。重构为基于 ES6 的 map 和解构进行高保真深拷贝以保留组件引用。 |
@@ -150,6 +151,7 @@
 
 | 日期 | 文档 | 变更摘要 |
 |------|------|----------|
+| 2026-06-09 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增调整图标左右间距滑块最小值的开发记录。 |
 | 2026-06-09 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增修复设置面板调节滑块归位 BUG 的开发记录。 |
 | 2026-06-09 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增修复推荐网址左右拖拽异常跳动 BUG 的开发记录。 |
 | 2026-06-08 | `WORKFLOW-STATUS-DEV.md` | 看板同步：新增批量管理一键刷新图标功能与后端防 OOM 队列设计的开发记录。 |
@@ -292,7 +294,25 @@
 - **实施细节**：
   - **根本原因分析**：@hello-pangea/dnd (react-beautiful-dnd) 库的 `direction="horizontal"` 水平拖拽模式在底层仅支持一维一行的水平列表，不支持多行折行的 `display: grid` 布局（如原本使用的 `grid grid-cols-8`）。当元素折行到多行时，库对 Y 轴方向上的多个 `top` 进行了错误的 X 轴投影计算，导致在跨行或者行内拖拽时产生了疯狂的闪动和跳跃。
   - **重构解决方案**：将预览模式下的推荐网址包裹容器重构为单行 Flex 横向滚动容器 (`flex flex-row items-center gap-6 overflow-x-auto pb-4 scrollbar-none`)，使每个分类下的网址自然排列在一行，从物理上避免了折行现象。
-  - **细节加固**：为每一个 Draggable 网址子项容器 and ADMIN 下的“新增网址”按钮容器添加了 `flex-shrink-0` 样式，保证在横向 Flex 容器中无论有多少子元素均不被挤压变形，配合 `overflow-x-auto` 实现了非常丝滑的横向滑动与左右拖拽交互。
+  - **细节加固**：为每一个 Draggable 网址子项容器和 ADMIN 下的“新增网址”按钮容器添加了 `flex-shrink-0` 样式，保证在横向 Flex 容器中无论有多少子元素均不被挤压变形，配合 `overflow-x-auto` 实现了非常丝滑的横向滑动与左右拖拽交互。
+- **状态**：已完成并测试编译通过。
+
+### 2026-06-09 任务日志：修复设置面板滑块拖动归位 Bug (依赖项细化)
+- **需求背景**：用户反馈在设置面板 (SettingsDialog) 拖动任何调整按钮（如搜索框大小、图标间距等 range 滑块）时，一旦拖动，滑块都会在重载后自动弹回重置为最初 the 默认已保存配置，导致无法调节。
+- **实施细节**：
+  - **根本原因分析**：
+    1. 自定义 Hook `useSettings.ts` 与 `useWidgets.ts` 返回的包含数据 and 方法的对象，在每次组件重绘时都会生成全新的引用（没有包裹 `useMemo`）。
+    2. 父组件 `App.tsx` 内用于在游客模式下初始化拉取超级管理员推荐配置的 `useEffect` 副作用，错误地将 `settingsData` 与 `widgetsData` 整个对象作为了依赖项。滑块拖拽实时预览导致 App 重绘，进而触发了 settingsData 引用改变，从而在拖拽滑块的瞬时重复触发了获取默认游客配置 the 副作用，瞬间将配置强行归位到初始默认值。
+    3. `SettingsDialog.tsx` 中的重置副作用依赖了 `settings` prop，任何时候外部 settings 重置都会强制覆盖弹窗内的本地 draft 草稿。
+  - **重构解决方案**：
+    1. 在 `App.tsx` 中细化解构：从 `widgetsData` 中解构提取 `setWidgets` 和 `setTempWidgets`，从 `settingsData` 中解构提取 `setSettings`，并在游客配置拉取的 `useEffect` 中以这些稳定的 dispatch 函数替换原大对象。这使得在拖动滑块时，重绘绝对不会重复触发副作用拉取默认配置。
+    2. 改造 `SettingsDialog.tsx` 中的 `useEffect` 依赖列表，将其限制为只依赖 `[isOpen]` 状态。确保只有在弹窗**打开的那一瞬间**才重置本地草稿，在已开启的状态下，弹窗内部 of 草稿始终以用户的手动调节为准，彻底阻断了隐式覆盖的 Bug 链路。
+- **状态**：已完成并测试编译通过。
+
+### 2026-06-09 任务日志：图标左右间距滑块最小值调整为 10
+- **需求背景**：用户要求将图标设置中“左右间距”滑块的调整下限调整至 10px。
+- **实施细节**：
+  - 修改了 [SettingsDialog.tsx](file:///c:/workspace/my-workspace/navatation/navatation-web/src/app/components/settings/SettingsDialog.tsx#L311) 中图标左右间距的 range 输入框，将其 `min` 属性由 `16` 调整为 `10`，以允许配置更紧凑的图标左右排布。
 - **状态**：已完成并测试编译通过。
 
 ### 2026-06-09 任务日志：修复设置面板滑块拖动归位 Bug (依赖项细化)
