@@ -63,5 +63,5 @@ AI 助手在每次代码改动前后，必须严格遵循以下文档同步维�
 - **架构设计与底层**：[backend-architecture.md](file:///e:/workspace/navatation/doc/backend-architecture.md) *(涉及缓存策略、模块结构或建表 UUID 规则等核心架构变动时，必须同步更新)*
 - **接口协议定义**：[api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md) *(后端 Controller、DTO 或响应结果有变动时必须 100% 同步更新)*
 - **数据库建表与数据初始化脚本**：[ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) *(任何表结构、字段类型、索引的变动必须同步至该脚本)* 及 [dml.sql](file:///e:/workspace/navatation/navatation-admin/dml.sql) *(任何初始数据、预置数据的变动必须同步至该脚本)*
-- **日常开发追踪 (dev)**：[WORKFLOW-STATUS-DEV.md](file:///e:/workspace/navatation/doc/WORKFLOW-STATUS-DEV.md) *(核心！**每次**单项开发任务结束后，AI 必须主动在文档中追加任务日志并更新进度状态，随后再执行 push-dev 推送)*
+- **日常开发追踪 (dev)**：[WORKFLOW-STATUS-DEV.md](file:///e:/workspace/navatation/doc/WORKFLOW-STATUS-DEV.md) *(核心！仅当**修复重大 BUG** 和 **开发新功能** 时，AI 才需要在文档中追加任务日志并更新进度状态，随后再执行 push-dev 推送。普通的日常修改和代码小优化无需写入此文档，以防文件内容过载)*
 - **主线版本追踪 (main)**：[WORKFLOW-STATUS.md](file:///e:/workspace/navatation/doc/WORKFLOW-STATUS.md) *(只有当大规模改动验证完成，并在用户确认合并至 main 分支后，才将 dev 看板的阶段性成果同步到此文档)*
