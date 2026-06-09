@@ -354,4 +354,12 @@
 - **实施细节**：定位到原因为弹窗容器拥有 backdrop-blur-xl 属性，批量管理的分类卡片容器拥有 backdrop-blur-md 属性。这类 backdrop-filter 属性会使子元素形成新的 containing block 包含块，强行将拖拽时被 hello-pangea/dnd 改为 fixed 定位的拖拽卡片定位基准点由 viewport 局限至包含块本身，引起计算偏差和位置跳跃。通过移除了 AddShortcutDialog.tsx 的弹窗主体 backdrop-blur-xl（由于 bg-card/95 接近不透明，移除无视觉差别）和分类卡片 backdrop-blur-md，彻底恢复了 fixed 定位基准点到 viewport，消除了距离差和定位瞬移 Bug。
 - **状态**：已完成并提交。
 
+### 2026-06-09 任务日志：优化管理员推荐网址释放拖动后的卡顿与落位延迟
+- **需求背景**：用户反馈在非批量管理下，拖动推荐网址图标并放开鼠标后，会出现短暂卡顿（动画滞后）之后才恢复正常排序。
+- **实施细节**：
+  1. 缩短释放鼠标后的过渡动画：在 AddShortcutDialog.tsx 中的 preview 模式与 batch 模式下的 Draggable 组件中，利用 snapshot.isDropAnimating 状态拦截并加速落位动画，将 transition-duration 从默认的 0.33s 缩短为 0.12s 极速落位，消除视觉滞后感。
+  2. 消除 CSS 过渡冲突：移除了批量管理列表中拖拽行容器的 transition-all 属性，改用精确的 transition-shadow 与 transition-colors。这彻底防止了浏览器原生 CSS transition 与 react-beautiful-dnd 计算的 transform 动作产生冲突导致的拖拽与释放时的卡顿和掉帧。
+- **状态**：已完成并提交。
+
+
 
