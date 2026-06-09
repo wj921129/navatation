@@ -22,7 +22,7 @@ trigger: always_on
 - **逻辑与性能**: 强制卫语句；嵌套 ≤ 3层。禁止通配符导入。严禁在 for/while 循环内查 DB 或调接口(必须批量聚合)。
 - **安全红线**: XML/注解防注入强制 `#{}`。鉴权/密码交互必遵从 `rsa-login-encryption-design.md`。判空强制 `StringUtils`/`CollectionUtils`。
 - **日志控制**: 仅限 `ERROR`/`INFO`，禁用 debug/warn。强制 `{}` 占位。禁止空 `catch`。
-- **文档同步**: DDL 变更必追加到 `ddl.sql`；API 变更 100% 实时同步 `api-specification.md`。
+- **文档同步**: DDL 变更必追加到 `ddl.sql`，初始或系统预置数据变更必追加到 `dml.sql`；API 变更 100% 实时同步 `api-specification.md`。
 - **注释约束**: 接口及非私有方法必写中文 Javadoc，禁数字编号(如 1., ①)。
 - **换行控制**：单行 ≤180 字符；左大括号不换行；连续空行 ≤1 行
 - **类依赖**：禁用通配符导入，删除未使用的 `import`

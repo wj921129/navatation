@@ -44,7 +44,7 @@
 
 - MySQL: `jdbc:mysql://localhost:3306/navatation`
 - Redis: `localhost:6379`
-- DDL 脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)
+- 数据库脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) (建表) 及 [dml.sql](file:///e:/workspace/navatation/navatation-admin/dml.sql) (初始数据)
 
 ## 代码架构
 
@@ -110,4 +110,4 @@ navatation-web/src/
 - API 规范: [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md)
 - 后端架构: [backend-architecture.md](file:///e:/workspace/navatation/doc/backend-architecture.md)
 - 任务追踪: [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md)
-- 数据库脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql)
+- 数据库脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) 及 [dml.sql](file:///e:/workspace/navatation/navatation-admin/dml.sql)
