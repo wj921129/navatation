@@ -349,3 +349,9 @@
 - **实施细节**：将 AddShortcutDialog.tsx 中的 ADMIN 模式按钮组进行重构。切换模式的“批量管理模式/返回预览模式”按钮被移动到弹窗主体左上角（absolute top-4 left-6），而保存全部更改、一键刷新以及新增分类按钮依然保留在右上角（absolute top-4 right-6），实现了操作类型分区与极佳 of 鼠标点击人体工学体验。
 - **状态**：已完成并提交。
 
+### 2026-06-09 任务日志：修复并优化管理员推荐网址拖动定位瞬移 Bug
+- **需求背景**：管理员反馈拖动推荐网址卡片时，被拖动元素会出现瞬移，且鼠标和卡片距离过远，拖拽体验不佳。
+- **实施细节**：定位到原因为弹窗容器拥有 backdrop-blur-xl 属性，批量管理的分类卡片容器拥有 backdrop-blur-md 属性。这类 backdrop-filter 属性会使子元素形成新的 containing block 包含块，强行将拖拽时被 hello-pangea/dnd 改为 fixed 定位的拖拽卡片定位基准点由 viewport 局限至包含块本身，引起计算偏差和位置跳跃。通过移除了 AddShortcutDialog.tsx 的弹窗主体 backdrop-blur-xl（由于 bg-card/95 接近不透明，移除无视觉差别）和分类卡片 backdrop-blur-md，彻底恢复了 fixed 定位基准点到 viewport，消除了距离差和定位瞬移 Bug。
+- **状态**：已完成并提交。
+
+
