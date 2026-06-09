@@ -62,7 +62,7 @@
 public class AuthController {
 
     @PostMapping("/login")
-    public Result<LoginVO> login(@Valid @RequestBody LoginDTO dto) {
+    public Result<LoginRespDTO> login(@Valid @RequestBody LoginDTO dto) {
         return Result.success(authService.login(dto));
     }
 }
@@ -82,7 +82,7 @@ public class AuthController {
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    public LoginVO login(LoginDTO dto) {
+    public LoginRespDTO login(LoginDTO dto) {
         // 1. 查用户
         // 2. 验密码
         // 3. 生成 JWT

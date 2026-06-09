@@ -122,7 +122,7 @@ public boolean consumeNonce(String nonce)  // 返回 true 表示有效且已消�
 
 #### 3. DTO 类
 
-新建 `EncryptedLoginRequest`、`EncryptedRegisterRequest`、`EncryptedChangePasswordRequest`，字段统一为：
+新建 `EncryptedLoginReqDTO`、`EncryptedRegisterReqDTO`、`EncryptedChangePasswordReqDTO`，字段统一为：
 - `username` (登录/注册 需要)
 - `encryptedData` — RSA 加密的 Base64 字符串
 - `nonce` — 一次性挑战码
