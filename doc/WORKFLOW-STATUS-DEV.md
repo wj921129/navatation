@@ -385,10 +385,11 @@
 - **状态**：已完成并提交。
 
 ### 2026-06-09 任务日志：优化推荐网址弹窗排版间距与主页快捷方式完全对齐
-- **需求背景**：用户要求优化图标拖动中，保持推荐网址页面的占比和间距与主页正常图标一致（目前在推荐弹窗中的尺寸与主页略有参差）。并在拖起元素时，右侧图标应保持稳定不发生位移。
+- **需求背景**：用户要求优化图标拖动中，保持推荐网址页面的占比和间距与主页正常图标一致（目前在推荐弹窗中的尺寸与主页略有参差）。并在拖起元素时，右侧图标应保持稳定不发生位移，且避免与其他卡片重叠。
 - **实施细节**：
   1. **传入系统样式 Props**：在 App.tsx 中向 AddShortcutDialog 传入 iconSpacingX (settings.iconSpacingX)、iconSpacingY (settings.iconSpacingY)、iconTextGap (settings.iconTextGap) 以及 textSize (settings.textSize) 变量，并设定了安全降级 fallback。
   2. **间距与宽度对齐**：在 AddShortcutDialog.tsx 中，将 Draggable 的网址卡片以及新增网址按钮的外层 width 由固定的 iconSize + 24px 放大为与主页完全一致的 iconSize + 32px。
-  3. **文字占比对齐**：将卡片内部的 gap 换成动态 iconTextGap 像素，网站字体的 fontSize 绑定为动态 textSize 像素，确保字号和图标文字间距 100% 一致。
+  3. **文字占比对齐**：将卡片内部 of gap 换成动态 iconTextGap 像素，网站字体的 fontSize 绑定为动态 textSize 像素，确保字号和图标文字间距 100% 一致。
   4. **解决拖动位移塌陷 Bug (Margin 方案)**：针对 dnd 在被拖拽元素变为 fixed 状态时导致 Flex 容器原生 gap 发生空间塌陷（使右侧图标向左缩进一个 gap 距离）的问题，重构为基于 Margin 的负折抵间距布局。将 Droppable 容器的 gap 移除，代以负 margin：margin: -spacingY/2 -spacingX/2；同时在 Draggable 子项和新增网址按钮上显式应用正 margin: spacingY/2 spacingX/2。由于库能正确读取子元素 margin 并在占位符上维持它，彻底解决了原地拖动时右侧图标向左闪移缩进的 Bug。
+  5. **解决新增网址按钮在拖拽时发生重叠 Bug (Disabled Draggable 方案)**：由于“新增网址”按钮是一个普通的 div（不参与 dnd 拖拽排版库的动态偏移计算），当其他图标在拖拽发生平移时，“新增网址”按钮依然保持静止，从而导致移动中的图标与按钮发生视觉重合。重构为将该按钮也用 Draggable 组件包裹并设置 isDragDisabled=true 和唯一的 draggableId。这样使按钮既能物理防拖拽固定在末尾，又参与了 dnd 库的位置偏移计算，当拖动其他项时会自动平滑移开腾出空间，完美防止了卡片与按钮的重叠冲突。
 - **状态**：已完成并测试编译通过。
