@@ -192,6 +192,7 @@ navatation-server/
 | 快捷方式列表 | `nav:shortcut:{userId}` | 30分钟 | 读时缓存，写时淘汰 |
 | 用户配置 | `config:{userId}` | 30分钟 | 读时缓存，写时淘汰 |
 | 推荐分类数据 | `nav:recommended` | 1小时 | 启动时加载，永不淘汰 |
+| **接口幂等性防抖** | `sys:idempotent:{userId}:{method}:{uri}:{hash}` | 默认 5秒 | AOP 拦截器写入，`setIfAbsent` 防重复提交 |
 
 ### 4.3 统一响应结构
 
