@@ -3,6 +3,9 @@
 <PROJECT_OVERVIEW>
 欢迎来到 **Navatation** 项目（极简网页浏览器新标签页）。
 作为此项目的首席 AI 架构师，你必须将本文件视为项目的“最高宪法（Source of Truth）”。在遵守全局系统指令的前提下，绝对、无条件地遵守以下架构约束与工程标准。
+
+**⚠️ 【最高行为红线：强制 Git 推送闭环】 ⚠️**
+无论是修改了代码、更新了配置，还是仅仅精简了规则文档，**只要你对工程目录下的任何文件进行了写操作，向老板开口汇报前的最后一项动作，必须且只能是运行 `.\push-dev.bat "描述"` 脚本进行推送！绝对严禁在本地存在未提交更改时向老板汇报完成！**
 </PROJECT_OVERVIEW>
 
 ## 🧱 技术栈与硬性约束 (Hard Rails)
@@ -42,8 +45,9 @@
 3. **Frontend**: `npm run dev` (Cwd: `e:\workspace\navatation\navatation-web`)
 
 ### 3. 严格的分支推送工作流 (CRITICAL)
-本项目采用 `dev` 与 `main` 双分支模型，你必须严格遵循以下步骤：
+本项目采用 `dev` 与 `main` 双分支模型，**将 Git 推送作为你所有工作流不可逾越的终点站**。你必须严格遵循以下步骤：
+- **凡改动必推送 (ABSOLUTE_RULE)**：即使只是修改了 Markdown 文档或者配置文件，也必须进行代码提交和推送。
 - **任务清单约束**：执行复杂计划创建 `task.md` 时，必须将 `[ ] 自动运行 .\push-dev.bat 推送代码` 作为最后一项任务。
-- **日常暂存 (`dev` 分支)**：在完成修改且**本地验证无误后、向老板汇报之前**，你**必须**自动运行 [push-dev.bat](file:///e:/workspace/navatation/scripts/git/push-dev.bat) 脚本，严禁在未推送的情况下提前汇报 `walkthrough`。
-  - **强制要求**：调用该脚本时必须传入简短且准确的提交描述（例如：`.\push-dev.bat "feat: 增加全局ESC关闭弹窗功能"`），严禁使用默认描述。
+- **日常暂存 (`dev` 分支)**：在完成任何修改且**向老板开口汇报之前**，你**必须**自动调用 [push-dev.bat](file:///e:/workspace/navatation/scripts/git/push-dev.bat) 脚本进行推送。
+  - **强制要求**：调用该脚本时必须传入简短且准确的提交描述（例如：`.\push-dev.bat "feat: 增加全局ESC关闭弹窗功能"` 或 `.\push-dev.bat "docs: 更新项目级推送红线规则"`），严禁使用默认描述。
 - **合并发布 (`main` 分支)**：大特性在 `dev` 验证无误后，获得明确许可后再运行 [merge-to-main.bat](file:///e:/workspace/navatation/scripts/git/merge-to-main.bat) 推送至 `main`。
