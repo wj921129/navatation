@@ -1,50 +1,39 @@
 # CLAUDE.md
 
-本文件为 Claude Code (claude.ai/code) 提供操作本代码库的指导。
+本文件为 Claude Code 提供操作本代码库的指导。
 
 > 全栈极简开发规范与红线请参考 [base_rule.md](file:///e:/workspace/navatation/.gemini/base_rule.md)
+> 项目整体构建与架构红线请参考 [GEMINI.md](file:///e:/workspace/navatation/GEMINI.md)
 
-## 角色定位
+## 角色与原则
 
-你是 **Navatation 项目的智能开发助手（单体全栈智能体）**，直接对用户的需求负责，并独立完成所有执行工作。
-
-- 你直接阅读、编写、修改全栈代码，并在当前主会话中直接执行终端脚本与 Git 命令。
-- **核心思维与原则**：
-  - **第一性原理**：遇到复杂问题深入探讨系统底层技术与最本质的业务逻辑，不盲目套用惯性思维。
-  - **极简改动**：设计方案时极力追求**用最少的代码改动实现功能**，严禁过度设计，保持系统高内聚低耦合。
-  - **主动澄清**：面对任何不确定、含糊的需求时，**必须主动抛出核心问题与用户沟通澄清**（每次最多提问 2 个问题），绝不盲目猜测。
-  - **发挥 Superpowers**：最大化利用你跨越技术栈和全局文件的认知能力，直接在前端、后端和配置文件中进行并发修改，拒绝不必要的角色隔离。
-- 与用户用中文沟通，始终保持专业简洁，并在任务完成后向用户汇总汇报。
+作为 Navatation 的智能开发助手，请遵循以下核心原则：
+- **第一性原理**：深入探讨最本质的业务逻辑，不盲目套用惯性思维。
+- **极简改动**：极力追求用最少的代码改动实现功能，严禁过度设计。
+- **主动澄清**：面对含糊需求必须主动抛出核心问题沟通，绝不盲目猜测。
 
 ## 项目概述
 
 **Navatation** 是一款极简风格的浏览器新标签页应用，支持自定义快捷方式、搜索功能和待办事项管理。
-
 - **前端** (`navatation-web/`): React 18 + TypeScript + Vite + Tailwind CSS 4 + shadcn/ui
 - **后端** (`navatation-admin/`): Spring Boot 3.3.5 + Java 17 + MyBatis-Plus + JWT
 
 ## 通用命令
 
 > 启动和控制命令已整合到独立的可视化控制台菜单脚本中，在 Windows 环境下极力推荐直接运行：
-> - **一键可视化控制台仪表盘**: `scripts/dashboard.bat` (支持以前端、后端、Redis 启动停止、以及代码一键推送的一体化数字交互菜单)
+> - **一键可视化控制台仪表盘**: `scripts/dashboard.bat` 
 > 
 > 同时也保留了底层的分类控制脚本：
-> - **服务控制 (`scripts/service/`)**:
->   - **前端控制**: `scripts/service/start-fe.bat` (启动) / `scripts/service/stop-fe.bat` (停止)
->   - **后端控制**: `scripts/service/start-be.bat` (启动) / `scripts/service/stop-be.bat` (停止)
->   - **Redis控制**: `scripts/service/start-redis.bat` (启动) / `scripts/service/stop-redis.bat` (停止)
-
+> - **服务控制 (`scripts/service/`)**: `start-fe.bat`, `start-be.bat`, `start-redis.bat` 等
 
 ### 📦 代码推送与一键同步
-
 - **推送脚本**: `scripts\git\push-all.bat "提交信息"`（不带参数则进入交互输入模式）
-- **触发规范**: 仅当用户发出“推送git”或“推送代码”等关键词时，AI 方可调用该脚本。
+- **触发规范**: 仅当用户发出“推送git”或“推送代码”等关键词时，方可调用该脚本。
 
 ### 数据库
-
 - MySQL: `jdbc:mysql://localhost:3306/navatation`
 - Redis: `localhost:6379`
-- 数据库脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) (建表) 及 [dml.sql](file:///e:/workspace/navatation/navatation-admin/dml.sql) (初始数据)
+- 数据库脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) 及 [dml.sql](file:///e:/workspace/navatation/navatation-admin/dml.sql)
 
 ## 代码架构
 
@@ -55,12 +44,6 @@ navatation-admin/
 ├── navatation-common/          # 公共工具类、常量、Result 包装器
 ├── navatation-framework/       # 安全 (JWT)、Redis 配置、全局异常处理器
 └── navatation-business/        # 控制器、服务、Mapper、实体类
-    └── src/main/java/com/navatation/business/
-        ├── controller/         # REST API 端点
-        ├── service/            # 业务逻辑
-        ├── mapper/             # MyBatis-Plus 数据访问层
-        ├── entity/             # 数据库实体
-        └── dto/                # 请求/响应对象
 ```
 
 **后端关键模式:**
@@ -69,7 +52,6 @@ navatation-admin/
 - 其他接口需在 Header 中携带 `Authorization: Bearer {token}`
 - MyBatis-Plus 逻辑删除 (`deleted` 字段)
 - API 前缀: `/api/v1`
-- Swagger 文档: http://localhost:8080/swagger-ui.html
 
 ### 前端结构
 
@@ -77,27 +59,15 @@ navatation-admin/
 navatation-web/src/
 ├── app/
 │   ├── components/           # React 组件
-│   │   ├── ui/              # shadcn/ui 组件 (50+ 个)
-│   │   ├── figma/           # Figma 相关组件
-│   │   └── *.tsx            # 功能组件 (LoginDialog, SettingsDialog 等)
 │   ├── services/            # API 客户端和服务模块
-│   │   ├── api-client.ts    # 核心 HTTP 客户端，支持自动刷新令牌
-│   │   ├── auth-service.ts
-│   │   ├── nav-service.ts
-│   │   ├── settings-service.ts
-│   │   └── todo-service.ts
-│   ├── stores/              # 状态管理 (轻量级自定义 store)
-│   │   └── auth-store.ts
+│   ├── stores/              # 状态管理
 │   └── App.tsx              # 主应用组件
-├── styles/
-└── main.tsx
 ```
 
 **前端关键模式:**
-- API 基础 URL 通过 `VITE_API_BASE` 环境变量配置 (默认 `http://localhost:8080/api/v1`)
-- 认证令牌存储在 localStorage 中 (`access_token`, `refresh_token`)
+- API 基础 URL 通过 `VITE_API_BASE` 环境变量配置
+- 认证令牌存储在 localStorage 中
 - 401 响应自动刷新令牌并排队请求
-- 内置 Lucide 图标通过名称引用；支持自定义 URL 和网站 Favicon
 - 游客模式：数据本地存储；登录时若云端为空则自动同步
 
 ## 模块依赖关系
@@ -110,4 +80,3 @@ navatation-web/src/
 - API 规范: [api-specification.md](file:///e:/workspace/navatation/doc/api-specification.md)
 - 后端架构: [backend-architecture.md](file:///e:/workspace/navatation/doc/backend-architecture.md)
 - 任务追踪: [WORKFLOW-STATUS.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS.md)
-- 数据库脚本: [ddl.sql](file:///e:/workspace/navatation/navatation-admin/ddl.sql) 及 [dml.sql](file:///e:/workspace/navatation/navatation-admin/dml.sql)
