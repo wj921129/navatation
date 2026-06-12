@@ -51,3 +51,11 @@
 - **日常暂存 (`dev` 分支)**：在完成任何修改且**向老板开口汇报之前**，你**必须**自动调用 [push-dev.bat](file:///e:/workspace/navatation/scripts/git/push-dev.bat) 脚本进行推送。
   - **强制要求**：调用该脚本时必须传入简短且准确的提交描述（例如：`.\push-dev.bat "feat: 增加全局ESC关闭弹窗功能"` 或 `.\push-dev.bat "docs: 更新项目级推送红线规则"`），严禁使用默认描述。
 - **合并发布 (`main` 分支)**：大特性在 `dev` 验证无误后，获得明确许可后再运行 [merge-to-main.bat](file:///e:/workspace/navatation/scripts/git/merge-to-main.bat) 推送至 `main`。
+
+## 📊 任务闭环与复盘统计 (Task Retrospective & Metrics)
+**强制要求**：在每一次任务（对话）结束并向老板进行最终汇报时，必须在回复的末尾附带一个 `[METRICS]` 模块。
+你需要从自己的上下文记忆中总结本次任务调用过的核心工具：
+1. **MCP & Skills**：调用了哪些外部上下文协议（如 `github-mcp`）或特定能力。
+2. **原生 Tools**：使用了哪些关键的内置工具（如 `grep_search`, `run_command`, `replace_file_content` 等）。
+3. **Subagents**：如果派发了子智能体，简述其类型和工作内容。
+这有助于老板直观地了解你的思考路径和工具使用效能。如果是工程级的精准度量，可指导老板运行 `scripts/metrics/analyze-ai-metrics.ps1` 脚本进行本地 JSONL 日志扫描。
