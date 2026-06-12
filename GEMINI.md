@@ -38,7 +38,12 @@
 ### 1. 可视化仪表盘
 - **入口**：[dashboard.bat](file:///e:/workspace/navatation/scripts/dashboard.bat) (告知老板双击它来快速管理前后端、Redis及Git推送)
 
-### 2. AI 快捷启动链路规则
+### 2. 🤖 多智能体与任务管控红线 (Subagent & Task Management)
+- **定期轮询与状态追踪**：主智能体在派发完后台任务（`run_command`）或子智能体（`invoke_subagent`）后，**绝不能放任不管**。必须通过定时器或在每轮交互中，**每隔一段时间检查子任务状态**，直到确认其已执行完毕。
+- **强制销毁闭环**：一旦确认子任务或后台指令完成（如测试脚本、curl 请求、数据迁移等），必须**立刻**调用 `manage_task` (action: kill) 或 `manage_subagents` (action: kill) 将其清理。**严禁让测试类或一次性任务处于 running 状态一直挂在后台消耗资源。**
+- **后置状态核查**：每次开口向老板汇报前，必须使用 `manage_task` (action: list) 和 `manage_subagents` (action: list) 检查并清理所有闲置的后台残留。
+
+### 3. AI 快捷启动链路规则
 当老板让你“启动前后端”时，必须按以下顺序**直接启动后台任务**：
 1. **Redis**: `.\start-redis.bat` (Cwd: `e:\workspace\navatation\scripts\service`)
 2. **Backend**: `$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run` (Cwd: `e:\workspace\navatation\navatation-admin\navatation-business`)
