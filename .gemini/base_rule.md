@@ -19,9 +19,13 @@ trigger: always_on
 ✅ **正确**（提前 return，扁平化控制流）
 ```java
 public UserVO getUser(Long id) {
-    if (id == null) { return null; }
+    if (id == null) {
+        return null; 
+    }
     User user = userMapper.selectById(id);
-    if (user == null) { throw new BusinessException("用户不存在"); }
+    if (user == null) {
+        throw new BusinessException("用户不存在"); 
+    }
     return convertToVO(user);
 }
 ```
