@@ -43,18 +43,11 @@ Get-Content $logPath | ForEach-Object {
                 }
                 
                 # Check for MCP or specific arguments if needed
-                if ($null -ne $call.arguments) {
-                    # This is a naive check for any MCP related argument, adjust as needed based on actual JSON payload
-                    $isMcp = $false
-                    if ($null -ne $call.arguments.Action -and $call.arguments.Action -eq 'mcp') {
-                        $isMcp = $true
-                        $mcpTarget = $call.arguments.Target
-                    } elseif ($null -ne $call.arguments.serverName) {
-                        $isMcp = $true
-                        $mcpTarget = $call.arguments.serverName
-                    }
-                    
-                    if ($isMcp) {
+                # Check for Eager loaded MCP
+                if ($toolName.StartsWith("mcp_")) {
+                    $parts = $toolName.Split("_")
+                    if ($parts.Length -ge 3) {
+                        $mcpTarget = $parts[1]
                         if ($null -eq $mcpCounts[$mcpTarget]) {
                             $mcpCounts[$mcpTarget] = 1
                         } else {
@@ -62,6 +55,16 @@ Get-Content $logPath | ForEach-Object {
                         }
                     }
                 }
+            }
+        }
+        
+        # Check for lazy loaded MCP tool ServerName via raw regex match on the line to bypass JSON un-stringification issues
+        if ($_ -match 'ServerName\\?["'']\s*:\s*\\?["'']([a-zA-Z0-9_-]+)') {
+            $mcpTarget = $matches[1]
+            if ($null -eq $mcpCounts[$mcpTarget]) {
+                $mcpCounts[$mcpTarget] = 1
+            } else {
+                $mcpCounts[$mcpTarget]++
             }
         }
     } catch {
