@@ -803,7 +803,10 @@ Content-Type: multipart/form-data
 #### 3.5.1 获取推荐分类列表
 
 ```
-GET /api/v1/public/guest-config
+GET /api/v1/public/guest-settings
+GET /api/v1/public/guest-widgets
+GET /api/v1/public/guest-categories
+GET /api/v1/public/guest-shortcuts
 ```
 
 该接口固定读取全局推荐配置，无需登录即可访问。
