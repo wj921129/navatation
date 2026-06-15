@@ -2,5 +2,7 @@
 navatation-admin/
 navatation-web/
 user_data/
+dump.rdb
+*.rdb
 
 .qoder/
