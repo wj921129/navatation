@@ -705,7 +705,10 @@ Authorization: Bearer {accessToken}
   "code": 200,
   "message": "success",
   "data": {
-    "faviconUrl": "https://github.com/favicon.ico",
+    "faviconUrls": [
+      "https://github.com/favicon.ico",
+      "https://github.com/apple-touch-icon.png"
+    ],
     "sourceUrl": "https://github.com"
   },
   "timestamp": 1715760000000
@@ -713,9 +716,10 @@ Authorization: Bearer {accessToken}
 ```
 
 抓取策略：
-1. 请求目标页面 HTML，解析 `<link rel="icon">` 标签提取真实图标地址
+1. 请求目标页面 HTML，解析所有 `<link rel="icon">` 标签（包括 apple-touch-icon、shortcut icon 等），返回多个候选图标 URL
 2. 若解析失败，回退到 `{origin}/favicon.ico`
 3. 超时 5 秒，网络异常时静默降级回退
+4. 结果缓存至 Redis（7 天过期），以 JSON 数组形式存储
 
 #### 3.3.2 批量根据 URL 抓取 Favicon
 
@@ -743,11 +747,16 @@ Authorization: Bearer {accessToken}
   "message": "success",
   "data": {
     "https://github.com": {
-      "faviconUrl": "https://github.com/favicon.ico",
+      "faviconUrls": [
+        "https://github.com/favicon.ico",
+        "https://github.com/apple-touch-icon.png"
+      ],
       "sourceUrl": "https://github.com"
     },
     "https://google.com": {
-      "faviconUrl": "https://www.google.com/favicon.ico",
+      "faviconUrls": [
+        "https://www.google.com/favicon.ico"
+      ],
       "sourceUrl": "https://google.com"
     }
   },
