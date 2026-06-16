@@ -57,9 +57,5 @@
 - **启动 agy 时**：自动在后台运行 `scripts/service/start-all.bat` 以有序拉起 Redis → 后端 Spring Boot → 前端 React 开发服务器，无需手动启动。
 - **关闭 agy 时**：自动触发 `scripts/service/stop-all.bat` 清理进程，关闭前后端及 Redis 进程，释放系统端口。
 
-### 2. 自动命令执行策略
-- **`autoExecutionPolicy`** 设为 `always`（由 `.agents/settings.json` 控制），对安全命令范围内的指令允许自动执行而不频繁打扰用户。
-- **允许的安全命令白名单**：`npm`, `npx`, `mvn`, `git`, `java`, `cmd.exe`, `powershell`。
-
-### 3. 实时代码评审
+### 2. 实时代码评审
 在 `agy` 的 TUI 环境下工作时，AI 助手在每次交付代码时，必须首先保证代码的类型安全性与构建正确性，并在开口汇报前完成 `.\push-dev.bat` 的代码同步。
