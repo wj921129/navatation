@@ -2,6 +2,14 @@
 navatation-admin/
 navatation-web/
 user_data/
+
+# Redis 数据快照
 dump.rdb
 *.rdb
-
+
+# AI 工具产物
+.agents/skills/
+task.md
+
+# 敏感文件
+keys.txt

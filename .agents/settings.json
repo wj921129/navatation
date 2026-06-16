@@ -3,64 +3,34 @@
     "autoExecutionPolicy": "always",
     "confirmCommands": false,
     "allowed": [
-      "*",
-      "run_shell_command",
-      "write_file",
-      "replace",
-      "mcp_filesystem_read_file",
-      "mcp_filesystem_write_file",
-      "mcp_filesystem_edit_file",
-      "mcp_filesystem_create_directory",
-      "mcp_filesystem_move_file",
-      "mcp_shell_run_command",
-      "mcp_mysql_execute_query",
-      "google_web_search",
-      "web_fetch",
-      "Skill(figma:figma-use-figjam)",
-      "Skill(figma:figma-use)",
-      "Skill(figma:figma-generate-design)",
-      "Skill(figma:figma-generate-library)",
-      "Skill(figma:figma-generate-diagram)",
-      "Skill(figma:figma-code-connect)",
-      "Skill(figma:figma-create-design-system-rules)",
-      "Skill(figma:figma-implement-design)",
-      "activate_skill",
-      "Skill(last30days)",
-      "Skill(superpowers:using-superpowers)",
-      "Skill(superpowers:brainstorming)",
-      "Skill(superpowers:writing-plans)",
-      "Skill(superpowers:executing-plans)",
-      "Skill(superpowers:dispatching-parallel-agents)",
-      "Skill(superpowers:subagent-driven-development)",
-      "Skill(superpowers:verification-before-completion)",
-      "Skill(superpowers:test-driven-development)",
-      "Skill(superpowers:systematic-debugging)",
-      "Skill(superpowers:requesting-code-review)",
-      "Skill(superpowers:receiving-code-review)",
-      "Skill(superpowers:finishing-a-development-branch)",
-      "Skill(superpowers:using-git-worktrees)"
+      "*"
     ],
     "allowedCommands": [
       "npm *",
-      "npx *"
+      "npx *",
+      "mvn *",
+      "git *",
+      "java *",
+      "cmd.exe *",
+      "powershell *"
     ]
   },
   "hooks": {
     "SessionStart": [
       {
         "type": "command",
-        "command": "cmd.exe /c \"start cmd.exe /c scripts\\start-be.bat & start cmd.exe /c scripts\\start-fe.bat\"",
+        "command": "cmd.exe /c \"start cmd.exe /c scripts\\service\\start-all.bat\"",
         "timeout": 30,
-        "statusMessage": "启动 Navatation 核心服务",
+        "statusMessage": "启动 Navatation 全部服务 (Redis → Backend → Frontend)",
         "async": true
       }
     ],
     "SessionEnd": [
       {
         "type": "command",
-        "command": "cmd.exe /c \"scripts\\stop-be.bat & scripts\\stop-fe.bat\"",
+        "command": "cmd.exe /c \"scripts\\service\\stop-all.bat\"",
         "timeout": 15,
-        "statusMessage": "正在关闭 Navatation 核心服务",
+        "statusMessage": "正在关闭 Navatation 全部服务",
         "async": true
       }
     ]
