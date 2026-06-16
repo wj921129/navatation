@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 通过注册表脚本在 Windows 11 中恢复经典右键菜单并增加“在 PowerShell 中打开”功能，放置在底部（紧邻“在终端中打开”）。
+**Goal:** 通过注册表脚本在 Windows 11 中恢复经典右键菜单并增加“在 PowerShell 中打开”功能，放置于普通项目区域（使其靠近“在终端中打开”）。
 
 **Architecture:** 编写添加与移除注册表分支的 `.reg` 配置文件，并提供对应的自动化导入与清理测试验证脚本。
 
@@ -33,7 +33,6 @@ Windows Registry Editor Version 5.00
 [HKEY_CLASSES_ROOT\Directory\Background\shell\OpenPowerShell]
 @="在 PowerShell 中打开"
 "Icon"="powershell.exe"
-"Position"="Bottom"
 
 [HKEY_CLASSES_ROOT\Directory\Background\shell\OpenPowerShell\command]
 @="powershell.exe -noexit -command Set-Location -literalPath '%V'"
@@ -42,7 +41,6 @@ Windows Registry Editor Version 5.00
 [HKEY_CLASSES_ROOT\Directory\shell\OpenPowerShell]
 @="在 PowerShell 中打开"
 "Icon"="powershell.exe"
-"Position"="Bottom"
 
 [HKEY_CLASSES_ROOT\Directory\shell\OpenPowerShell\command]
 @="powershell.exe -noexit -command Set-Location -literalPath '%V'"
@@ -51,7 +49,6 @@ Windows Registry Editor Version 5.00
 [HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell]
 @="在 PowerShell 中打开"
 "Icon"="powershell.exe"
-"Position"="Bottom"
 
 [HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell\command]
 @="powershell.exe -noexit -command Set-Location -literalPath '%V'"

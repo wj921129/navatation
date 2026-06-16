@@ -1,10 +1,10 @@
 # Windows 右键菜单添加“在 PowerShell 中打开”设计说明书
 
-本项目旨在通过修改 Windows 注册表，在 Windows 11 的右键菜单第一级中添加“在 PowerShell 中打开”选项，并将其置于底部（靠近“在终端中打开”）。
+本项目旨在通过修改 Windows 注册表，在 Windows 11 的右键菜单第一级中添加“在 PowerShell 中打开”选项，并将其与“在终端中打开”放置在相近的区域。
 
 ## 1. 方案背景与架构设计
 
-在 Windows 11 中，默认的现代右键菜单（Fluent Context Menu）为了保证安全和样式统一，隐藏了传统的第三方 shell 注册项，只允许将它们展示在“显示更多选项”子菜单中。
+在 Windows 11 中，默认 the 现代右键菜单（Fluent Context Menu）为了保证安全和样式统一，隐藏了传统的第三方 shell 注册项，只允许将它们展示在“显示更多选项”子菜单中。
 为了能在第一级主右键菜单中直接添加自定义项，我们采用**恢复 Windows 10 经典右键菜单样式**的方案，这样自定义注册项即可直接生效并显示在第一级。
 
 ## 2. 详细配置设计
@@ -23,7 +23,6 @@
 每个配置点的数据定义如下：
 - **默认值 (Default)**: `在 PowerShell 中打开` (菜单显示的文本)
 - **Icon**: `powershell.exe` (直接关联系统自带的 PowerShell 图标)
-- **Position**: `Bottom` (指定菜单项位于底部，保证在“在终端中打开”附近)
 
 对应的命令执行子项：
 - `...\OpenPowerShell\command` 的**默认值 (Default)**:
