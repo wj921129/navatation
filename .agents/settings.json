@@ -1,7 +1,7 @@
 {
   "tools": {
     "autoExecutionPolicy": "always",
-    "confirmCommands": false,
+    "confirmCommands": true,
     "allowedCommands": [
       "npm *",
       "npx *",
