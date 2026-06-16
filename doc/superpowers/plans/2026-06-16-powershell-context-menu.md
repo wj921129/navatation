@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 通过注册表脚本在 Windows 11 中恢复经典右键菜单并增加“在 PowerShell 中打开”功能，放置于普通项目区域（使其靠近“在终端中打开”）。
+**Goal:** 通过注册表脚本在 Windows 11 中恢复经典右键菜单并增加“在 PowerShell 中打开 (管理员)”功能，启用安全盾牌并实现自动提权。
 
 **Architecture:** 编写添加与移除注册表分支的 `.reg` 配置文件，并提供对应的自动化导入与清理测试验证脚本。
 
@@ -31,27 +31,30 @@ Windows Registry Editor Version 5.00
 
 ; 2. 文件夹空白处右键
 [HKEY_CLASSES_ROOT\Directory\Background\shell\OpenPowerShell]
-@="在 PowerShell 中打开"
+@="在 PowerShell 中打开 (管理员)"
 "Icon"="powershell.exe"
+"HasLUAShield"=""
 
 [HKEY_CLASSES_ROOT\Directory\Background\shell\OpenPowerShell\command]
-@="powershell.exe -noexit -command Set-Location -literalPath '%V'"
+@="powershell.exe -Command \"Start-Process powershell.exe -ArgumentList '-NoExit', '-Command', 'Set-Location -LiteralPath ''%V''' -Verb RunAs\""
 
 ; 3. 文件夹对象右键
 [HKEY_CLASSES_ROOT\Directory\shell\OpenPowerShell]
-@="在 PowerShell 中打开"
+@="在 PowerShell 中打开 (管理员)"
 "Icon"="powershell.exe"
+"HasLUAShield"=""
 
 [HKEY_CLASSES_ROOT\Directory\shell\OpenPowerShell\command]
-@="powershell.exe -noexit -command Set-Location -literalPath '%V'"
+@="powershell.exe -Command \"Start-Process powershell.exe -ArgumentList '-NoExit', '-Command', 'Set-Location -LiteralPath ''%V''' -Verb RunAs\""
 
 ; 4. 磁盘驱动器右键
 [HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell]
-@="在 PowerShell 中打开"
+@="在 PowerShell 中打开 (管理员)"
 "Icon"="powershell.exe"
+"HasLUAShield"=""
 
 [HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell\command]
-@="powershell.exe -noexit -command Set-Location -literalPath '%V'"
+@="powershell.exe -Command \"Start-Process powershell.exe -ArgumentList '-NoExit', '-Command', 'Set-Location -LiteralPath ''%V''' -Verb RunAs\""
 ```
 
 - [ ] **Step 2: 编写移除/回滚菜单注册表脚本 `scripts/tools/remove-powershell-menu.reg`**
@@ -113,7 +116,7 @@ if (!(Test-Path $shellPath)) {
 }
 
 $shellCommand = (Get-ItemProperty -Path $shellPath)."(default)"
-if ($shellCommand -notlike "*powershell.exe*") {
+if ($shellCommand -notlike "*Start-Process*") {
     Write-Error "测试失败：OpenPowerShell 命令数据不匹配"
     exit 1
 }
