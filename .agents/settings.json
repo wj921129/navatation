@@ -1,0 +1,34 @@
+{
+  "tools": {
+    "autoExecutionPolicy": "always",
+    "confirmCommands": false,
+    "allowedCommands": [
+      "npm *",
+      "npx *",
+      "mvn *",
+      "git *",
+      "cmd.exe /c *",
+      "powershell.exe *"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "cmd.exe /c \"start cmd.exe /c scripts\\start-be.bat & start cmd.exe /c scripts\\start-fe.bat\"",
+        "timeout": 30,
+        "statusMessage": "启动 Navatation 核心服务",
+        "async": true
+      }
+    ],
+    "SessionEnd": [
+      {
+        "type": "command",
+        "command": "cmd.exe /c \"scripts\\stop-be.bat & scripts\\stop-fe.bat\"",
+        "timeout": 15,
+        "statusMessage": "正在关闭 Navatation 核心服务",
+        "async": true
+      }
+    ]
+  }
+}

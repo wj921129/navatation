@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mysql": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-mysql",
+        "mysql://root:root@localhost:3306/navatation"
+      ]
+    }
+  }
+}
