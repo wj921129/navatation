@@ -1,0 +1,9 @@
+Windows Registry Editor Version 5.00
+
+; 1. 恢复 Windows 11 原生右键菜单样式
+[-HKEY_CURRENT_USER\Software\Classes\CLSID\{5A292D82-B836-40B3-8897-F70C340F4844}]
+
+; 2. 删除注入的 PowerShell 选项
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\OpenPowerShell]
+[-HKEY_CLASSES_ROOT\Directory\shell\OpenPowerShell]
+[-HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell]
