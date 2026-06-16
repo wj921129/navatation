@@ -27,9 +27,9 @@
 - **日常推送 (`dev` 分支)**：完成任何修改且**向老板开口汇报之前**，必须自动调用 [push-dev.bat](file:///E:/workspace/navatation/scripts/git/push-dev.bat) 推送。调用时必须传入简短准确的提交描述（例如：`.\push-dev.bat "feat: 增加全局ESC关闭弹窗功能"`），严禁使用默认描述。执行复杂计划创建 `task.md` 时，必须将 `[ ] 自动运行 .\push-dev.bat 推送代码` 作为最后一项任务。
 - **合并发布 (`main` 分支)**：大特性在 `dev` 验证无误后，获得明确许可后再运行 [merge-to-main.bat](file:///E:/workspace/navatation/scripts/git/merge-to-main.bat) 推送至 `main`。
 
-## 📊 PHASE 5: Git 推送 + METRICS 复盘 (Pipeline 收尾)
+## 📊 任务收尾: Git 推送 + METRICS 复盘 (收尾闭环)
 
-> **Pipeline 衔接**：此为用户级 Pipeline（PHASE 0-4）的项目级收尾阶段。当 PHASE 4 验证通过后，必须立即进入本阶段。
+> **收尾衔接**：此为任务交付的最终阶段。在本地修改与验证通过后，必须立即进入本阶段。
 
 ### 5.1 Git 推送闭环
 **⚠️ 【最高行为红线】 ⚠️**
