@@ -1,3 +1,7 @@
 # AGENTS.md - AI 引导重定向 (Multi-Agents)
 
-👉 请直接阅读并严格遵守项目主规范：**[GEMINI.md](file:///C:/workspace/my-workspace/navatation/GEMINI.md)**
+👉 请直接阅读并严格遵守项目主规范：**[GEMINI.md](file:///E:/workspace/navatation/GEMINI.md)**
+
+子规范（与主规范同等约束力）：
+- **[WORKFLOW.md](file:///E:/workspace/navatation/WORKFLOW.md)** — 工作流与 Pipeline 规范
+- **[CODING-STANDARDS.md](file:///E:/workspace/navatation/CODING-STANDARDS.md)** — 核心编码与安全规范
