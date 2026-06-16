@@ -6,7 +6,7 @@
 
 在 Windows 11 中，默认的现代右键菜单（Fluent Context Menu）为了保证安全和样式统一，隐藏了传统的第三方 shell 注册项，只允许将它们展示在“显示更多选项”子菜单中。
 为了能在第一级主右键菜单中直接添加自定义项，我们采用**恢复 Windows 10 经典右键菜单样式**的方案，这样自定义注册项即可直接生效并显示在第一级。
-为满足管理员权限运行的需求，菜单指令使用 PowerShell 的 `Start-Process -Verb RunAs` 进行动态提权启动，并通过 `HasLUAShield` 展示系统级的安全盾牌图标。
+为满足管理员权限运行并且以黑色背景样式（而非默认蓝色）打开的需求，菜单指令使用 `Start-Process cmd.exe -Verb RunAs` 提权拉起黑色 CMD 宿主，并使用 `/c` 参数在该窗口中启动并托管 `powershell.exe`。当 PowerShell 退出时，宿主窗口同步自动关闭。
 
 ## 2. 详细配置设计
 
@@ -19,7 +19,7 @@
 在以下三个注册表配置点添加相同的子项结构：
 1. `HKEY_CLASSES_ROOT\Directory\shell\OpenPowerShell` (文件夹右键)
 2. `HKEY_CLASSES_ROOT\Directory\Background\shell\OpenPowerShell` (文件夹内空白处右键)
-3. `HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell` (磁盘盘符右键)
+3. `HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell` (磁盘驱动器右键)
 
 每个配置点的数据定义如下：
 - **默认值 (Default)**: `在 PowerShell 中打开 (管理员)` (菜单显示的文本)
@@ -29,7 +29,7 @@
 对应的命令执行子项：
 - `...\OpenPowerShell\command` 的**默认值 (Default)**:
   ```cmd
-  powershell.exe -Command "Start-Process powershell.exe -ArgumentList '-NoExit', '-Command', 'Set-Location -LiteralPath ''%V''' -Verb RunAs"
+  powershell.exe -Command "Start-Process cmd.exe -ArgumentList '/c', 'powershell.exe -NoExit -Command Set-Location -LiteralPath ''%V''' -Verb RunAs"
   ```
 
 ## 3. 回滚方案 (卸载脚本)
@@ -46,7 +46,7 @@
 1. **导入注册表**：双击生成的 `.reg` 文件，写入系统注册表。
 2. **重启资源管理器**：在任务管理器中重启 `explorer.exe`，或者注销并重新登录系统以使菜单生效。
 3. **右键验证**：
-   - 选中文件夹右键：点击“在 PowerShell 中打开 (管理员)”，验证是否能弹出 UAC 提权并成功在当前选中目录启动。
-   - 文件夹空白处右键：点击“在 PowerShell 中打开 (管理员)”，验证是否能成功提权启动。
-   - 磁盘驱动器右键：点击“在 PowerShell 中打开 (管理员)”，验证是否在驱动器根目录提权启动。
-   - 检查其位置是否靠近或位于“在终端中打开”的下方。
+   - 选中文件夹右键：点击“在 PowerShell 中打开 (管理员)”，验证是否能在黑底命令行窗口中加载 PowerShell，并定位至选中目录。
+   - 文件夹空白处右键：点击“在 PowerShell 中打开 (管理员)”，验证是否在黑底窗口定位启动。
+   - 磁盘驱动器右键：点击“在 PowerShell 中打开 (管理员)”，验证是否在黑底窗口定位启动。
+   - 输入 `exit` 退出，验证窗口是否同步自动关闭。

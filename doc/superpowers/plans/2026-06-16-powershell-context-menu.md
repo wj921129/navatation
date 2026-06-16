@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 通过注册表脚本在 Windows 11 中恢复经典右键菜单并增加“在 PowerShell 中打开 (管理员)”功能，启用安全盾牌并实现自动提权。
+**Goal:** 通过注册表脚本在 Windows 11 中恢复经典右键菜单并增加“在 PowerShell 中打开 (管理员)”功能，采用黑色控制台宿主（CMD）继承黑色配色样式，并实现自动提权。
 
 **Architecture:** 编写添加与移除注册表分支的 `.reg` 配置文件，并提供对应的自动化导入与清理测试验证脚本。
 
@@ -36,7 +36,7 @@ Windows Registry Editor Version 5.00
 "HasLUAShield"=""
 
 [HKEY_CLASSES_ROOT\Directory\Background\shell\OpenPowerShell\command]
-@="powershell.exe -Command \"Start-Process powershell.exe -ArgumentList '-NoExit', '-Command', 'Set-Location -LiteralPath ''%V''' -Verb RunAs\""
+@="powershell.exe -Command \"Start-Process cmd.exe -ArgumentList '/c', 'powershell.exe -NoExit -Command Set-Location -LiteralPath ''%V''' -Verb RunAs\""
 
 ; 3. 文件夹对象右键
 [HKEY_CLASSES_ROOT\Directory\shell\OpenPowerShell]
@@ -45,7 +45,7 @@ Windows Registry Editor Version 5.00
 "HasLUAShield"=""
 
 [HKEY_CLASSES_ROOT\Directory\shell\OpenPowerShell\command]
-@="powershell.exe -Command \"Start-Process powershell.exe -ArgumentList '-NoExit', '-Command', 'Set-Location -LiteralPath ''%V''' -Verb RunAs\""
+@="powershell.exe -Command \"Start-Process cmd.exe -ArgumentList '/c', 'powershell.exe -NoExit -Command Set-Location -LiteralPath ''%V''' -Verb RunAs\""
 
 ; 4. 磁盘驱动器右键
 [HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell]
@@ -54,7 +54,7 @@ Windows Registry Editor Version 5.00
 "HasLUAShield"=""
 
 [HKEY_CLASSES_ROOT\Drive\shell\OpenPowerShell\command]
-@="powershell.exe -Command \"Start-Process powershell.exe -ArgumentList '-NoExit', '-Command', 'Set-Location -LiteralPath ''%V''' -Verb RunAs\""
+@="powershell.exe -Command \"Start-Process cmd.exe -ArgumentList '/c', 'powershell.exe -NoExit -Command Set-Location -LiteralPath ''%V''' -Verb RunAs\""
 ```
 
 - [ ] **Step 2: 编写移除/回滚菜单注册表脚本 `scripts/tools/remove-powershell-menu.reg`**
@@ -116,7 +116,7 @@ if (!(Test-Path $shellPath)) {
 }
 
 $shellCommand = (Get-ItemProperty -Path $shellPath)."(default)"
-if ($shellCommand -notlike "*Start-Process*") {
+if ($shellCommand -notlike "*cmd.exe*") {
     Write-Error "测试失败：OpenPowerShell 命令数据不匹配"
     exit 1
 }
@@ -185,7 +185,7 @@ Stop-Process -Name explorer -Force
 *(Windows 资源管理器进程 explorer.exe 将自动重新拉起)*
 
 - [ ] **Step 3: 清理临时测试文件**
-我们在运行测试后，已将系统回退到了默认状态。刚才我们在 Step 1 重新导入了配置，为保持系统干净，仅保留 add/remove 配置脚本和测试脚本，且确保系统注册表处于已应用最新 add 配置状态。
+我们在运行测试后，已将系统回退到了默认状态。刚才我们在 Step 1 重新导入了配置，为保持系统干净，仅保留 add/remove 配置脚本 and 测试脚本，且确保系统注册表处于已应用最新 add 配置状态。
 
 - [ ] **Step 4: 自动运行 `.\push-dev.bat` 推送代码**
 运行：
