@@ -39,7 +39,7 @@ navatation/
 │   ├── service/                 # 服务启停脚本
 │   ├── metrics/                 # AI 度量分析脚本
 │   └── tools/                   # 辅助工具
-└── .gemini/base_rule.md         # 编码规范（唯一权威）
+└── .agents/base_rule.md         # 编码规范（唯一权威）
 ```
 
 ## 🧱 技术栈清单 (Tech Stack)
@@ -50,7 +50,7 @@ navatation/
 | **前端** | React 18 (TypeScript) + Vite + Tailwind CSS 4 + shadcn/ui |
 | **后端** | Spring Boot 3.3.5 + Java 17 + MyBatis-Plus + MySQL + Redis |
 
-> 编码红线与约束详见 [base_rule.md](file:///c:/workspace/my-workspace/navatation/.gemini/base_rule.md)
+> 编码红线与约束详见 [base_rule.md](file:///c:/workspace/my-workspace/navatation/.agents/base_rule.md)
 
 ## 📜 严格的 DDD 文档驱动开发 (Doc-Driven)
 **代码即文档，文档即代码。** 在进行以下变动时，必须同步更新对应的文档：
