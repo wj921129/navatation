@@ -4,7 +4,7 @@
 欢迎来到 **Navatation** 项目（极简网页浏览器新标签页）。
 作为此项目的首席 AI 架构师，你必须将本文件视为项目的"最高宪法（Source of Truth）"。在遵守全局系统指令的前提下，绝对、无条件地遵守以下架构约束与工程标准。
 
-**⚠️ 本项目遵循用户级 Pipeline（PHASE 0-4）+ 项目级 PHASE 5 的完整对话工作流引擎。所有工程目录写操作完成后，必须执行 PHASE 5 Git 推送闭环，详见 [WORKFLOW.md](file:///E:/workspace/navatation/.agents/WORKFLOW.md)。 ⚠️**
+**⚠️ 本项目遵循用户级 Pipeline（PHASE 0-4）+ 项目级 PHASE 5 的完整对话工作流引擎。所有工程目录写操作完成后，必须执行 PHASE 5 Git 推送闭环，详见 [WORKFLOW.md](file:///E:/workspace/navatation/.agents/rules/WORKFLOW.md)。 ⚠️**
 </PROJECT_OVERVIEW>
 
 ## 📁 项目结构地图
@@ -40,8 +40,9 @@ navatation/
 │   ├── metrics/                 # AI 度量分析脚本
 │   └── tools/                   # 辅助工具
 ├── .agents/                     # AI 助手配置与规范
-│   ├── WORKFLOW.md              # 工作流与 Pipeline 规范
-│   └── CODING-STANDARDS.md      # 核心编码与安全规范
+│   ├── rules/                   # 项目级规则规范
+│   │   ├── WORKFLOW.md          # 工作流与 Pipeline 规范
+│   │   └── CODING-STANDARDS.md  # 核心编码与安全规范
 ├── GEMINI.md                   # 项目总入口（最高宪法）
 ```
 
@@ -59,7 +60,7 @@ navatation/
 
 | 子规范 | 文件 | 核心内容 |
 |:---|:---|:---|
-| **工作流规范** | [WORKFLOW.md](file:///E:/workspace/navatation/.agents/WORKFLOW.md) | DDD 文档驱动、构建运行、分支推送、PHASE 5 Pipeline 收尾、agy CLI 配置 |
-| **编码规范** | [CODING-STANDARDS.md](file:///E:/workspace/navatation/.agents/CODING-STANDARDS.md) | 通用编码红线、前端规范、后端规范、安全红线、错误处理与测试 |
+| **工作流规范** | [WORKFLOW.md](file:///E:/workspace/navatation/.agents/rules/WORKFLOW.md) | DDD 文档驱动、构建运行、分支推送、PHASE 5 Pipeline 收尾、agy CLI 配置 |
+| **编码规范** | [CODING-STANDARDS.md](file:///E:/workspace/navatation/.agents/rules/CODING-STANDARDS.md) | 通用编码红线、前端规范、后端规范、安全红线、错误处理与测试 |
 
 > **⚠️ 重要提示**：上述两个子规范文件是本宪法的有机组成部分，具有与本文件相同的最高约束力。违反子规范等同于违反本文件。
