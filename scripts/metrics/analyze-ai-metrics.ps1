@@ -2,7 +2,7 @@ param (
     [string]$ConversationId
 )
 
-$brainPath = "$env:USERPROFILE\.gemini\antigravity\brain"
+$brainPath = "$env:USERPROFILE\.gemini\antigravity-cli\brain"
 
 if ([string]::IsNullOrWhiteSpace($ConversationId)) {
     Write-Host "Please provide a Conversation ID." -ForegroundColor Yellow

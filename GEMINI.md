@@ -45,7 +45,11 @@ navatation/
 │   ├── backend-architecture.md  # 后端架构设计
 │   ├── frontend-architecture.md # 前端架构设计
 │   ├── WORKFLOW-STATUS-DEV.md   # 开发任务看板
-│   └── rsa-login-encryption-design.md  # RSA 加密设计
+│   ├── USER-GUIDE.md            # 用户手册 & 版本更新日志
+│   ├── rsa-login-encryption-design.md  # RSA 加密设计
+│   ├── favicon-local-storage-design.md  # favicon本地化存储设计
+│   ├── plans/                   # 各项功能的实现计划
+│   └── specs/                   # 各项功能的设计方案
 ├── scripts/                     # 自动化脚本
 │   ├── dashboard.bat            # 可视化管理仪表盘
 │   ├── git/                     # Git 推送/合并脚本
@@ -80,8 +84,8 @@ navatation/
 
 ## 🛠️ AI 提速与项目结构索引 (Codegraph Indexing)
 为了降低 AI 交互的 Token 消耗并大幅提升大型重构与代码查询的效率，本项目集成了 **codegraph** 智能图谱分析。
-- **初始化脚本**：运行 [init-codegraph.bat](file:///C:/workspace/my-workspace/navatation/scripts/tools/init-codegraph.bat) 脚本进行项目的 AST 索引定制化配置。
-- **启动脚本**：运行 [start-codegraph.bat](file:///C:/workspace/my-workspace/navatation/scripts/tools/start-codegraph.bat) 脚本即可。
+- **初始化脚本**：运行 [init-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/init-codegraph.bat) 脚本进行项目的 AST 索引定制化配置。
+- **启动脚本**：运行 [start-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/start-codegraph.bat) 脚本即可。
 - **配置与机制**：项目在全局 MCP (`mcp_config.json`) 中注册了 codegraph。它基于 Tree-sitter 在本地为 `navatation-web` 与 `navatation-admin` 构建 AST 知识图谱，使 AI 助手能通过 Model Context Protocol (MCP) 实时、按需查询符号依赖（如 callers/callees/定义），无需频繁读取源文件，极大节省 Token 开销。
 
 

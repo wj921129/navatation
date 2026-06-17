@@ -13,3 +13,18 @@ task.md
 
 # 敏感文件
 keys.txt
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDEs and editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Log files
+*.log

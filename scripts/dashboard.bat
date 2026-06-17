@@ -1,214 +1,108 @@
 @echo off
-
+chcp 65001 > nul
 title Navatation Service and Git Control Panel
 
-
-
 :menu
-
 cls
-
 echo ============================================
-
-echo   Navatation ÏîÄ¿Ò»¼ü¿ØÖÆÃæ°åÒÇ±íÅÌ
-
+echo   Navatation ä»ªè¡¨ç›˜æ§åˆ¶é¢æ¿
 echo ============================================
-
-echo   [·şÎñÆô¶¯/Í£Ö¹]
-
-echo     1. Æô¶¯Ç°¶Ë·şÎñ (Vite)
-
-echo     2. Í£Ö¹Ç°¶Ë·şÎñ (Port 5173)
-
-echo     3. Æô¶¯ºó¶Ë·şÎñ (Spring Boot)
-
-echo     4. Í£Ö¹ºó¶Ë·şÎñ (Port 8080)
-
-echo     5. Æô¶¯ Redis ·şÎñ
-
-echo     6. Í£Ö¹ Redis ·şÎñ
-
+echo   [æœåŠ¡å¯åœ]
+echo     1. å¯åŠ¨å‰ç«¯æœåŠ¡ (Vite)
+echo     2. åœæ­¢å‰ç«¯æœåŠ¡ (Port 5173)
+echo     3. å¯åŠ¨åç«¯æœåŠ¡ (Spring Boot)
+echo     4. åœæ­¢åç«¯æœåŠ¡ (Port 8080)
+echo     5. å¯åŠ¨ Redis æœåŠ¡
+echo     6. åœæ­¢ Redis æœåŠ¡
 echo.
-
-echo   [Ò»¼ü²Ù×÷]
-
-echo     7. Ò»¼üÆô¶¯ËùÓĞ·şÎñ (Redis -> ºó¶Ë -> Ç°¶Ë)
-
-echo     8. Ò»¼üÍ£Ö¹ËùÓĞ·şÎñ (Ç°¶Ë -> ºó¶Ë -> Redis)
-
+echo   [ä¸€é”®æ“ä½œ]
+echo     7. ä¸€é”®å¯åŠ¨æ‰€æœ‰æœåŠ¡ (Redis -> åç«¯ -> å‰ç«¯)
+echo     8. ä¸€é”®åœæ­¢æ‰€æœ‰æœåŠ¡ (å‰ç«¯ -> åç«¯ -> Redis)
 echo.
-
-echo   [°æ±¾¹ÜÀí]
-
-echo     9. Ò»¼üÍÆËÍËùÓĞ²Ö¿âµ½ dev ·ÖÖ§
-
-echo     10. Ò»¼üÀ­È¡ËùÓĞ²Ö¿âµÄ dev ´úÂë
-
+echo   [ç‰ˆæœ¬æ§åˆ¶]
+echo     9. ä¸€é”®æ¨é€æ‰€æœ‰ä»“åº“è‡³ dev åˆ†æ”¯
+echo     10. ä¸€é”®æ‹‰å–æ‰€æœ‰ä»“åº“ dev æœ€æ–°ä»£ç 
 echo.
-
-echo   [ÏµÍ³]
-
-echo     11. ÍË³ö¿ØÖÆÃæ°å
-
+echo   [ç³»ç»Ÿ]
+echo     11. é€€å‡ºä»ªè¡¨ç›˜
 echo ============================================
-
-set /p choice="ÇëÑ¡Ôñ²Ù×÷ (1-11): "
-
-
+set /p choice="è¯·è¾“å…¥é€‰æ‹© (1-11): "
 
 if "%choice%"=="1" goto start_fe
-
 if "%choice%"=="2" goto stop_fe
-
 if "%choice%"=="3" goto start_be
-
 if "%choice%"=="4" goto stop_be
-
 if "%choice%"=="5" goto start_redis
-
 if "%choice%"=="6" goto stop_redis
-
 if "%choice%"=="7" goto start_all
-
 if "%choice%"=="8" goto stop_all
-
 if "%choice%"=="9" goto push_dev
-
 if "%choice%"=="10" goto pull_dev
-
 if "%choice%"=="11" goto exit
-
 goto menu
-
-
 
 :start_fe
-
-echo Æô¶¯Ç°¶Ë·şÎñ...
-
+echo æ­£åœ¨å¯åŠ¨å‰ç«¯æœåŠ¡...
 start "Navatation Frontend" cmd /c "%~dp0service\start-fe.bat"
-
 pause
-
 goto menu
-
-
 
 :stop_fe
-
-echo Í£Ö¹Ç°¶Ë·şÎñ...
-
+echo æ­£åœ¨åœæ­¢å‰ç«¯æœåŠ¡...
 call "%~dp0service\stop-fe.bat"
-
 pause
-
 goto menu
-
-
 
 :start_be
-
-echo Æô¶¯ºó¶Ë·şÎñ...
-
+echo æ­£åœ¨å¯åŠ¨åç«¯æœåŠ¡...
 start "Navatation Backend" cmd /c "%~dp0service\start-be.bat"
-
 pause
-
 goto menu
-
-
 
 :stop_be
-
-echo Í£Ö¹ºó¶Ë·şÎñ...
-
+echo æ­£åœ¨åœæ­¢åç«¯æœåŠ¡...
 call "%~dp0service\stop-be.bat"
-
 pause
-
 goto menu
-
-
 
 :start_redis
-
-echo Æô¶¯ Redis ·şÎñ...
-
+echo æ­£åœ¨å¯åŠ¨ Redis æœåŠ¡...
 start "Navatation Redis" cmd /c "%~dp0service\start-redis.bat"
-
 pause
-
 goto menu
-
-
 
 :stop_redis
-
-echo Í£Ö¹ Redis ·şÎñ...
-
+echo æ­£åœ¨åœæ­¢ Redis æœåŠ¡...
 call "%~dp0service\stop-redis.bat"
-
 pause
-
 goto menu
-
-
 
 :start_all
-
-echo Ò»¼üÆô¶¯·şÎñ...
-
+echo ä¸€é”®å¯åŠ¨æ‰€æœ‰æœåŠ¡ä¸­...
 call "%~dp0service\start-all.bat"
-
 pause
-
 goto menu
-
-
 
 :stop_all
-
-echo Ò»¼üÍ£Ö¹·şÎñ...
-
+echo ä¸€é”®åœæ­¢æ‰€æœ‰æœåŠ¡ä¸­...
 call "%~dp0service\stop-all.bat"
-
 pause
-
 goto menu
-
-
 
 :push_dev
-
-set /p msg="ÇëÊäÈë±¾µØÌá½»µÄÃèÊöĞÅÏ¢: "
-
+set /p msg="è¯·è¾“å…¥æœ¬æ¬¡æäº¤ä¿¡æ¯: "
 if "%msg%"=="" set msg=dev: auto update code via dashboard
-
-echo Ò»¼üÍÆËÍËùÓĞ²Ö¿âµ½ dev ·ÖÖ§...
-
+echo ä¸€é”®æ¨é€æ‰€æœ‰ä»“åº“è‡³ dev åˆ†æ”¯...
 call "%~dp0git\push-dev.bat" "%msg%"
-
 pause
-
 goto menu
-
-
 
 :pull_dev
-
-echo Ò»¼üÀ­È¡ËùÓĞ²Ö¿âµÄ dev ·ÖÖ§×îĞÂ´úÂë...
-
+echo ä¸€é”®æ‹‰å–æ‰€æœ‰ä»“åº“ dev åˆ†æ”¯æœ€æ–°ä»£ç ...
 call "%~dp0git\pull-dev.bat"
-
 pause
-
 goto menu
 
-
-
 :exit
-
-echo ¸ĞĞ»Ê¹ÓÃ£¬ÔÙ¼û£¡
-
+echo æ„Ÿè°¢ä½¿ç”¨ï¼Œå†è§ï¼
 exit /b
-

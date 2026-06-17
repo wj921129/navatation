@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const srcDir = path.join(__dirname, '../navatation-web/src');
+const srcDir = path.join(__dirname, '../../navatation-web/src');
 const dateStr = '2026-06-10';
 
 function walkDir(dir) {

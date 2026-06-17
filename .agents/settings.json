@@ -16,7 +16,11 @@
     ]
   },
   "hooks": {
-    "SessionStart": [],
-    "SessionEnd": []
+    "SessionStart": [
+      "cmd.exe /c E:\\workspace\\navatation\\scripts\\service\\start-all.bat"
+    ],
+    "SessionEnd": [
+      "cmd.exe /c E:\\workspace\\navatation\\scripts\\service\\stop-all.bat"
+    ]
   }
 }

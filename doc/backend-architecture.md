@@ -13,8 +13,8 @@
 | 安全 | Spring Security | 6.x | 声明式安全控制，与 Spring Boot 深度集成 |
 | 认证 | JWT (jjwt) | 0.12.x | 无状态 Token，适合前后端分离 |
 | ORM | MyBatis-Plus | 3.5.x | 轻量级 ORM，Lambda 查询 |
-| 数据库 | MySQL | 5.7 | 成熟稳定，满足结构化存储需求 |
-| 缓存 | Redis | 3.2.100 | 高性能缓存，Token 黑名单 |
+| 数据库 | MySQL | 8.0.x | 成熟稳定，满足结构化存储需求 |
+| 缓存 | Redis | 7.x | 高性能缓存，Token 黑名单 |
 | 构建 | Maven | 3.9.x | Java 生态标准构建工具 |
 | API文档 | SpringDoc OpenAPI | 2.x | 自动生成 Swagger 文档 |
 
@@ -40,7 +40,7 @@
 │                      DAO Layer                          │
 │       Mapper 接口 — 数据持久化，SQL 执行                │
 ├─────────────────────────────────────────────────────────┤
-│                  MySQL 5.7  │  Redis 3.2.100                │
+│                   MySQL 8.0   │  Redis 7.x                   │
 │                    (持久化)    (缓存 / Token)            │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -114,7 +114,7 @@ public interface UserMapper extends BaseMapper<User> {
 ## 三、项目模块结构
 
 ```
-navatation-server/
+navatation-admin/
 ├── pom.xml                          # 父 POM，依赖管理
 ├── navatation-common/               # 公共模块
 │   ├── pom.xml
@@ -215,6 +215,25 @@ navatation-server/
 | 409 | 数据冲突（如用户名重复） |
 | 500 | 服务器内部错误 |
 
+### 4.4 Facade 门面解耦模式
+为了使 Controller 层和 Service 层保持低耦合，避免 Service 层直接暴露内部复杂的业务逻辑，引入了 Facade 解耦层：
+- **职责**：作为 Controller 和底层多个 Service / Mapper 之间的中介，负责 DTO 的组装、参数校验后的转换与复杂多服务协同。
+- **好处**：极大地简化了 Controller 的代码，同时使得具体的 Service（如 UserService，SettingsService）职责更单一。
+
+### 4.5 @Idempotent 幂等防抖注解与 AOP 切面
+为了防止重复提交，后端引入了 `@Idempotent` 防抖机制：
+- **实现原理**：通过自定义注解 `@Idempotent` 标记需要防抖的接口，使用 Spring AOP 拦截被标记的方法。
+- **拦截逻辑**：
+  1. 生成唯一 Redis Key：`sys:idempotent:{userId}:{method}:{uri}:{hash}`。
+  2. 调用 Redis 的 `setIfAbsent(key, "1", timeout)`。
+  3. 如果写入成功，则继续执行方法；如果写入失败（说明在防抖时间内已有相同请求在处理），直接拦截并抛出自定义防抖异常，全局异常处理器捕获后返回防重复提交的提示。
+- **默认防抖时长**：5 秒。
+
+### 4.6 首页快捷方式独立服务 (HomeShortcutService)
+将原本混杂在导航或设置中的首页快捷方式独立抽离：
+- **职责**：专门管理用户浏览器主页中的高频快捷方式（Add/Delete/Sort/Update）。
+- **缓存设计**：独立缓存 Key 为 `nav:shortcut:{userId}`，发生修改时精准淘汰该缓存，确保数据一致性。
+
 ---
 
 ## 五、数据流向图
@@ -288,7 +307,7 @@ graph TB
 |------|------|------|------|
 | JDK | 17 LTS | — | `JAVA_HOME` 已配置 |
 | Maven | 3.9.x | — | 构建与依赖管理 |
-| MySQL | 5.7 | 3306 | 执行 `admin/ddl.sql` 初始化库表 |
+| MySQL | 8.0.x | 3306 | 执行 `admin/ddl.sql` 初始化库表 |
 | Redis | 7.x | 6379 | Token 缓存与黑名单 |
 
 ### 7.2 本地启动步骤
@@ -298,7 +317,7 @@ graph TB
 mysql -u root -p < admin/ddl.sql
 
 # 2. 进入项目根目录
-cd navatation-server
+cd navatation-admin
 
 # 3. 编译打包
 mvn clean package -DskipTests
@@ -330,7 +349,7 @@ curl http://localhost:8080/api/v1/nav/recommended
        │                  │
        ▼                  ▼
 ┌──────────────┐  ┌──────────────┐
-│  MySQL 5.7   │  │  Redis 7.x   │
+│  MySQL 8.0   │  │  Redis 7.x   │
 │  localhost   │  │  localhost   │
 │  :3306       │  │  :6379       │
 └──────────────┘  └──────────────┘

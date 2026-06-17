@@ -2,7 +2,7 @@
 
 > 维护者：AI 助手
 > 
-> 🔗 关联主线稳定看板：[主线稳定看板 (main 分支)](file:///e:/workspace/navatation/doc/WORKFLOW-STATUS.md)
+> 🔗 关联用户手册：[用户手册 (main 分支)](file:///e:/workspace/navatation/doc/USER-GUIDE.md)
 
 ---
 
@@ -125,7 +125,7 @@
 | 日期 | 文档 | 变更摘要 |
 |------|------|----------|
 | 2026-06-09 | `ddl.sql`, `dml.sql` | 架构变更：将数据库脚本从单一 ddl.sql 中拆分，独立出了 dml.sql 用于专门维护数据初始化。 |
-| 2026-06-07 | `base_rule.md` | 规范更新：在开发规范中新增 Git 提交描述字数不超过 40 字的要求。 |
+| 2026-06-07 | `.agents/rules/CODING-STANDARDS.md` | 规范更新：在开发规范中新增 Git 提交描述字数不超过 40 字的要求。 |
 | 2026-06-07 | `frontend-architecture.md` | 新建文档：编写前端项目模块化重构后的详细技术栈概览、目录树结构、数据流架构与样式体系。 |
 | 2026-05-26 | `WORKFLOW-STATUS-DEV.md` | 新建看板：全新创立 dev 专版开发进度文档，实现开发分支与稳定分支进度的双向彻底隔离。 |
 | 2026-05-25 | `ddl.sql`, `backend-architecture.md` | 架构变更：记录业务 ID UUID 逻辑重塑、row_id 自增引入、超长内容参数校验加固以及建表规则。 |
