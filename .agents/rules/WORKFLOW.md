@@ -16,25 +16,21 @@
 ### 1. 可视化仪表盘
 - **入口**：[dashboard.bat](file:///E:/workspace/navatation/scripts/dashboard.bat) (告知老板双击它来快速管理前后端、Redis及Git推送)
 
-### 2. AI 快捷启动链路规则
-当老板让你"启动前后端"时，必须按以下顺序**直接启动后台任务**：
-1. **Redis**: `.\start-redis.bat` (Cwd: `E:\workspace\navatation\scripts\service`)
-2. **Backend**: `$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run` (Cwd: `E:\workspace\navatation\navatation-admin\navatation-business`)
-3. **Frontend**: `npm run dev` (Cwd: `E:\workspace\navatation\navatation-web`)
+### 2. AI 快捷启动与托管规则
+在 agy 模式下，系统在 Session 建立时已自动运行一键脚本拉起全部服务。如果老板要求手动启动或需要重启：
+- **操作原则**：优先执行根目录下的 `scripts\service\start-all.bat`。
+- **防重逻辑**：AI 在响应前必须自检端口是否已占用，避免重复拉起导致端口冲突崩溃。
 
-### 3. CodeGraph 索引维护
+### 3. CodeGraph 索引维护与 MCP 托管
 > [!IMPORTANT]
-> codegraph daemon 运行时自带 **file watcher**，会自动监听文件变更并增量同步 `.codegraph/codegraph.db`，**无需手动重建**。
-> 但 daemon 未启动期间的文件变更不会被捕获，因此开发前务必确认 daemon 处于运行状态。
+> 在 agy 模式下，CodeGraph 已被 MCP 配置托管，随会话自动拉起。
 
-- **检查方式**：查看 `.codegraph/daemon.pid` 是否存在且进程存活。
-- **启动方式**：运行 [start-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/start-codegraph.bat)，或直接执行 `npx -y @colbymchenry/codegraph`。
-- **全量重建场景**：长时间未启动 daemon（如切分支、长假归来）时，启动 daemon 即可自动全量索引。
+- **非 agy 环境开发**：若在非 agy 环境中开发，需手动运行 [start-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/start-codegraph.bat) 启动守护进程。daemon 运行时自带 file watcher 监听变更并增量同步。
 
-### 4. 分支推送工作流 (CRITICAL)
+### 4. 分支管理工作流
 本项目采用 `dev` 与 `main` 双分支模型。
-- **日常推送 (`dev` 分支)**：完成任何修改且**向老板开口汇报之前**，必须自动调用 [push-dev.bat](file:///E:/workspace/navatation/scripts/git/push-dev.bat) 推送。调用时必须传入简短准确的提交描述（例如：`.\push-dev.bat "feat: 增加全局ESC关闭弹窗功能"`），严禁使用默认描述。执行复杂计划创建 `task.md` 时，必须将 `[ ] 自动运行 .\push-dev.bat 推送代码` 作为最后一项任务。
-- **合并发布 (`main` 分支)**：大特性在 `dev` 验证无误后，获得明确许可后再运行 [merge-to-main.bat](file:///E:/workspace/navatation/scripts/git/merge-to-main.bat) 推送至 `main`。
+- **日常开发**：在 `dev` 分支进行。任务完成交付前执行 Git 推送闭环。
+- **合并发布 (`main` 分支)**：大特性在 `dev` 验证无误并获得明确许可后，运行 [merge-to-main.bat](file:///E:/workspace/navatation/scripts/git/merge-to-main.bat) 合并推送。
 
 ## 📊 任务收尾: Git 推送 + METRICS 复盘 (收尾闭环)
 
@@ -42,7 +38,9 @@
 
 ### 5. Git 推送闭环
 **⚠️ 【最高行为红线】 ⚠️**
-只要对工程目录下的任何文件进行了写操作，**向老板开口汇报前的最后一项动作**，必须且只能是运行 `.\push-dev.bat "描述"` 脚本进行推送。绝对严禁在本地存在未提交更改时向老板汇报完成。
+1. **时机**：只要对工程目录下的任何文件进行了写操作，**在开口汇报前**必须运行 `.\push-dev.bat "您的具体变更说明"`（禁止使用默认描述）。
+2. **无遗留**：绝对严禁在本地存在未提交更改（Working Tree 脏）时向老板汇报任务完成。
+3. **计划对齐**：执行复杂任务创建 `task.md` 时，必须将 `[ ] 运行 .\push-dev.bat 提交代码` 作为任务清单的最后一项。
 
 ### 6. METRICS 复盘输出
 **⚠️ 【CRITICAL 强制输出红线】 ⚠️**
@@ -66,5 +64,5 @@
 - **启动 agy 时**：自动在后台运行 `scripts/service/start-all.bat` 以有序拉起 Redis → 后端 Spring Boot → 前端 React 开发服务器，无需手动启动。
 - **关闭 agy 时**：自动触发 `scripts/service/stop-all.bat` 清理进程，关闭前后端及 Redis 进程，释放系统端口。
 
-### 2. 实时代码评审
-在 `agy` 的 TUI 环境下工作时，AI 助手在每次交付代码时，必须首先保证代码的类型安全性与构建正确性，并在开口汇报前完成 `.\push-dev.bat` 的代码同步。
+### 2. 自动构建与校验
+在 `agy` 环境下开发时，AI 助手在每次交付前必须自动运行项目构建或 Lint 检查以确保代码类型安全性，排除潜在编译错误。Git 推送的执行规范详见本文件的 [Git 推送闭环](#5-git-推送闭环) 部分。
