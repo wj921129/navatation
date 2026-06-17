@@ -51,7 +51,7 @@ navatation/
 │   ├── git/                     # Git 推送/合并脚本
 │   ├── service/                 # 服务启停脚本
 │   ├── metrics/                 # AI 度量分析脚本
-│   └── tools/                   # 辅助工具
+│   └── tools/                   # 辅助工具（包含 start-codegraph.bat 项目结构索引）
 ├── .agents/                     # AI 助手配置与规范
 │   ├── rules/                   # 项目级规则规范
 │   │   ├── WORKFLOW.md          # 工作流与 Pipeline 规范
@@ -77,3 +77,9 @@ navatation/
 | **编码规范** | [CODING-STANDARDS.md](file:///E:/workspace/navatation/.agents/rules/CODING-STANDARDS.md) | 通用编码红线、前端规范、后端规范、安全红线、错误处理与测试 |
 
 > **⚠️ 重要提示**：上述两个子规范文件是本宪法的有机组成部分，具有与本文件相同的最高约束力。违反子规范等同于违反本文件。
+
+## 🛠️ AI 提速与项目结构索引 (Codegraph Indexing)
+为了降低 AI 交互的 Token 消耗并大幅提升大型重构与代码查询的效率，本项目集成了 **codegraph** 智能图谱分析。
+- **启动脚本**：运行 [start-codegraph.bat](file:///C:/workspace/my-workspace/navatation/scripts/tools/start-codegraph.bat) 脚本即可。
+- **配置与机制**：项目在全局 MCP (`mcp_config.json`) 中注册了 codegraph。它基于 Tree-sitter 在本地为 `navatation-web` 与 `navatation-admin` 构建 AST 知识图谱，使 AI 助手能通过 Model Context Protocol (MCP) 实时、按需查询符号依赖（如 callers/callees/定义），无需频繁读取源文件，极大节省 Token 开销。
+
