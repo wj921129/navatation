@@ -10,10 +10,11 @@
 ## ⚡ AI 极速启动与服务管理指南 (Fast Launch Guide)
 当老板下达“启动服务”、“启动前后端”或类似指令时，AI 必须遵循以下原则以防启动冲突：
 1. **防重检查**：当前项目已配置 agy `SessionStart` 自动生命周期托管，服务在 agy 启动时已由后台自动拉起。AI 应当先核对相关端口或服务状态（如 Redis 6379, 后端 8080, 前端 5173）。若已在运行，直接向老板汇报“服务已自动拉起并就绪”。
-2. **手动拉起/重启**：若服务未拉起或老板明确要求手动启动/重启，必须在**根目录**下直接异步执行一键启动脚本：
-   - **Cwd**: `.` (项目根目录)
-   - **Command**: `cmd.exe /c scripts\service\start-all.bat`
-   *(严禁在未检查状态下，手动分步执行 Redis、Backend 和 Frontend 命令以防端口冲突。)*
+2. **手动拉起/重启**：若服务未拉起或老板明确要求手动启动/重启，**必须分别**在后台并行拉起各服务脚本，因为 `start-all.bat` 中的弹窗命令在无头环境中会执行失败且主进程退出会导致子进程死亡：
+   - 使用 `run_command` 分发后台任务（Cwd: `.`)：
+     1. `scripts\service\start-redis.bat`
+     2. `scripts\service\start-be.bat`
+     3. `scripts\service\start-fe.bat`
 
 
 ## 📁 项目结构地图

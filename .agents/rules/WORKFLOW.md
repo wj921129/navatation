@@ -17,8 +17,8 @@
 - **入口**：[dashboard.bat](file:///E:/workspace/navatation/scripts/dashboard.bat) (告知老板双击它来快速管理前后端、Redis及Git推送)
 
 ### 2. AI 快捷启动与托管规则
-在 agy 模式下，系统在 Session 建立时已自动运行一键脚本拉起全部服务。如果老板要求手动启动或需要重启：
-- **操作原则**：优先执行根目录下的 `scripts\service\start-all.bat`。
+在 agy 模式下，系统在 Session 建立时已自动运行配置钩子拉起全部服务。如果老板要求手动启动或需要重启：
+- **操作原则**：AI 应通过后台任务分别执行 `scripts\service\` 下的 `start-redis.bat`、`start-be.bat` 和 `start-fe.bat`。
 - **防重逻辑**：AI 在响应前必须自检端口是否已占用，避免重复拉起导致端口冲突崩溃。
 
 ### 3. CodeGraph 索引维护与 MCP 托管
@@ -61,7 +61,7 @@
 
 ### 1. 服务生命周期自动管理
 项目在 `.agents/settings.json` 中配置了 `SessionStart` 和 `SessionEnd` 钩子，具备以下行为：
-- **启动 agy 时**：自动在后台运行 `scripts/service/start-all.bat` 以有序拉起 Redis → 后端 Spring Boot → 前端 React 开发服务器，无需手动启动。
+- **启动 agy 时**：自动在后台**分别运行** `start-redis.bat`、`start-be.bat` 和 `start-fe.bat` 以有序拉起全栈服务，无需手动启动。
 - **关闭 agy 时**：自动触发 `scripts/service/stop-all.bat` 清理进程，关闭前后端及 Redis 进程，释放系统端口。
 
 ### 2. 自动构建与校验

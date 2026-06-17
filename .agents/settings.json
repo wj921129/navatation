@@ -17,7 +17,9 @@
   },
   "hooks": {
     "SessionStart": [
-      "cmd.exe /c scripts\\service\\start-all.bat"
+      "cmd.exe /c scripts\\service\\start-redis.bat",
+      "cmd.exe /c scripts\\service\\start-be.bat",
+      "cmd.exe /c scripts\\service\\start-fe.bat"
     ],
     "SessionEnd": [
       "cmd.exe /c scripts\\service\\stop-all.bat"
