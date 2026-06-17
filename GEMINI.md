@@ -80,6 +80,8 @@ navatation/
 
 ## 🛠️ AI 提速与项目结构索引 (Codegraph Indexing)
 为了降低 AI 交互的 Token 消耗并大幅提升大型重构与代码查询的效率，本项目集成了 **codegraph** 智能图谱分析。
+- **初始化脚本**：运行 [init-codegraph.bat](file:///C:/workspace/my-workspace/navatation/scripts/tools/init-codegraph.bat) 脚本进行项目的 AST 索引定制化配置。
 - **启动脚本**：运行 [start-codegraph.bat](file:///C:/workspace/my-workspace/navatation/scripts/tools/start-codegraph.bat) 脚本即可。
 - **配置与机制**：项目在全局 MCP (`mcp_config.json`) 中注册了 codegraph。它基于 Tree-sitter 在本地为 `navatation-web` 与 `navatation-admin` 构建 AST 知识图谱，使 AI 助手能通过 Model Context Protocol (MCP) 实时、按需查询符号依赖（如 callers/callees/定义），无需频繁读取源文件，极大节省 Token 开销。
+
 
