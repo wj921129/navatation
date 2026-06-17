@@ -4,8 +4,20 @@
       "command": "npx",
       "args": [
         "-y",
-        "@modelcontextprotocol/server-mysql",
-        "mysql://root:root@localhost:3306/navatation"
+        "@nolimit35/mysql-mcp-server"
+      ],
+      "env": {
+        "MYSQL_DATASOURCES": "|navatation|root:root@localhost:3306/navatation;",
+        "MYSQL_DANGER_MODE": "true",
+        "LOG_LEVEL": "INFO",
+        "LOG_COLORS": "true"
+      }
+    },
+    "fetch": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
       ]
     }
   }
