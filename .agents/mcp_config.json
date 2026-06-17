@@ -12,13 +12,6 @@
         "LOG_LEVEL": "INFO",
         "LOG_COLORS": "true"
       }
-    },
-    "fetch": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-fetch"
-      ]
     }
   }
 }

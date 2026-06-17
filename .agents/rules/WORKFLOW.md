@@ -22,7 +22,16 @@
 2. **Backend**: `$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run` (Cwd: `E:\workspace\navatation\navatation-admin\navatation-business`)
 3. **Frontend**: `npm run dev` (Cwd: `E:\workspace\navatation\navatation-web`)
 
-### 3. 分支推送工作流 (CRITICAL)
+### 3. CodeGraph 索引维护
+> [!IMPORTANT]
+> codegraph daemon 运行时自带 **file watcher**，会自动监听文件变更并增量同步 `.codegraph/codegraph.db`，**无需手动重建**。
+> 但 daemon 未启动期间的文件变更不会被捕获，因此开发前务必确认 daemon 处于运行状态。
+
+- **检查方式**：查看 `.codegraph/daemon.pid` 是否存在且进程存活。
+- **启动方式**：运行 [start-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/start-codegraph.bat)，或直接执行 `npx -y @colbymchenry/codegraph`。
+- **全量重建场景**：长时间未启动 daemon（如切分支、长假归来）时，启动 daemon 即可自动全量索引。
+
+### 4. 分支推送工作流 (CRITICAL)
 本项目采用 `dev` 与 `main` 双分支模型。
 - **日常推送 (`dev` 分支)**：完成任何修改且**向老板开口汇报之前**，必须自动调用 [push-dev.bat](file:///E:/workspace/navatation/scripts/git/push-dev.bat) 推送。调用时必须传入简短准确的提交描述（例如：`.\push-dev.bat "feat: 增加全局ESC关闭弹窗功能"`），严禁使用默认描述。执行复杂计划创建 `task.md` 时，必须将 `[ ] 自动运行 .\push-dev.bat 推送代码` 作为最后一项任务。
 - **合并发布 (`main` 分支)**：大特性在 `dev` 验证无误后，获得明确许可后再运行 [merge-to-main.bat](file:///E:/workspace/navatation/scripts/git/merge-to-main.bat) 推送至 `main`。
@@ -31,11 +40,11 @@
 
 > **收尾衔接**：此为任务交付的最终阶段。在本地修改与验证通过后，必须立即进入本阶段。
 
-### 4. Git 推送闭环
+### 5. Git 推送闭环
 **⚠️ 【最高行为红线】 ⚠️**
 只要对工程目录下的任何文件进行了写操作，**向老板开口汇报前的最后一项动作**，必须且只能是运行 `.\push-dev.bat "描述"` 脚本进行推送。绝对严禁在本地存在未提交更改时向老板汇报完成。
 
-### 5. METRICS 复盘输出
+### 6. METRICS 复盘输出
 **⚠️ 【CRITICAL 强制输出红线】 ⚠️**
 在**每一次对话、任务或修复的最后一次文字汇报中**，必须且只能在回复消息体的**最末尾**附带一个标准的 `[METRICS]` 统计模块。此为强制规则，**不论任务大小皆不可省略**！
 
