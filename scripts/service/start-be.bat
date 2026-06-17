@@ -5,4 +5,4 @@ echo   Starting Navatation Backend Service...
 echo ============================================
 set JAVA_HOME=D:\javaSoftware\jdk\jdk17
 cd /d "%~dp0..\..\navatation-admin\navatation-business"
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dfile.encoding=UTF-8"
