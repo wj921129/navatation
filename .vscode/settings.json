@@ -1,0 +1,19 @@
+{
+  // 开启保存文件时自动进行格式化
+  "editor.formatOnSave": true,
+  // 将 Biome 设定为项目默认的格式化工具 (替代 Prettier)
+  "editor.defaultFormatter": "biomejs.biome",
+  // 配置保存文件时触发的代码动作
+  "editor.codeActionsOnSave": {
+    // 自动应用 Biome 提供的安全修复 (如修复 lint/correctness 警告)
+    "source.fixAll.biome": "explicit",
+    // 自动对导入语句 (import) 进行归类和排序
+    "source.organizeImports.biome": "explicit"
+  },
+  // 实验性正则表达式：支持在 cn(...) 函数的字符串参数中获得 Tailwind CSS 智能补全和悬浮提示
+  "tailwindCSS.experimental.classRegex": [
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*)[\"'`]"]
+  ],
+  // 指定项目工作区内使用的 TypeScript 语言服务路径，与本地开发包一致
+  "typescript.tsdk": "navatation-web/node_modules/typescript/lib"
+}

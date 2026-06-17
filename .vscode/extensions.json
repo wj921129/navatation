@@ -1,0 +1,13 @@
+{
+  // 推荐团队成员安装的前端工具链增强相关 VSCode 扩展
+  "recommendations": [
+    // Biome 官方扩展，提供极致快速的 Lint、Format 和 Import 自动整理服务
+    "biomejs.biome",
+    // Error Lens，在代码行内即时高亮展示 Linter/TypeScript 错误和警告
+    "usernamehw.errorlens",
+    // Tailwind CSS IntelliSense，提供极其流畅的类名智能提示与自动补全
+    "bradlc.vscode-tailwindcss",
+    // Pretty TypeScript Errors，将冗长晦涩的 TS 类型报错转译为极美、易读的可视化图表
+    "yoavbls.pretty-ts-errors"
+  ]
+}
