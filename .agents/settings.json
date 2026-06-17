@@ -16,23 +16,7 @@
     ]
   },
   "hooks": {
-    "SessionStart": [
-      {
-        "type": "command",
-        "command": "cmd.exe /c \"start cmd.exe /c scripts\\service\\start-all.bat\"",
-        "timeout": 30,
-        "statusMessage": "启动 Navatation 全部服务 (Redis → Backend → Frontend)",
-        "async": true
-      }
-    ],
-    "SessionEnd": [
-      {
-        "type": "command",
-        "command": "cmd.exe /c \"scripts\\service\\stop-all.bat\"",
-        "timeout": 15,
-        "statusMessage": "正在关闭 Navatation 全部服务",
-        "async": true
-      }
-    ]
+    "SessionStart": [],
+    "SessionEnd": []
   }
 }
