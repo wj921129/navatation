@@ -7,6 +7,19 @@
 **⚠️ 本项目遵循严密的代码提交与复盘流程。所有工程目录写操作完成后，必须执行 Git 推送与度量复盘收尾闭环，详见 [WORKFLOW.md](file:///E:/workspace/navatation/.agents/rules/WORKFLOW.md)。 ⚠️**
 </PROJECT_OVERVIEW>
 
+## ⚡ AI 极速启动服务指令 (Fast Launch Guide)
+当老板下达“启动前后端”、“启动服务”或类似指令时，AI **必须在 0 文件检索的前提下**立即、直接依次执行以下后台异步命令（Cwd 路径为项目根目录的相对路径）：
+1. **Redis**:
+   - **相对路径 (Cwd)**: `scripts/service`
+   - **Command**: `.\start-redis.bat`
+2. **Backend**:
+   - **相对路径 (Cwd)**: `navatation-admin/navatation-business`
+   - **Command**: `$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`
+3. **Frontend**:
+   - **相对路径 (Cwd)**: `navatation-web`
+   - **Command**: `npm run dev`
+*(此备忘录优先级最高，用于避免读取子规范文件或脚本内容以缩短启动前置开销)*
+
 ## 📁 项目结构地图
 ```
 navatation/
