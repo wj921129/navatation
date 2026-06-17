@@ -7,18 +7,14 @@
 **⚠️ 本项目遵循严密的代码提交与复盘流程。所有工程目录写操作完成后，必须执行 Git 推送与度量复盘收尾闭环，详见 [WORKFLOW.md](file:///E:/workspace/navatation/.agents/rules/WORKFLOW.md)。 ⚠️**
 </PROJECT_OVERVIEW>
 
-## ⚡ AI 极速启动服务指令 (Fast Launch Guide)
-当老板下达“启动前后端”、“启动服务”或类似指令时，AI **必须在 0 文件检索的前提下**立即、直接依次执行以下后台异步命令（Cwd 路径为项目根目录的相对路径）：
-1. **Redis**:
-   - **相对路径 (Cwd)**: `scripts/service`
-   - **Command**: `.\start-redis.bat`
-2. **Backend**:
-   - **相对路径 (Cwd)**: `navatation-admin/navatation-business`
-   - **Command**: `$env:JAVA_HOME = "D:\javaSoftware\jdk\jdk17"; mvn spring-boot:run`
-3. **Frontend**:
-   - **相对路径 (Cwd)**: `navatation-web`
-   - **Command**: `npm run dev`
-*(此备忘录优先级最高，用于避免读取子规范文件或脚本内容以缩短启动前置开销)*
+## ⚡ AI 极速启动与服务管理指南 (Fast Launch Guide)
+当老板下达“启动服务”、“启动前后端”或类似指令时，AI 必须遵循以下原则以防启动冲突：
+1. **防重检查**：当前项目已配置 agy `SessionStart` 自动生命周期托管，服务在 agy 启动时已由后台自动拉起。AI 应当先核对相关端口或服务状态（如 Redis 6379, 后端 8080, 前端 5173）。若已在运行，直接向老板汇报“服务已自动拉起并就绪”。
+2. **手动拉起/重启**：若服务未拉起或老板明确要求手动启动/重启，必须在**根目录**下直接异步执行一键启动脚本：
+   - **Cwd**: `.` (项目根目录)
+   - **Command**: `cmd.exe /c scripts\service\start-all.bat`
+   *(严禁在未检查状态下，手动分步执行 Redis、Backend 和 Frontend 命令以防端口冲突。)*
+
 
 ## 📁 项目结构地图
 ```
