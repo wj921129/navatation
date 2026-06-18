@@ -8,7 +8,6 @@ dump.rdb
 *.rdb
 
 # AI 工具产物
-.agents/skills/
 task.md
 
 # 敏感文件
