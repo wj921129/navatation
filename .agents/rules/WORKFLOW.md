@@ -1,51 +1,40 @@
 # WORKFLOW.md - Navatation 项目工作流规范
 
-> **本文件是 [GEMINI.md](file:///E:/workspace/navatation/GEMINI.md) 的子规范，聚焦于工作流、构建运行与 Pipeline 闭环。**
+> **[GEMINI.md](file:///E:/workspace/navatation/GEMINI.md) 子规范：聚焦工作流、构建与闭环。**
 
-## 📜 严格的 DDD 文档驱动开发 (Doc-Driven)
-**代码即文档，文档即代码。** 在进行以下变动时，必须同步更新对应的文档：
-- **[PRD]** ([PRD.md](file:///E:/workspace/navatation/doc/PRD.md)): 新功能或业务规则调整前后对齐。
-- **[设计与规划]**: 所有任务规划、设计方案必须且只能输出到 `doc/specs/` 和 `doc/plans/` 目录中，严禁写入任何第三方或非标准路径。
-- **[接口协议]** ([api-specification.md](file:///E:/workspace/navatation/doc/api-specification.md)): 任何 Controller 接口、DTO 或响应结构的增改。
-- **[数据表]**: 表结构变更追加到 [ddl.sql](file:///E:/workspace/navatation/navatation-admin/ddl.sql)；数据变更追加到 [dml.sql](file:///E:/workspace/navatation/navatation-admin/dml.sql)。
-- **[架构设计]** ([backend-architecture.md](file:///E:/workspace/navatation/doc/backend-architecture.md)): 缓存策略、表分区或工程结构变化。
-- **[任务看板]** ([WORKFLOW-STATUS-DEV.md](file:///E:/workspace/navatation/doc/WORKFLOW-STATUS-DEV.md)): 重大 BUG 修复和新功能开发进度。常规小优化无需写入。
+## 📜 一、 DDD 文档驱动 (Doc-Driven)
+**文档即代码，代码变动必同步文档：**
+- **[PRD]**: 功能/业务调整更新 `doc/PRD.md`。
+- **[设计]**: 规划/设计方案仅限输出至 `doc/specs/` 与 `doc/plans/`，严禁写入非标准路径。
+- **[接口]**: 接口/DTO 增改同步至 `doc/api-specification.md`。
+- **[数据]**: 表结构变更入 `ddl.sql`，数据变更入 `dml.sql`。
+- **[架构]**: 缓存/架构变动同步至 `doc/backend-architecture.md`。
+- **[看板]**: 重大特性或核心 BUG 进度更新至 `doc/WORKFLOW-STATUS-DEV.md`。
 
-## 🛠️ 构建、运行与自动化工作流
-所有环境操作必须通过 `scripts/` 下的脚本执行，严禁自己探测和瞎写系统启动命令。
+## 🛠️ 二、 构建与服务自动化
+**环境与启动操作必须通过 `scripts/`，严禁手动猜测或自行拼凑命令。**
 
-### 1. 可视化仪表盘
-- **入口**：[dashboard.bat](file:///E:/workspace/navatation/scripts/dashboard.bat) (告知老板双击它来快速管理前后端、Redis及Git推送)
+1. **Dashboard 面板**：引导老板使用 `dashboard.bat` 进行可视化服务管理。
+2. **AI 启停托管**：
+   - agy 模式下服务已自动拉起。
+   - 若需手动干预，必须通过后台任务独立执行 `start-redis.bat`、`start-be.bat`、`start-fe.bat`。
+   - **防重红线**：操作前必须自检端口占用，杜绝重复拉起导致崩溃。
+3. **CodeGraph 索引**：非 agy 环境须手动运行 `start-codegraph.bat` 守护进程。
+4. **分支管理红线**：仅允许 `dev` 与 `main` 双分支模型。
+   - **严禁**使用 `.worktrees/` 或创建其他开发分支，日常开发**仅限**在 `dev` 分支进行。
+   - 特性验证通过后，运行 `merge-to-main.bat` 合并发布。
 
-### 2. AI 快捷启动与托管规则
-在 agy 模式下，系统在 Session 建立时已自动运行配置钩子拉起全部服务。如果老板要求手动启动或需要重启：
-- **操作原则**：AI 应通过后台任务分别执行 `scripts\service\` 下的 `start-redis.bat`、`start-be.bat` 和 `start-fe.bat`。
-- **防重逻辑**：AI 在响应前必须自检端口是否已占用，避免重复拉起导致端口冲突崩溃。
+## 📊 三、 节点推送与收尾闭环
 
-### 3. CodeGraph 索引维护与 MCP 托管
-> [!IMPORTANT]
-> 在 agy 模式下，CodeGraph 已被 MCP 配置托管，随会话自动拉起。
+### 1. 及时节点提交 (防冲突)
+**多端开发环境下，必须及时推送，杜绝代码堆积冲突：**
+- **微节点推送**：独立小功能/Bug修复完成后，立即调用 `scripts\git\push-dev.bat` 推送代码，无需等待整个任务结束。
+- **阶段性同步**：在等待老板反馈期间，必须主动将当前稳定的阶段性代码推送至远程 `dev` 分支。
+- *注：中间推送无需调用收尾技能，执行 push 脚本即可。*
 
-- **非 agy 环境开发**：若在非 agy 环境中开发，需手动运行 [start-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/start-codegraph.bat) 启动守护进程。daemon 运行时自带 file watcher 监听变更并增量同步。
-
-### 4. 分支管理工作流
-**绝对红线**：绝对禁止使用 `.worktrees/` 目录或创建功能开发分支，所有开发行为必须严格且仅在 `dev` 分支进行。本项目仅允许 `dev` 与 `main` 双分支模型。
-- **日常开发**：在 `dev` 分支进行。任务完成交付前执行 Git 推送闭环。
-- **合并发布 (`main` 分支)**：大特性在 `dev` 验证无误并获得明确许可后，运行 [merge-to-main.bat](file:///E:/workspace/navatation/scripts/git/merge-to-main.bat) 合并推送。
-
-## 📊 任务收尾: Git 推送 + METRICS 复盘 (收尾闭环)
-
-> **收尾衔接**：此为任务交付的最终阶段。在本地修改与验证通过后，必须立即进入本阶段。
-
-### 5. 任务收尾与复盘闭环
+### 2. 最终收尾与复盘闭环
 **⚠️ 【最高行为红线】 ⚠️**
-1. **临时文件清理闭环**：在宣布任务完成或进入收尾前，必须严格检查并主动清理（如使用 `rm`、撤销测试端点）所有在调试或测试过程中创建的临时脚本、临时测试代码及调试日志，严禁将其遗留或提交进版本库，确保工程环境纯净。
-2. **强制调用技能**：无论经过何种测试或验证流程，任务交付的**绝对最终出口**必须是调用 `custom-finish-development-task` 技能。
-3. **静默推送与度量**：严禁在本地存在未提交代码时向老板宣布“已完成”。AI 在结束最后阶段时，应依赖 `custom-finish-development-task` 自动执行 Git 推送并在回复末尾强制附带 `[METRICS]` 复盘模块。具体格式与步骤由该技能接管，你只需无条件触发它。
-
-### 6. 多端协作与防冲突及时提交 (Incremental Checkpoint Commits)
-考虑到多端协同开发与维护，为防止代码长时间堆积导致 Git 合并冲突，AI 必须遵循**“及时节点提交”**原则：
-- **节点化推送**：在一个相对独立的小功能、Bug修复或重要核心文件修改完成并初步验证后，**无需等待整个大任务彻底结束**，可以直接调用内置的 `scripts\git\push-dev.bat` 执行中间节点的及时推送。
-- **阶段性同步**：在较长的工作流中，如果需要等待老板的确认或反馈，AI 应该主动把当前阶段性稳定的代码推送到远程 `dev` 分支，保障远程代码库的实时性。
-- **注意**：这种中间节点的及时提交不需要触发 `custom-finish-development-task` 技能（该技能仅用于最终的收尾和数据统计），仅需直接运行推送脚本即可。
+1. **强制清理**：任务交付前，必须彻底删除（`rm` 或回滚）所有临时脚本、测试代码及日志，确保工程环境绝对纯净。
+2. **强制闭环出口**：任务彻底完成后的**绝对最终动作**必须是调用 `custom-finish-development-task` 技能。
+3. **静默推送与度量**：严禁携带未提交代码宣布“完成”。必须通过收尾技能执行最终 Git Push，并在回复末尾强制附带 `[METRICS]` 复盘模块。
 
