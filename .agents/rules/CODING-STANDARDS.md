@@ -75,4 +75,3 @@
 - **测试规范**：
   - 前端：使用 Vitest + React Testing Library。新增核心组件必须附带基础渲染测试。运行命令: `npm run test` (Cwd: `navatation-web/`)。
   - 后端：使用 JUnit 5 + Mockito。Service 层核心方法必须有单元测试覆盖。运行命令: `mvn test` (Cwd: `navatation-admin/`)。
-  - **TDD 流程**：编写核心新功能时，优先编写测试用例，再实现业务代码。

@@ -5,6 +5,7 @@
 ## 📜 严格的 DDD 文档驱动开发 (Doc-Driven)
 **代码即文档，文档即代码。** 在进行以下变动时，必须同步更新对应的文档：
 - **[PRD]** ([PRD.md](file:///E:/workspace/navatation/doc/PRD.md)): 新功能或业务规则调整前后对齐。
+- **[设计与规划]**: 所有任务规划、设计方案必须且只能输出到 `doc/specs/` 和 `doc/plans/` 目录中，严禁写入任何第三方或非标准路径。
 - **[接口协议]** ([api-specification.md](file:///E:/workspace/navatation/doc/api-specification.md)): 任何 Controller 接口、DTO 或响应结构的增改。
 - **[数据表]**: 表结构变更追加到 [ddl.sql](file:///E:/workspace/navatation/navatation-admin/ddl.sql)；数据变更追加到 [dml.sql](file:///E:/workspace/navatation/navatation-admin/dml.sql)。
 - **[架构设计]** ([backend-architecture.md](file:///E:/workspace/navatation/doc/backend-architecture.md)): 缓存策略、表分区或工程结构变化。
@@ -28,7 +29,7 @@
 - **非 agy 环境开发**：若在非 agy 环境中开发，需手动运行 [start-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/start-codegraph.bat) 启动守护进程。daemon 运行时自带 file watcher 监听变更并增量同步。
 
 ### 4. 分支管理工作流
-本项目采用 `dev` 与 `main` 双分支模型。
+**绝对红线**：绝对禁止使用 `.worktrees/` 目录或创建功能开发分支，所有开发行为必须严格且仅在 `dev` 分支进行。本项目仅允许 `dev` 与 `main` 双分支模型。
 - **日常开发**：在 `dev` 分支进行。任务完成交付前执行 Git 推送闭环。
 - **合并发布 (`main` 分支)**：大特性在 `dev` 验证无误并获得明确许可后，运行 [merge-to-main.bat](file:///E:/workspace/navatation/scripts/git/merge-to-main.bat) 合并推送。
 
@@ -38,9 +39,8 @@
 
 ### 5. Git 推送与收尾闭环
 **⚠️ 【最高行为红线】 ⚠️**
-1. **任务规划（非强制）**：日常开发、单点优化或简单指令**无需**创建任何 `task.md` 或其他看板 Artifact。仅在涉及大型模块重构、跨模块设计等复杂任务时，推荐使用 `implementation_plan.md` 供老板 Review，日常开发直接执行即可。
-2. **静默收尾**：任何对工程文件产生写入的操作，在向老板汇报“已完成”前，AI **必须**确保本地所有代码被推送提交（自动或引导运行 `scripts\git\push-dev.bat`，若为主干发布则运行 `scripts\git\merge-to-main.bat`），绝对严禁在本地存在未提交更改（Working Tree 脏）时向老板宣布完成。
-3. **强制度量**：在每次交付/修复的最后一次回复末尾，必须严格并精确地输出 `[METRICS]` 模块记录 AI 操作量。
+1. **静默收尾与强制终点**：无论经过何种测试或验证流程，任务的**绝对最终出口**必须是执行 Git 推送与输出 `[METRICS]`，不可被任何其他流程阻断。任何对工程文件产生写入的操作，在向老板汇报“已完成”前，AI **必须**确保本地所有代码被推送提交（自动或引导运行 `scripts\git\push-dev.bat`，若为主干发布则运行 `scripts\git\merge-to-main.bat`），绝对严禁在本地存在未提交更改（Working Tree 脏）时向老板宣布完成。
+2. **强制度量**：在每次交付/修复的最后一次回复末尾，必须严格并精确地输出 `[METRICS]` 模块记录 AI 操作量。
 
 ### 6. METRICS 复盘输出
 **⚠️ 【CRITICAL 强制输出红线】 ⚠️**

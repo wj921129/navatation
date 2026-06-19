@@ -1,0 +1,26 @@
+# 🐞 调试与反馈循环指南 (Debugging & Feedback Loops)
+
+> **这是一份实用参考指南**。当遇到难以定位的疑难 Bug 时，可以参考本指南构建反馈循环。本项目标准的调试流程由外部 Superpowers 技能 `systematic-debugging` 约束，但本指南为您提供了具体的构建工具。
+
+解决 Hard Bugs 的核心是构建一个**短平快（Tight）、确定的（Deterministic）、必定能在触发该 Bug 时亮红灯（Red-capable）** 的反馈循环。
+
+## 10 种构建反馈循环的方法（优先级从高到低）
+
+1. **失败的测试 (Failing test)**：在能触及 Bug 的任何层面（Unit, Integration, E2E）编写一个失败的用例。
+2. **Curl / HTTP 脚本**：针对正在运行的开发服务器，直接用简单的脚本触发网络请求。
+3. **CLI 触发 (CLI invocation)**：带固定输入的命令行调用，并与正确的 Snapshot 进行 diff 对比。
+4. **无头浏览器脚本 (Headless browser script)**：使用 Playwright / Puppeteer 驱动 UI，并对 DOM/Console/Network 进行断言。
+5. **回放抓取的 Trace (Replay a captured trace)**：将真实的请求/Payload/日志保存到本地，然后在这个隔离路径上重放。
+6. **一次性脚手架 (Throwaway harness)**：启动系统的极小化子集（例如 mock 掉其他服务），仅通过单一函数调用来触发 Bug 路径。
+7. **属性/模糊循环 (Property / fuzz loop)**：如果 Bug 是“有时输出错误”，注入 1000 次随机输入来寻找失败模式。
+8. **二分查找脚手架 (Bisection harness)**：如果 Bug 在两个已知状态之间出现，自动化“启动特定状态 -> 检查 -> 重复”的过程，配合 `git bisect run` 使用。
+9. **差异对比循环 (Differential loop)**：把同样的输入传给旧版本（或不同配置）和新版本，对比两者的输出差异。
+10. **HITL 脚本 (Human-in-the-loop bash script)**：最后手段。如果必须有人工点击，写一个脚本让“人”的点击过程被结构化记录。
+
+## 缩小与收紧反馈循环
+一旦有了一个初步的循环，尝试**收紧（Tighten）**它：
+- **更快**：缓存设置阶段、跳过无关初始化、缩小测试范围。
+- **更准**：断言具体的症状，而不是简单的“没有崩溃”。
+- **更确定**：固定时间种子、固定随机数、隔离文件系统和网络。
+
+> **铁律**：如果你发现自己为了验证一个理论去“满世界打 Log”或者“用眼读代码”，请立刻停下！没有能亮红灯的命令，就没有接下来的调试。

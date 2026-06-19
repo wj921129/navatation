@@ -79,10 +79,9 @@ navatation/
 
 > **⚠️ 重要提示**：上述两个子规范文件是本宪法的有机组成部分，具有与本文件相同的最高约束力。违反子规范等同于违反本文件。
 
-## 🛠️ AI 提速与项目结构索引 (Codegraph Indexing)
-为了降低 AI 交互的 Token 消耗并大幅提升大型重构与代码查询的效率，本项目集成了 **codegraph** 智能图谱分析。
-- **初始化脚本**：运行 [init-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/init-codegraph.bat) 脚本进行项目的 AST 索引定制化配置。
-- **启动脚本**：运行 [start-codegraph.bat](file:///E:/workspace/navatation/scripts/tools/start-codegraph.bat) 脚本即可。
-- **配置与机制**：项目在全局 MCP (`mcp_config.json`) 中注册了 codegraph。它基于 Tree-sitter 在本地为 `navatation-web` 与 `navatation-admin` 构建 AST 知识图谱，使 AI 助手能通过 Model Context Protocol (MCP) 实时、按需查询符号依赖（如 callers/callees/定义），无需频繁读取源文件，极大节省 Token 开销。
+## 🛠️ 代码检索红线 (Codegraph Indexing)
+> **⚠️ 核心探索约束**：在定位代码、理解架构或查找上下文时，只要项目存在 `.codegraph/` 目录，**必须优先调用 `codegraph` 系列 MCP 工具**（如 `codegraph_explore` 或其对应的 CLI），严禁在初期大量使用 `grep` 或盲目跨文件读取以节省 Token 开销。
+
+*注：在 agy 环境下该服务已被自动托管拉起。非托管环境或需重新初始化时，请运行 `scripts/tools/` 目录下的相关脚本。详细调用参数请直接查阅 MCP 工具定义。*
 
 
