@@ -26,7 +26,6 @@ description: Executes the mandatory project wrap-up sequence (Git push and METRI
 Plugins / MCP & Skills: {列出本次调用的外部插件/MCP工具或技能，如 "custom-finish-development-task, run_command"}
 原生 Tools: {列出使用到的原生工具名称，如 "replace_file_content, run_command"}
 Subagents: {若派发了后台智能体则列出其角色，否则写 "未派发"}
-[/METRICS]
 ```
 
 > **⚠️ 绝对红线 (CRITICAL)**：绝对严禁在本地存在未提交更改时向老板宣布“任务已完成”。METRICS 数据块是本次会话收尾的强制句号，不可省略。
