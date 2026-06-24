@@ -1,0 +1,46 @@
+# ── 第一阶段：Maven 构建 ──────────────────────────────────────
+FROM maven:3.9-eclipse-temurin-17 AS builder
+
+WORKDIR /build
+
+# 先复制 pom.xml 利用 Docker 层缓存加速依赖下载
+COPY pom.xml .
+COPY navatation-common/pom.xml   navatation-common/
+COPY navatation-framework/pom.xml navatation-framework/
+COPY navatation-business/pom.xml  navatation-business/
+
+RUN mvn dependency:go-offline -B --no-transfer-progress
+
+# 再复制源码并打包
+COPY navatation-common/src   navatation-common/src
+COPY navatation-framework/src navatation-framework/src
+COPY navatation-business/src  navatation-business/src
+
+RUN mvn clean package -DskipTests -B --no-transfer-progress
+
+# ── 第二阶段：运行镜像（精简）────────────────────────────────────
+FROM eclipse-temurin:17-jre-jammy
+
+WORKDIR /app
+
+# 创建数据目录
+RUN mkdir -p /app/data/user_data/icon \
+             /app/data/user_data/bg_custom \
+             /app/data/sys_data/bg_img \
+             /app/data/sys_data/icon \
+             /app/rsa \
+             /app/log
+
+# 复制 JAR 包
+COPY --from=builder /build/navatation-business/target/*.jar app.jar
+
+# 复制 RSA 密钥（如果存在）
+COPY rsa/ /app/rsa/
+
+EXPOSE 8080
+
+# JVM 内存优化（适合 1-2 核心小服务器）
+ENTRYPOINT ["java", \
+  "-Xms256m", "-Xmx512m", \
+  "-Djava.security.egd=file:/dev/./urandom", \
+  "-jar", "app.jar"]
