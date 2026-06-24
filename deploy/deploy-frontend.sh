@@ -125,62 +125,7 @@ EOF
     log_title "部署完成！"
 }
 
-# 模式2: Docker Compose 部署模式
-deploy_docker_compose() {
-    log_title "开始配置：Docker Compose 挂载目录更新"
-    
-    # 引导用户输入前端挂载卷在宿主机的路径
-    # 默认假设是在 navatation 项目下
-    DEFAULT_COMPOSE_WEB_DIR="/opt/navatation/navatation-web/dist"
-    read -p "请输入 Docker Compose 对应的前端挂载目录路径 (对应宿主机路径) [默认: $DEFAULT_COMPOSE_WEB_DIR]: " WEB_DIR
-    WEB_DIR=${WEB_DIR:-$DEFAULT_COMPOSE_WEB_DIR}
-    
-    log_info "前端挂载目标目录: $WEB_DIR"
-    
-    # 解压替换
-    if [ ! -d "$WEB_DIR" ]; then
-        log_info "目录不存在，正在创建: $WEB_DIR"
-        mkdir -p "$WEB_DIR"
-    fi
-    
-    log_info "正在解压并更新前端静态文件..."
-    TEMP_DIR=$(mktemp -d)
-    unzip -q dist-main.zip -d "$TEMP_DIR"
-    
-    # 清空旧目录（保留挂载）
-    rm -rf "$WEB_DIR"/*
-    
-    if [ -d "$TEMP_DIR/dist" ]; then
-        cp -r "$TEMP_DIR/dist/"* "$WEB_DIR/"
-    else
-        cp -r "$TEMP_DIR/"* "$WEB_DIR/"
-    fi
-    rm -rf "$TEMP_DIR"
-    
-    log_info "挂载目录前端文件更新完成！"
-    
-    # 提示重载容器内 Nginx
-    read -p "是否尝试重新加载 Docker 中的 Nginx 容器? (y/n) [默认: y]: " DOCKER_RELOAD
-    DOCKER_RELOAD=${DOCKER_RELOAD:-y}
-    
-    if [[ "$DOCKER_RELOAD" =~ ^[Yy]$ ]]; then
-        DEFAULT_CONTAINER_NAME="navatation-nginx"
-        read -p "请输入前端 Nginx 容器名称 [默认: $DEFAULT_CONTAINER_NAME]: " CONTAINER_NAME
-        CONTAINER_NAME=${CONTAINER_NAME:-$DEFAULT_CONTAINER_NAME}
-        
-        if docker ps | grep -q "$CONTAINER_NAME"; then
-            log_info "正在重新加载容器 $CONTAINER_NAME 中的 Nginx..."
-            docker exec "$CONTAINER_NAME" nginx -s reload
-            log_info "容器 Nginx 重新加载成功！"
-        else
-            log_warn "未找到正在运行的容器 '$CONTAINER_NAME'，请检查容器名称或手动执行 'docker-compose restart nginx'"
-        fi
-    fi
-    
-    log_title "Docker Compose 前端文件更新成功！"
-}
-
-# 模式3: Node.js (serve) 极速启动部署
+# 模式2: Node.js (serve) 极速启动部署
 deploy_nodejs_serve() {
     log_title "开始配置：Node.js serve 极速托管"
     
@@ -238,8 +183,7 @@ check_requirements
 
 echo -e "\n请选择您的部署运行方案:"
 echo -e "  [1] Nginx 宿主机部署 (推荐生产使用，性能极佳，支持反向代理)"
-echo -e "  [2] Docker Compose 挂载替换 (更新 Docker 部署中的前端静态资源)"
-echo -e "  [3] Node.js serve 极速启动 (适合简单快速调试验证)"
+echo -e "  [2] Node.js serve 极速启动 (适合简单快速调试验证)"
 echo -e "  [q] 退出"
 read -p "请输入选项数字: " CHOICE
 
@@ -248,9 +192,6 @@ case "$CHOICE" in
         deploy_nginx_host
         ;;
     2)
-        deploy_docker_compose
-        ;;
-    3)
         deploy_nodejs_serve
         ;;
     q|Q)
