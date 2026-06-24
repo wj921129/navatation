@@ -18,9 +18,10 @@ echo.
 echo [2/4] Building backend service (dev)...
 call mvn clean package -DskipTests
 
-echo.
 echo [3/4] Copying build artifacts...
-copy /Y navatation-business\target\navatation-business-*.jar "..\scripts\package\navatation-backend-dev.jar"
+for /f "delims=" %%i in ('dir /b navatation-business\target\navatation-business-*.jar 2^>nul ^| findstr /v /i "original"') do (
+    copy /B /Y "navatation-business\target\%%i" "..\scripts\package\navatation-backend-dev.jar"
+)
 
 echo.
 echo [4/4] Build complete! File saved at scripts\package\navatation-backend-dev.jar
