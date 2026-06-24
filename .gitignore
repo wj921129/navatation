@@ -1,5 +1,11 @@
 # Compiled class file
-navatation-admin/
+navatation-admin/*
+# 豁免后端多环境配置文件
+!navatation-admin/navatation-business/
+!navatation-admin/navatation-business/src/
+!navatation-admin/navatation-business/src/main/
+!navatation-admin/navatation-business/src/main/resources/
+!navatation-admin/navatation-business/src/main/resources/application*.yml
 navatation-web/
 user_data/
 
