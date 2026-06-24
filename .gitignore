@@ -1,11 +1,5 @@
 # Compiled class file
-navatation-admin/*
-# 豁免后端多环境配置文件
-!navatation-admin/navatation-business/
-!navatation-admin/navatation-business/src/
-!navatation-admin/navatation-business/src/main/
-!navatation-admin/navatation-business/src/main/resources/
-!navatation-admin/navatation-business/src/main/resources/application*.yml
+# navatation-admin 由内部 .gitignore 控制
 navatation-web/
 user_data/
 
