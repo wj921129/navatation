@@ -378,7 +378,7 @@ app:
     refresh-token-expire: 604800
 ```
 
-> 生产环境部署（Nginx 反向代理、HTTPS、集群化）将在后续迭代中加入。
+> 生产环境部署采用前后端独立端口模式，前端通过 Node.js serve 托管静态文件，后端提供 REST API。
 
 ---
 

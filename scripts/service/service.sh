@@ -14,7 +14,7 @@ JVM_OPTS="-Xmx1024M -Xms256M"
 cd "$APP_DIR" || exit 1
 
 # 确保日志目录存在
-mkdir -p "$APP_DIR/log"
+mkdir -p "$APP_DIR/data/log"
 
 # 获取程序运行的 PID
 get_pid() {
@@ -34,9 +34,9 @@ start() {
     fi
 
     echo "正在启动 Navatation 后端服务..."
-    LOG_FILE="$APP_DIR/log/log_$(date +%Y%m%d).log"
-    # 使用 nohup 后台静默启动，并将日志重定向至指定文件
-    nohup "$JAVA_PATH" -jar $JVM_OPTS "$JAR_PATH" > "$LOG_FILE" 2>&1 &
+    LOG_FILE="$APP_DIR/data/log/log_$(date +%Y%m%d).log"
+    # 使用 nohup 后台静默启动，指定 prd 配置文件，并将日志重定向至指定文件
+    nohup "$JAVA_PATH" -jar $JVM_OPTS "$JAR_PATH" --spring.profiles.active=prd > "$LOG_FILE" 2>&1 &
     
     sleep 2
     pid=$(get_pid)
