@@ -24,19 +24,40 @@ description: Executes the mandatory project wrap-up sequence (Git push and METRI
 
 [METRICS]
 
-### 1. Plugins / MCP & Skills
-| 名称 | 中文解释 | 使用简要说明 |
-| :--- | :--- | :--- |
-| `custom-finish-development-task` | 任务收尾与 Git 推送技能 | 用于在开发结束后推送代码、完成闭环度量 |
-
-### 2. 原生 Tools
-| 名称 | 中文解释 | 使用简要说明 |
-| :--- | :--- | :--- |
-| `replace_file_content` | 修改文件内容工具 | 对文件中的特定代码块执行精确替换 |
-
-### 3. Subagents
-| 名称 | 中文解释 | 使用简要说明 |
-| :--- | :--- | :--- |
-| `未派发` | 无 | 本次会话未调度子智能体协作 |
+<table>
+  <thead>
+    <tr>
+      <th align="left">名称</th>
+      <th align="left">中文解释</th>
+      <th align="left">使用简要说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="3" align="center" style="background-color: #f2f2f2; font-weight: bold;">Plugins / MCP & Skills</td>
+    </tr>
+    <tr>
+      <td><code>custom-finish-development-task</code></td>
+      <td>任务收尾与 Git 推送技能</td>
+      <td>用于在开发结束后推送代码、完成闭环度量</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center" style="background-color: #f2f2f2; font-weight: bold;">原生 Tools</td>
+    </tr>
+    <tr>
+      <td><code>replace_file_content</code></td>
+      <td>修改文件内容工具</td>
+      <td>对文件中的特定代码块执行精确替换</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center" style="background-color: #f2f2f2; font-weight: bold;">Subagents</td>
+    </tr>
+    <tr>
+      <td><code>未派发</code></td>
+      <td>无</td>
+      <td>本次会话未调度子智能体协作</td>
+    </tr>
+  </tbody>
+</table>
 
 > **⚠️ 绝对红线 (CRITICAL)**：绝对严禁在本地存在未提交更改时向老板宣布“任务已完成”。METRICS 数据块是本次会话收尾的强制句号，不可省略。
