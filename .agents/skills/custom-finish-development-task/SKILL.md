@@ -21,11 +21,22 @@ description: Executes the mandatory project wrap-up sequence (Git push and METRI
 在 Git 推送成功后，你**必须且只能**在你最后一次回复消息的最末尾，输出一个 `[METRICS]` 数据块，供后台指标系统扫描收集。
 
 **必须原样输出的格式模板**：
-```text
+
 [METRICS]
-Plugins / MCP & Skills: {列出本次调用的外部插件/MCP工具或技能，如 "custom-finish-development-task, run_command"}
-原生 Tools: {列出使用到的原生工具名称，如 "replace_file_content, run_command"}
-Subagents: {若派发了后台智能体则列出其角色，否则写 "未派发"}
-```
+
+### 1. Plugins / MCP & Skills
+| 名称 | 中文解释 | 使用简要说明 |
+| :--- | :--- | :--- |
+| `custom-finish-development-task` | 任务收尾与 Git 推送技能 | 用于在开发结束后推送代码、完成闭环度量 |
+
+### 2. 原生 Tools
+| 名称 | 中文解释 | 使用简要说明 |
+| :--- | :--- | :--- |
+| `replace_file_content` | 修改文件内容工具 | 对文件中的特定代码块执行精确替换 |
+
+### 3. Subagents
+| 名称 | 中文解释 | 使用简要说明 |
+| :--- | :--- | :--- |
+| `未派发` | 无 | 本次会话未调度子智能体协作 |
 
 > **⚠️ 绝对红线 (CRITICAL)**：绝对严禁在本地存在未提交更改时向老板宣布“任务已完成”。METRICS 数据块是本次会话收尾的强制句号，不可省略。
