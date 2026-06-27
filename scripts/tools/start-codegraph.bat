@@ -1,7 +1,7 @@
 @echo off
 echo ======================================================
-echo   Starting codegraph MCP server...
+echo   Registering and Installing CodeGraph MCP Server...
 echo   Path: E:\workspace\navatation
 echo ======================================================
-npx -y @colbymchenry/codegraph
+npx -y @colbymchenry/codegraph install -y
 pause
