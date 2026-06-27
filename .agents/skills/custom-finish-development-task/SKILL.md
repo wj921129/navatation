@@ -34,7 +34,7 @@ description: Executes the mandatory project wrap-up sequence (Git push and METRI
   </thead>
   <tbody>
     <tr>
-      <td colspan="3" align="center" style="background-color: #f2f2f2; font-weight: bold;">Plugins / MCP & Skills</td>
+      <td colspan="3" align="center" bgcolor="#eaeaea" style="background-color: #eaeaea; font-weight: bold;">Plugins / MCP & Skills</td>
     </tr>
     <tr>
       <td><code>custom-finish-development-task</code></td>
@@ -42,7 +42,7 @@ description: Executes the mandatory project wrap-up sequence (Git push and METRI
       <td>用于在开发结束后推送代码、完成闭环度量</td>
     </tr>
     <tr>
-      <td colspan="3" align="center" style="background-color: #f2f2f2; font-weight: bold;">原生 Tools</td>
+      <td colspan="3" align="center" bgcolor="#eaeaea" style="background-color: #eaeaea; font-weight: bold;">原生 Tools</td>
     </tr>
     <tr>
       <td><code>replace_file_content</code></td>
@@ -50,7 +50,7 @@ description: Executes the mandatory project wrap-up sequence (Git push and METRI
       <td>对文件中的特定代码块执行精确替换</td>
     </tr>
     <tr>
-      <td colspan="3" align="center" style="background-color: #f2f2f2; font-weight: bold;">Subagents</td>
+      <td colspan="3" align="center" bgcolor="#eaeaea" style="background-color: #eaeaea; font-weight: bold;">Subagents</td>
     </tr>
     <tr>
       <td><code>未派发</code></td>
