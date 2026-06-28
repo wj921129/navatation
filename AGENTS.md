@@ -7,6 +7,10 @@
 **⚠️ 本项目遵循严密的代码提交与复盘流程。所有工程目录写操作完成后，必须执行 Git 推送与度量复盘收尾闭环，详见 [WORKFLOW.md](file:///E:/workspace/navatation/.agents/rules/WORKFLOW.md)。 ⚠️**
 </PROJECT_OVERVIEW>
 
+## 🤖 AI 核心操作行为红线 (AI Behavioral Constraints)
+1. **Superpowers 强制前置**：在执行任何具体任务（特别是修复 Bug、添加新功能）前，哪怕只有 1% 的可能会用到，AI 也**必须强制优先调用相关 Superpowers 技能**（如 `systematic-debugging`, `using-superpowers` 等）。严禁凭直觉直接写代码。
+2. **后台定时器规范**：在使用 `schedule` 等工具设置后台定时器的取消条件（TimerCondition）时，**必须使用包含完整 UUID 的全局 Task ID**（例如 `7b7f79f6-.../task-X`），严禁使用缩写，以确保任务能够被系统精确回收。
+
 ## ⚡ AI 极速启动与服务管理指南 (Fast Launch Guide)
 当老板下达“启动服务”、“启动前后端”或类似指令时，AI 必须遵循以下原则以防启动冲突：
 1. **防重检查**：当前项目已配置 agy `SessionStart` 自动生命周期托管，服务在 agy 启动时已由后台自动拉起。若已在运行，直接向老板汇报“服务已自动拉起并就绪”。

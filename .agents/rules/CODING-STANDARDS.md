@@ -61,7 +61,8 @@
   - **非空判定**：任何非空判定必须使用通用工具类（如 `StringUtils.isNotBlank`, `CollectionUtils.isNotEmpty` 等），避免手写逻辑产生的漏洞。
 - **日志与依赖规范**：
   - 仅允许打印 `ERROR` 和 `INFO` 级别日志。必须使用 `{}` 占位符打印日志，坚决禁止使用 `+` 拼接字符串。严禁捕获异常后留下空的 `catch` 块，至少需要打印详细错误并向上抛出。
-  - 禁止使用通配符导入（如 `import java.util.*;`）。业务方法内部禁止直接硬编码全限定类名，必须在文件头部显式 `import`。所有的数据流、连接对象等必须使用 `try-with-resources` 语法进行自动化安全关闭。
+  - **[绝对红线]** 严禁在业务方法内部直接硬编码全限定类名（如 `java.util.concurrent.TimeUnit`）。必须在文件头部显式 `import`！
+  - 禁止使用通配符导入（如 `import java.util.*;`）。所有的数据流、连接对象等必须使用 `try-with-resources` 语法进行自动化安全关闭。
 
 ## 4. 🔒 通用安全红线 (Security Hard Rails)
 - **(CRITICAL)** 严禁在代码中硬编码任何密钥、Token、密码。前端使用 `.env` + `VITE_` 前缀，后端使用配置中心或系统环境变量。
