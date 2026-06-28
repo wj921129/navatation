@@ -1,0 +1,7 @@
+{
+  "exclude": [
+    "finishing-a-development-branch",
+    "using-git-worktrees",
+    "setup-pre-commit"
+  ]
+}
