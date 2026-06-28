@@ -9,6 +9,7 @@ dump.rdb
 
 # AI 工具产物
 task.md
+.codebase-memory/
 
 # 敏感文件
 keys.txt

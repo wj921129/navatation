@@ -1,6 +1,6 @@
 # CODING-STANDARDS.md - Navatation 核心编码与安全规范
 
-> **本文件是 [GEMINI.md](file:///E:/workspace/navatation/GEMINI.md) 的子规范，聚焦于编码红线、安全约束与测试要求。**
+> **本文件是 [AGENTS.md](file:///E:/workspace/navatation/AGENTS.md) 的子规范，聚焦于编码红线、安全约束与测试要求。**
 > 本章节是 Navatation 项目的**编码规范唯一权威定义**。所有开发人员及 AI 助手必须在此标准下工作。
 
 ## 1. ⚔️ 编码通用红线 (Common Strict Rules)

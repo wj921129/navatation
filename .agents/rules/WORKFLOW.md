@@ -1,6 +1,6 @@
 # WORKFLOW.md - Navatation 项目工作流规范
 
-> **[GEMINI.md](file:///E:/workspace/navatation/GEMINI.md) 子规范：聚焦工作流、构建与闭环。**
+> **[AGENTS.md](file:///E:/workspace/navatation/AGENTS.md) 子规范：聚焦工作流、构建与闭环。**
 
 ## 📜 一、 DDD 文档驱动 (Doc-Driven)
 **文档即代码，代码变动必同步文档：**
@@ -19,7 +19,7 @@
    - agy 模式下服务已自动拉起。
    - 若需手动干预，必须通过后台任务独立执行 `start-redis.bat`、`start-be.bat`、`start-fe.bat`。
    - **防重红线**：操作前必须自检端口占用，杜绝重复拉起导致崩溃。
-3. **CodeGraph 索引**：非 agy 环境须手动运行 `start-codegraph.bat` 守护进程。
+3. **Codebase Memory 索引**：首次安装或重建请运行 `install-codebase-memory.bat`，之后通过后台自动维护。
 4. **分支管理红线**：仅允许 `dev` 与 `main` 双分支模型。
    - **严禁**使用 `.worktrees/` 或创建其他开发分支，日常开发**仅限**在 `dev` 分支进行。
    - 特性验证通过后，运行 `merge-to-main.bat` 合并发布。
