@@ -26,7 +26,7 @@
 **Interfaces:**
 - Produces: `SingleShortcut`, `StackShortcut`, `DesktopItem` types
 
-- [ ] **Step 1: Update type definitions**
+- [x] **Step 1: Update type definitions**
 
 ```typescript
 export interface BaseShortcut {
@@ -52,7 +52,7 @@ export interface StackShortcut extends BaseShortcut {
 export type DesktopItem = SingleShortcut | StackShortcut;
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add navatation-web/src/app/constants/
