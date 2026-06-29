@@ -17,6 +17,7 @@
 | **日志级别** | `DEBUG` | `INFO` |
 | **文件上传路径** | `../data/` 等相对路径 | `/www/wwwroot/navatation/data/` 绝对路径 |
 | **前端 API 根路径**| `http://localhost:8080/api/v1` | `http://106.13.107.122:8080/api/v1` |
+| **静态资源服务地址** | 默认使用后端地址（相对路径） | 走 `9909` 端口，通过 Nginx 直接读取 (`http://106.13.107.122:9909`) |
 | **对应打包脚本** | 后端：`build-backend-dev.bat`<br>前端：`build-frontend-dev.bat` | 后端：`build-backend-main.bat`<br>前端：`build-frontend-main.bat` |
 
 ## 2. 行为准则与响应要求
