@@ -70,7 +70,7 @@ git commit -m "feat: add StackShortcut types for icon stack feature"
 - Consumes: Nothing
 - Produces: `IconEntryModal` React Component
 
-- [ ] **Step 1: Create Glassmorphism UI Component**
+- [x] **Step 1: Create Glassmorphism UI Component**
 
 ```typescript
 import { X, Globe, Layers } from 'lucide-react';
@@ -111,7 +111,7 @@ export function IconEntryModal({
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add navatation-web/src/app/components/shortcut/IconEntryModal.tsx
