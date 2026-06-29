@@ -7,7 +7,7 @@
         "@nolimit35/mysql-mcp-server"
       ],
       "env": {
-        "MYSQL_DATASOURCES": "|navatation|root:root@localhost:3306/navatation;",
+        "MYSQL_DATASOURCES": "|navatation|root:root@localhost:3306/navatation?multipleStatements=true;",
         "MYSQL_DANGER_MODE": "true",
         "LOG_LEVEL": "INFO",
         "LOG_COLORS": "true"

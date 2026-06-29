@@ -11,7 +11,10 @@ description: Executes the mandatory project wrap-up sequence (Git push and METRI
 
 你必须**按顺序**自动执行以下步骤，任何一步失败都必须先解决错误：
 
-### 1. 运行本地推送脚本 (Run Git Push)
+### 1. 清理遗留后台任务 (Cleanup Background Tasks)
+在进行收尾前，必须首先调用 `manage_task(Action='list')` 检查是否有任何尚未结束的定时器或后台任务（如多余的 `schedule`）。若存在，必须调用 `manage_task(Action='kill')` 将其强制结束，确保环境清净无残留。
+
+### 2. 运行本地推送脚本 (Run Git Push)
 在 `navatation` 根目录下调用内置的 Git 推送脚本。
 - **日常开发**（dev 分支）：运行 `scripts\git\push-dev.bat`
 - **主干合并**（需要老板许可）：运行 `scripts\git\merge-to-main.bat`
