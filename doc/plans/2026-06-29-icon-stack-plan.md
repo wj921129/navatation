@@ -132,28 +132,16 @@ git commit -m "feat: add IconEntryModal for stack vs single choice"
 Update `ShortcutGrid.tsx` to handle the choice before popping up the old AddShortcutDialog.
 
 ```typescript
-// Add these lines inside the component
-const [isEntryModalOpen, setIsEntryModalOpen] = useState(false);
+- [x] **Step 1: Integrate Modals**
 
-// Modify the Plus button onClick:
-// <button onClick={() => setIsEntryModalOpen(true)} ...>
+- Import and add `IconEntryModal` and `StackExpandModal` to the JSX rendering.
+- State: `isIconEntryOpen`, `isStackExpandOpen`, `activeStack`.
+- When clicking "Add Shortcut" (the plus button), open `IconEntryModal` instead of old prompt logic (if in edit mode).
+- When clicking a `StackShortcut`, open `StackExpandModal`.
+- When clicking a `SingleShortcut`, open the URL as usual.
+- Ensure dragging a StackShortcut is possible in edit mode (handled generically by `DraggableShortcut`).
 
-// Render the modal at the bottom of ShortcutGrid
-<IconEntryModal 
-  isOpen={isEntryModalOpen} 
-  onClose={() => setIsEntryModalOpen(false)}
-  onSelectSingle={() => {
-    setIsEntryModalOpen(false);
-    setIsAddShortcutOpen(true);
-  }}
-  onSelectStack={() => {
-    setIsEntryModalOpen(false);
-    // TODO in later tasks: Add an empty stack to the list
-  }}
-/>
-```
-
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add navatation-web/src/app/components/shortcut/ShortcutGrid.tsx
