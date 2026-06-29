@@ -29,6 +29,9 @@ __pycache__/
 # Log files
 *.log
 
+# Qoder
+.qoder/
+
 # 打包产物与密钥对
 scripts/package/*.jar
 scripts/package/rsa/
