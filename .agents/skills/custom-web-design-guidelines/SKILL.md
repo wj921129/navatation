@@ -18,7 +18,7 @@ description: Use when reviewing or building UI components. Audits accessibility 
 
 ## 3. 动画与交互 (Animation & Interaction) - MEDIUM
 - **微动效 (Micro-interactions)**：使用 CSS `transition` 为 Hover 状态、展开/折叠、模态框弹出等提供 150ms-300ms 的平滑过渡。
-- **性能友好的动画**：尽量只对 `transform` 和 `opacity` 进行动画处理，避免对 `width`、`height` 或 `margin` 制作动画（以防止频繁触发 Layout 回流）。
+- **性能友好的动画**：动画**只允许**作用于 `transform` 和 `opacity` 属性。**禁止**对 `width`、`height`、`margin` 制作动画（会触发 Layout 回流）。如有例外需求，**必须在代码注释中标注性能影响原因**。
 - **防抖与节流**：涉及滚动监听（Scroll）、窗口缩放（Resize）或搜索框连续输入的场景，必须强制包裹防抖（Debounce）或节流（Throttle）函数。
 
 ## 4. 表单与排版 (Forms & Typography) - MEDIUM

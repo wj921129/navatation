@@ -13,7 +13,7 @@ description: Use when creating or refactoring React components. Contains critica
 
 ## 2. 重新渲染优化 (Re-render Optimization) - HIGH
 - **局部状态管理**：将频繁变化的状态（如输入框内容、拖拽坐标）封装在最小的可独立渲染子组件中，防止引起全局或大范围的 Re-render。
-- **慎用 useMemo/useCallback**：不要盲目给所有函数加 `useCallback`。只有当把函数作为 Prop 传给经过 `React.memo` 包装的子组件，或者函数是某个 `useEffect` 的依赖项时，才需要使用它们。
+- **`useMemo`/`useCallback` 仅限以下场景使用**：1) 函数作为 Prop 传给 `React.memo` 包装的子组件；2) 函数是 `useEffect` 的依赖项。其他场景**禁止使用**。
 - **Key 的正确使用**：列表渲染中绝对禁止使用 `index` 作为 `key`（除非列表永不重排序、新增或删除），必须使用唯一 ID。
 
 ## 3. 组件设计与状态 (Component Architecture) - MEDIUM
