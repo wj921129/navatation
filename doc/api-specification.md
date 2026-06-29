@@ -513,35 +513,38 @@ Authorization: Bearer {accessToken}
       "iconType": "BUILTIN",
       "iconValue": "Search",
       "iconColor": "#4285F4",
+      "type": "single",
       "sortOrder": 1,
       "createdAt": "2026-01-15T10:30:00Z"
     },
     {
       "shortcutId": 2,
       "categoryId": 1,
-      "name": "GitHub",
-      "url": "https://github.com",
-      "iconType": "BUILTIN",
-      "iconValue": "Github",
-      "iconColor": "#181717",
+      "name": "开发工具",
+      "type": "stack",
+      "children": [
+        {
+          "shortcutId": 3,
+          "name": "GitHub",
+          "url": "https://github.com",
+          "iconType": "BUILTIN",
+          "iconValue": "Github",
+          "type": "single"
+        }
+      ],
       "sortOrder": 2,
       "createdAt": "2026-01-15T10:30:00Z"
-    },
-    {
-      "shortcutId": 3,
-      "categoryId": 1,
-      "name": "我的博客",
-      "url": "https://myblog.com",
-      "iconType": "FAVICON",
-      "iconValue": "https://myblog.com/favicon.ico",
-      "iconColor": null,
-      "sortOrder": 3,
-      "createdAt": "2026-01-20T08:15:00Z"
     }
   ],
   "timestamp": 1715760000000
 }
 ```
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| type | String | `single` 表示单一网址卡片，`stack` 表示图标堆叠文件夹 |
+| children | Array | 当 `type` 为 `stack` 时，该字段包含堆叠内的子快捷方式列表 |
+
 
 **iconType 枚举说明：**
 
