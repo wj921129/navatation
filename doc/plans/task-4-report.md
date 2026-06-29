@@ -13,6 +13,12 @@
 - TypeScript compiler (`tsc`) finished with 0 errors (pristine output). 
 - Biome check warnings remain only on pre-existing `any` definitions.
 
+## Revisions
+- Fixed TypeScript `any` in `ShortcutGrid` by defining `activeStack` as `StackShortcut | null`.
+- Removed `console.log('Select Stack clicked')` and added `// TODO: Implement in Task 5`.
+- Updated `DraggableShortcut.tsx` and `GridDragOverlay.tsx` to safely access `.color` only when `shortcut.type !== 'stack'` or by using `'color' in shortcut` type guard to prevent TS/runtime errors on union types.
+- Amended commits in both `navatation-web` and root using proper Chinese commit messages.
+
 ## Files changed
 - `c:/workspace/my-workspace/navatation/navatation-web/src/app/components/shortcut/ShortcutGrid.tsx`
 - `c:/workspace/my-workspace/navatation/navatation-web/src/app/components/shortcut/DraggableShortcut.tsx`
