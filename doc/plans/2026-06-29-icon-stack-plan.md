@@ -284,7 +284,7 @@ git commit -m "feat: add center modal for expanded stack"
 
 ---
 
-### Task 6: Overlap Detection & Merging Logic
+### Task 7: Overlap Detection & Merging Logic
 
 **Files:**
 - Modify: `c:/workspace/my-workspace/navatation/navatation-web/src/app/App.tsx`
@@ -292,7 +292,7 @@ git commit -m "feat: add center modal for expanded stack"
 **Interfaces:**
 - Uses `@dnd-kit/core` hooks
 
-- [ ] **Step 1: Update onDragEnd to merge on 50% overlap**
+- [x] **Step 1: Update onDragEnd to merge on 50% overlap**
 
 ```typescript
 // Inside handleDragEndGrid function in App.tsx
@@ -328,7 +328,7 @@ if (activeRect && overRect) {
 // Proceed to normal sorting logic...
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add navatation-web/src/app/App.tsx
