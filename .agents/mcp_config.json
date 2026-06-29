@@ -12,10 +12,6 @@
         "LOG_LEVEL": "INFO",
         "LOG_COLORS": "true"
       }
-    },
-	"codebase-memory": {
-      "command": "codebase-memory-mcp",
-      "args": []
     }
   }
 }
