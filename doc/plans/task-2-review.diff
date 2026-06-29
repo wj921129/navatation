@@ -1,0 +1,230 @@
+commit 1c657857f27e04464e4e83277f98648d095ae924
+Author: wj921129 <631960490@qq.com>
+Date:   Mon Jun 29 15:29:18 2026 +0800
+
+    feat: 新增 IconEntryModal 选择组件
+
+ doc/plans/2026-06-29-icon-stack-plan.md |   4 +-
+ doc/plans/progress.md                   |   1 +
+ doc/plans/task-1-report.md              |   2 +-
+ doc/plans/task-1-review.diff            | Bin 0 -> 6786 bytes
+ doc/plans/task-2-brief.md               |  64 ++++++++++++++++++++++++++++++++
+ doc/plans/task-2-report.md              |  28 ++++++++++++++
+ 6 files changed, 96 insertions(+), 3 deletions(-)
+diff --git a/doc/plans/2026-06-29-icon-stack-plan.md b/doc/plans/2026-06-29-icon-stack-plan.md
+index 92d80ad..9d65958 100644
+--- a/doc/plans/2026-06-29-icon-stack-plan.md
++++ b/doc/plans/2026-06-29-icon-stack-plan.md
+@@ -26,7 +26,7 @@
+ **Interfaces:**
+ - Produces: `SingleShortcut`, `StackShortcut`, `DesktopItem` types
+ 
+-- [ ] **Step 1: Update type definitions**
++- [x] **Step 1: Update type definitions**
+ 
+ ```typescript
+ export interface BaseShortcut {
+@@ -52,7 +52,7 @@ export interface StackShortcut extends BaseShortcut {
+ export type DesktopItem = SingleShortcut | StackShortcut;
+ ```
+ 
+-- [ ] **Step 2: Commit**
++- [x] **Step 2: Commit**
+ 
+ ```bash
+ git add navatation-web/src/app/constants/
+diff --git a/doc/plans/progress.md b/doc/plans/progress.md
+new file mode 100644
+index 0000000..7ddce3c
+--- /dev/null
++++ b/doc/plans/progress.md
+@@ -0,0 +1 @@
++Task 1: complete (commits 40ead30..2680f3c, review clean)
+diff --git a/doc/plans/task-1-report.md b/doc/plans/task-1-report.md
+index 3b7529d..ab0549a 100644
+--- a/doc/plans/task-1-report.md
++++ b/doc/plans/task-1-report.md
+@@ -11,7 +11,7 @@ Result: Compilation checking passed, output pristine. The types were correctly a
+ - `c:/workspace/my-workspace/navatation/navatation-web/src/app/constants/recommendedSitesData.ts`
+ 
+ ### Self-review findings
+-- The types perfectly match the task requirements.
++- The types perfectly match the task requirements, with the exception that we upgraded `icon?: any;` to `icon?: LucideIcon;` for strict type safety.
+ - The types were placed at the top of the file to be easily imported and used by other files.
+ - We did not replace the existing `RecommendedSite` type usage in this step since the plan didn't explicitly instruct refactoring the existing data objects yet.
+ 
+diff --git a/doc/plans/task-1-review.diff b/doc/plans/task-1-review.diff
+new file mode 100644
+index 0000000..f0c79d7
+Binary files /dev/null and b/doc/plans/task-1-review.diff differ
+diff --git a/doc/plans/task-2-brief.md b/doc/plans/task-2-brief.md
+new file mode 100644
+index 0000000..7c7d7d3
+--- /dev/null
++++ b/doc/plans/task-2-brief.md
+@@ -0,0 +1,64 @@
++## Global Constraints
++
++- 前端: React 18 (TypeScript) + Vite + Tailwind CSS 4 + shadcn/ui
++- 后端: Spring Boot 3.3.5 + Java 17 + MyBatis-Plus + MySQL + Redis
++- 严格遵循中英文排版规范
++- 拖拽必须隔离管理员模式
++- 收尾流程必须调用 custom-finish-development-task 技能
++
++### Task 2: Create IconEntryModal
++
++**Files:**
++- Create: `c:/workspace/my-workspace/navatation/navatation-web/src/app/components/shortcut/IconEntryModal.tsx`
++
++**Interfaces:**
++- Consumes: Nothing
++- Produces: `IconEntryModal` React Component
++
++- [ ] **Step 1: Create Glassmorphism UI Component**
++
++```typescript
++import { X, Globe, Layers } from 'lucide-react';
++
++export function IconEntryModal({
++  isOpen,
++  onClose,
++  onSelectSingle,
++  onSelectStack
++}: {
++  isOpen: boolean;
++  onClose: () => void;
++  onSelectSingle: () => void;
++  onSelectStack: () => void;
++}) {
++  if (!isOpen) return null;
++
++  return (
++    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
++      <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-2xl p-6 shadow-2xl w-full max-w-sm border border-white/20">
++        <div className="flex justify-between items-center mb-6">
++          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">添加图标</h2>
++          <button onClick={onClose} className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"><X size={20} /></button>
++        </div>
++        <div className="grid grid-cols-2 gap-4">
++          <button onClick={onSelectSingle} className="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/50 dark:bg-gray-800/50 hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all border border-transparent hover:border-blue-500/30">
++            <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center"><Globe className="text-blue-500" /></div>
++            <span className="font-medium text-gray-700 dark:text-gray-200">单一网址</span>
++          </button>
++          <button onClick={onSelectStack} className="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/50 dark:bg-gray-800/50 hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all border border-transparent hover:border-purple-500/30">
++            <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center"><Layers className="text-purple-500" /></div>
++            <span className="font-medium text-gray-700 dark:text-gray-200">图标堆叠</span>
++          </button>
++        </div>
++      </div>
++    </div>
++  );
++}
++```
++
++- [ ] **Step 2: Commit**
++
++```bash
++git add navatation-web/src/app/components/shortcut/IconEntryModal.tsx
++git commit -m "feat: add IconEntryModal for stack vs single choice"
++```
+diff --git a/doc/plans/task-2-report.md b/doc/plans/task-2-report.md
+new file mode 100644
+index 0000000..22aed1f
+--- /dev/null
++++ b/doc/plans/task-2-report.md
+@@ -0,0 +1,28 @@
++# Task 2 Report: Create IconEntryModal
++
++## Implementation
++- Implemented `IconEntryModal` exactly as specified in `task-2-brief.md`.
++- Created a glassmorphism modal with background blur (`backdrop-blur-md`, `bg-white/80`).
++- Included buttons for choosing "Single URL" and "Icon Stack", triggering `onSelectSingle` and `onSelectStack` respectively.
++
++## Testing & Results
++- Verified using `npm run check` inside `navatation-web`.
++- No new linting or typing errors were introduced.
++- Tests (TDD): No unit tests were specified in the brief or requested, so I skipped writing TDD tests to follow exactly what was in the provided task instructions and matching existing codebase style.
++- The single new file passes TypeScript and Biome checks completely clean.
++
++## Files Changed
++- `navatation-web/src/app/components/shortcut/IconEntryModal.tsx` (Added)
++
++## Self-Review Findings
++- **Completeness**: Implemented exactly what the spec requested, matching class names and structure perfectly.
++- **Quality**: The code looks clean and adheres to the Tailwind / React / Lucide standards present in the repository.
++- **Testing**: No test file was defined in the brief for this component. Checked via linter.
++
++## Concerns / Issues
++None. The implementation was straightforward and follows the brief verbatim.
++
++## Fixes applied after review
++- Removed unrelated formatting changes in navatation-web.
++- Restored clean commit history with single commit.
++- Removed accidentally committed task-2-review.diff from the repository.
+  
+--- NAVATATION-WEB SUBMODULE DIFF ---  
+commit 9c230a610904454e9b1653e9f4eb8fe9329093a9
+Author: wj921129 <631960490@qq.com>
+Date:   Mon Jun 29 15:28:02 2026 +0800
+
+    feat: 新增 IconEntryModal 选择组件
+
+ src/app/components/shortcut/IconEntryModal.tsx | 51 ++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+diff --git a/src/app/components/shortcut/IconEntryModal.tsx b/src/app/components/shortcut/IconEntryModal.tsx
+new file mode 100644
+index 0000000..5470b6d
+--- /dev/null
++++ b/src/app/components/shortcut/IconEntryModal.tsx
+@@ -0,0 +1,51 @@
++import { Globe, Layers, X } from 'lucide-react'
++
++export function IconEntryModal({
++  isOpen,
++  onClose,
++  onSelectSingle,
++  onSelectStack,
++}: {
++  isOpen: boolean
++  onClose: () => void
++  onSelectSingle: () => void
++  onSelectStack: () => void
++}) {
++  if (!isOpen) return null
++
++  return (
++    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
++      <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-2xl p-6 shadow-2xl w-full max-w-sm border border-white/20">
++        <div className="flex justify-between items-center mb-6">
++          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">添加图标</h2>
++          <button
++            onClick={onClose}
++            className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
++          >
++            <X size={20} />
++          </button>
++        </div>
++        <div className="grid grid-cols-2 gap-4">
++          <button
++            onClick={onSelectSingle}
++            className="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/50 dark:bg-gray-800/50 hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all border border-transparent hover:border-blue-500/30"
++          >
++            <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
++              <Globe className="text-blue-500" />
++            </div>
++            <span className="font-medium text-gray-700 dark:text-gray-200">单一网址</span>
++          </button>
++          <button
++            onClick={onSelectStack}
++            className="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/50 dark:bg-gray-800/50 hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all border border-transparent hover:border-purple-500/30"
++          >
++            <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
++              <Layers className="text-purple-500" />
++            </div>
++            <span className="font-medium text-gray-700 dark:text-gray-200">图标堆叠</span>
++          </button>
++        </div>
++      </div>
++    </div>
++  )
++}
