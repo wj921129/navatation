@@ -2,6 +2,12 @@
 
 > **[AGENTS.md](../../AGENTS.md) 子规范：项目目录结构的静态参考。**
 
+**⚠️ 这是一个多仓库 (Multi-Repo) 项目 ⚠️**
+这三个主要目录均为独立的 Git 仓库，拥有各自的远端地址，操作时必须分别处理：
+1. **Navatation 配置主仓库**: `navatation/` (`https://github.com/wj921129/navatation-develop-config.git`)
+2. **前端客户端仓库**: `navatation/navatation-web/` (`https://github.com/wj921129/navatation-web.git`)
+3. **后端与后台管理端仓库**: `navatation/navatation-admin/` (`https://github.com/wj921129/navatation-admin.git`)
+
 ```
 navatation/
 ├── navatation-web/              # 前端 React 项目

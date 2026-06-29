@@ -4,6 +4,8 @@
 欢迎来到 **Navatation** 项目（极简网页浏览器新标签页）。
 作为此项目的首席 AI 架构师，你必须将本文件视为项目的"最高宪法（Source of Truth）"与全局指引。本文件主要负责路由各子规范文档，在遵守全局系统指令的前提下，绝对、无条件地遵守以下架构约束与工程标准。
 
+**⚠️ 多仓库架构警告 (MULTI-REPO)：本项目包含 3 个独立的 Git 仓库（当前主仓库、`navatation-web`、`navatation-admin`）。每次拉取代码、检查状态及推送代码时，绝对必须分别操作这 3 个仓库！严禁仅拉取一个仓库！详见 [WORKFLOW.md](.agents/rules/WORKFLOW.md) ⚠️**
+
 **🚫 检索红线 (Codebase Memory)：禁止盲目 grep 或跨文件读取！任何代码定位与架构探索必须绝对优先调用 `codebase-memory` 系列 MCP 工具！仅当无结果时方可降级！** *(注：MCP索引由后台实时维护)*
 
 **⚠️ 任务收尾流程：所有工程目录写操作完成后，必须调用 `custom-finish-development-task` 技能执行收尾闭环。 ⚠️**

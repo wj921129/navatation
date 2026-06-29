@@ -2,6 +2,14 @@
 
 > **[AGENTS.md](../../AGENTS.md) 子规范：聚焦工作流、构建与闭环。**
 
+## 🔄 零、 多仓库同步红线 (Multi-Repo Sync)
+**【核心操作规范】本项目由 3 个独立的 Git 仓库组成，严禁在同步代码时仅拉取/推送单个仓库！**
+1. **仓库清单与地址**：
+   - 主配置/文档仓库 (当前根目录): `.` (`https://github.com/wj921129/navatation-develop-config.git`)
+   - 前端 Web 仓库: `./navatation-web` (`https://github.com/wj921129/navatation-web.git`)
+   - 后端 Admin 仓库: `./navatation-admin` (`https://github.com/wj921129/navatation-admin.git`)
+2. **强制同步要求**：无论是开始新对话、老板要求“拉取最新代码”，还是进行节点推送，都**必须**遍历以上 3 个目录分别执行对应的 Git 操作。绝不允许遗漏。
+
 ## 📜 一、 DDD 文档驱动 (Doc-Driven)
 **【最高行为红线：文档与代码同等重要，且必须先于或随同代码更新】**
 在任何功能开发或修改后，**必须强制、主动地**同步更新对应的产品文档和 API 文档。
