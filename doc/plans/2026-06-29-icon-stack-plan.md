@@ -237,38 +237,50 @@ git commit -m "feat: create ShortcutStackItem for 2x2 folder rendering"
 **Interfaces:**
 - Consumes: `StackShortcut`
 
-- [ ] **Step 1: Implement the Modal**
+- [x] **Step 1: Create Full-Screen Blur Modal**
 
 ```typescript
 import { StackShortcut } from '../../constants/recommendedSitesData';
+import { ShortcutGrid } from './ShortcutGrid';
 
-export function ShortcutStackExpandedModal({
-  stack,
+export function StackExpandModal({
   isOpen,
   onClose,
-  settings
+  stack
 }: {
-  stack: StackShortcut | null;
   isOpen: boolean;
   onClose: () => void;
-  settings: any;
+  stack: StackShortcut | null;
 }) {
   if (!isOpen || !stack) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose}>
-      <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl rounded-3xl p-8 shadow-2xl min-w-[300px] min-h-[300px] max-w-2xl max-h-[80vh] overflow-y-auto border border-white/20" onClick={e => e.stopPropagation()}>
-         <h2 className="text-white text-2xl font-bold mb-6 text-center">{stack.name || '未命名文件夹'}</h2>
-         <div className="flex flex-wrap justify-center gap-6">
-            {/* We will map children and reuse the existing Shortcut renderer here */}
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xl animate-in fade-in duration-300"
+      onClick={onClose}
+    >
+      <div 
+        className="w-[80vw] h-[80vh] bg-transparent flex flex-col"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-white drop-shadow-md">{stack.name}</h2>
+        </div>
+        
+        {/* Render grid reusing existing ShortcutGrid if possible, or mapping items */}
+        <div className="flex-1 overflow-y-auto">
+          {/* Implement a simplified view of the child shortcuts here */}
+          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-items-center">
             {stack.children.map(child => (
-               <div key={child.dragId} className="text-white">{child.name}</div>
+              <div key={child.dragId} className="flex flex-col items-center gap-2">
+                {/* Render child icon similar to RecommendSiteItem */}
+                <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-colors cursor-pointer">
+                   {/* Icon logic placeholder */}
+                   <span className="text-2xl">{child.name[0]}</span>
+                </div>
+                <span className="text-white text-sm font-medium drop-shadow-md">{child.name}</span>
+              </div>
             ))}
-         </div>
-      </div>
-    </div>
-  );
-}
 ```
 
 - [ ] **Step 2: Commit**

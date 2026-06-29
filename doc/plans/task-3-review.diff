@@ -1,0 +1,225 @@
+commit 93436296ac94e0799e035923cb9aaaf0f9be1b50
+Author: wj921129 <631960490@qq.com>
+Date:   Mon Jun 29 15:37:44 2026 +0800
+
+    feat: 新增 StackExpandModal 展示堆叠组内容
+
+ doc/plans/2026-06-29-icon-stack-plan.md |   4 +-
+ doc/plans/progress.md                   |   1 +
+ doc/plans/task-1-review.diff            | Bin 6786 -> 0 bytes
+ doc/plans/task-3-brief.md               |  77 ++++++++++++++++++++++++++++++++
+ doc/plans/task-3-report.md              |  26 +++++++++++
+ 5 files changed, 106 insertions(+), 2 deletions(-)
+diff --git a/doc/plans/2026-06-29-icon-stack-plan.md b/doc/plans/2026-06-29-icon-stack-plan.md
+index 9d65958..9e53fc4 100644
+--- a/doc/plans/2026-06-29-icon-stack-plan.md
++++ b/doc/plans/2026-06-29-icon-stack-plan.md
+@@ -70,7 +70,7 @@ git commit -m "feat: add StackShortcut types for icon stack feature"
+ - Consumes: Nothing
+ - Produces: `IconEntryModal` React Component
+ 
+-- [ ] **Step 1: Create Glassmorphism UI Component**
++- [x] **Step 1: Create Glassmorphism UI Component**
+ 
+ ```typescript
+ import { X, Globe, Layers } from 'lucide-react';
+@@ -111,7 +111,7 @@ export function IconEntryModal({
+ }
+ ```
+ 
+-- [ ] **Step 2: Commit**
++- [x] **Step 2: Commit**
+ 
+ ```bash
+ git add navatation-web/src/app/components/shortcut/IconEntryModal.tsx
+diff --git a/doc/plans/progress.md b/doc/plans/progress.md
+index 7ddce3c..922112f 100644
+--- a/doc/plans/progress.md
++++ b/doc/plans/progress.md
+@@ -1 +1,2 @@
+ Task 1: complete (commits 40ead30..2680f3c, review clean)
++Task 2: complete (commits 53fc565..1c65785, review clean) 
+diff --git a/doc/plans/task-1-review.diff b/doc/plans/task-1-review.diff
+deleted file mode 100644
+index f0c79d7..0000000
+Binary files a/doc/plans/task-1-review.diff and /dev/null differ
+diff --git a/doc/plans/task-3-brief.md b/doc/plans/task-3-brief.md
+new file mode 100644
+index 0000000..6821b17
+--- /dev/null
++++ b/doc/plans/task-3-brief.md
+@@ -0,0 +1,77 @@
++## Global Constraints
++
++- 前端: React 18 (TypeScript) + Vite + Tailwind CSS 4 + shadcn/ui
++- 后端: Spring Boot 3.3.5 + Java 17 + MyBatis-Plus + MySQL + Redis
++- 严格遵循中英文排版规范
++- 拖拽必须隔离管理员模式
++- 收尾流程必须调用 custom-finish-development-task 技能
++
++### Task 3: Create StackExpandModal
++
++**Files:**
++- Create: `c:/workspace/my-workspace/navatation/navatation-web/src/app/components/shortcut/StackExpandModal.tsx`
++
++**Interfaces:**
++- Consumes: `StackShortcut`
++- Produces: `StackExpandModal` React Component
++
++- [ ] **Step 1: Create Full-Screen Blur Modal**
++
++```typescript
++import { StackShortcut } from '../../constants/recommendedSitesData';
++
++export function StackExpandModal({
++  isOpen,
++  onClose,
++  stack
++}: {
++  isOpen: boolean;
++  onClose: () => void;
++  stack: StackShortcut | null;
++}) {
++  if (!isOpen || !stack) return null;
++
++  return (
++    <div 
++      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xl animate-in fade-in duration-300"
++      onClick={onClose}
++    >
++      <div 
++        className="w-[80vw] h-[80vh] bg-transparent flex flex-col"
++        onClick={e => e.stopPropagation()}
++      >
++        <div className="text-center mb-8">
++          <h2 className="text-3xl font-bold text-white drop-shadow-md">{stack.name}</h2>
++        </div>
++        
++        {/* Render grid reusing existing ShortcutGrid if possible, or mapping items */}
++        <div className="flex-1 overflow-y-auto p-4">
++          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 justify-items-center">
++            {stack.children.map(child => (
++              <div key={child.dragId} className="flex flex-col items-center gap-3 group">
++                <a 
++                  href={child.url}
++                  target="_blank"
++                  rel="noopener noreferrer"
++                  className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-white/20 group-hover:scale-105 transition-all cursor-pointer shadow-lg border border-white/5"
++                >
++                   {/* Simplified icon rendering, matching original desktop logic */}
++                   <span className="text-2xl font-semibold">{child.name[0]}</span>
++                </a>
++                <span className="text-white text-sm font-medium drop-shadow-md truncate max-w-[80px] text-center">{child.name}</span>
++              </div>
++            ))}
++          </div>
++        </div>
++      </div>
++    </div>
++  );
++}
++```
++
++- [ ] **Step 2: Commit**
++
++```bash
++git add navatation-web/src/app/components/shortcut/StackExpandModal.tsx
++git commit -m "feat: add StackExpandModal for rendering icon stack contents"
++```
+diff --git a/doc/plans/task-3-report.md b/doc/plans/task-3-report.md
+new file mode 100644
+index 0000000..0569999
+--- /dev/null
++++ b/doc/plans/task-3-report.md
+@@ -0,0 +1,26 @@
++# Task 3: Create StackExpandModal
++
++## What was implemented
++- Created `StackExpandModal` in `navatation-web/src/app/components/shortcut/StackExpandModal.tsx`.
++- The modal uses a full-screen blur with an `animate-in fade-in` animation.
++- It displays the stack name and renders a grid of child shortcuts exactly matching the provided markup in the brief.
++
++## Tests and Verification
++- Ran `npm run lint` in `navatation-web`. The component code passed lint checks with no warnings or errors specific to `StackExpandModal.tsx`. 
++- No TDD was required for this task (as the brief provided only the component code and the commit command, without any unit testing framework configuration for UI components).
++
++## Files Changed
++- Created: `c:/workspace/my-workspace/navatation/navatation-web/src/app/components/shortcut/StackExpandModal.tsx`
++
++## Revisions
++- Fixed potential undefined string access (`child.name?.charAt(0) || '?'`) in `StackExpandModal.tsx`.
++- Removed `doc/plans/task-2-review.diff` from the repository index.
++- Amended commits in both `navatation-web` and root using proper Chinese commit messages.
++
++## Self-Review Findings
++- **Completeness**: Implemented exactly what was specified in Step 1 of the task brief.
++- **Quality**: Handled undefined string index access edge-cases correctly.
++- **Discipline**: Did not modify any other files or overbuild functionality.
++
++## Issues or Concerns
++- None.
+  
+--- NAVATATION-WEB SUBMODULE DIFF ---  
+commit cc64e02413b94d1a99520dac044247a8b8fb85a0
+Author: wj921129 <631960490@qq.com>
+Date:   Mon Jun 29 15:34:29 2026 +0800
+
+    feat: 新增 StackExpandModal 展示堆叠组内容
+
+ src/app/components/shortcut/StackExpandModal.tsx | 49 ++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+diff --git a/src/app/components/shortcut/StackExpandModal.tsx b/src/app/components/shortcut/StackExpandModal.tsx
+new file mode 100644
+index 0000000..7b207e4
+--- /dev/null
++++ b/src/app/components/shortcut/StackExpandModal.tsx
+@@ -0,0 +1,49 @@
++import { StackShortcut } from '../../constants/recommendedSitesData';
++
++export function StackExpandModal({
++  isOpen,
++  onClose,
++  stack
++}: {
++  isOpen: boolean;
++  onClose: () => void;
++  stack: StackShortcut | null;
++}) {
++  if (!isOpen || !stack) return null;
++
++  return (
++    <div 
++      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xl animate-in fade-in duration-300"
++      onClick={onClose}
++    >
++      <div 
++        className="w-[80vw] h-[80vh] bg-transparent flex flex-col"
++        onClick={e => e.stopPropagation()}
++      >
++        <div className="text-center mb-8">
++          <h2 className="text-3xl font-bold text-white drop-shadow-md">{stack.name}</h2>
++        </div>
++        
++        {/* Render grid reusing existing ShortcutGrid if possible, or mapping items */}
++        <div className="flex-1 overflow-y-auto p-4">
++          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 justify-items-center">
++            {stack.children.map(child => (
++              <div key={child.dragId} className="flex flex-col items-center gap-3 group">
++                <a 
++                  href={child.url}
++                  target="_blank"
++                  rel="noopener noreferrer"
++                  className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-white/20 group-hover:scale-105 transition-all cursor-pointer shadow-lg border border-white/5"
++                >
++                   {/* Simplified icon rendering, matching original desktop logic */}
++                   <span className="text-2xl font-semibold">{child.name?.charAt(0) || '?'}</span>
++                </a>
++                <span className="text-white text-sm font-medium drop-shadow-md truncate max-w-[80px] text-center">{child.name}</span>
++              </div>
++            ))}
++          </div>
++        </div>
++      </div>
++    </div>
++  );
++}
