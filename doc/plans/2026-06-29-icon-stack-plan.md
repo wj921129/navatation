@@ -128,18 +128,22 @@ git commit -m "feat: add IconEntryModal for stack vs single choice"
 **Interfaces:**
 - Consumes: `IconEntryModal`
 
-- [ ] **Step 1: Add state and render modal**
-Update `ShortcutGrid.tsx` to handle the choice before popping up the old AddShortcutDialog.
+- [x] **Step 1: Create a Stack creation utility**
 
-```typescript
-- [x] **Step 1: Integrate Modals**
-
-- Import and add `IconEntryModal` and `StackExpandModal` to the JSX rendering.
-- State: `isIconEntryOpen`, `isStackExpandOpen`, `activeStack`.
-- When clicking "Add Shortcut" (the plus button), open `IconEntryModal` instead of old prompt logic (if in edit mode).
-- When clicking a `StackShortcut`, open `StackExpandModal`.
-- When clicking a `SingleShortcut`, open the URL as usual.
-- Ensure dragging a StackShortcut is possible in edit mode (handled generically by `DraggableShortcut`).
+When `IconEntryModal` triggers `onSelectStack`, the user is intending to create a new empty stack.
+- Generate a new UUID for `dragId`.
+- Prompt the user for a name, or just default to "未命名文件夹".
+- Insert a new `StackShortcut` into the shortcuts list.
+  ```typescript
+  const newStack: StackShortcut = {
+    type: 'stack',
+    dragId: uuidv4(),
+    name: '未命名文件夹',
+    children: []
+  };
+  ```
+- Dispatch state update to append this to the user's shortcuts list.
+- We must make sure that `onSelectStack` creates this object and calls the appropriate state update function (likely `handleAddShortcut` logic or similar array setter).
 
 - [x] **Step 2: Commit**
 
