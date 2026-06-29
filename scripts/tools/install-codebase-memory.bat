@@ -3,6 +3,10 @@ echo ======================================================
 echo   安装 codebase-memory-mcp 并索引 Navatation 项目...
 echo ======================================================
 
+set "SCRIPT_DIR=%~dp0"
+for %%i in ("%SCRIPT_DIR%..\..") do set "REPO_PATH=%%~fi"
+set "REPO_PATH=%REPO_PATH:\=/%"
+
 REM 1. 通过 winget 安装（静态二进制，零依赖）
 echo [1/4] 安装 codebase-memory-mcp...
 winget install DeusData.codebase-memory-mcp --accept-source-agreements --accept-package-agreements
@@ -13,14 +17,14 @@ codebase-memory-mcp config set auto_index true
 codebase-memory-mcp config set auto_index_limit 50000
 
 REM 3. 首次索引当前项目
-echo [3/4] 索引项目 E:\workspace\navatation ...
-codebase-memory-mcp cli index_repository "{\"repo_path\": \"E:/workspace/navatation\"}"
+echo [3/4] 索引项目 %REPO_PATH% ...
+codebase-memory-mcp cli index_repository "{\"repo_path\": \"%REPO_PATH%\"}"
 
 REM 4. 验证
-echo [4/4] 验证安装...
-codebase-memory-mcp cli index_status "{\"repo_path\": \"E:/workspace/navatation\"}"
+echo [4/4] 验证安装并列出所有项目...
+codebase-memory-mcp cli list_projects "{}"
 
 echo ======================================================
 echo   安装完毕！后台 watcher 已启动，索引将自动维护。
 echo ======================================================
-pause
+if "%1" neq "nopause" pause
